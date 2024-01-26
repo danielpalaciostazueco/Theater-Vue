@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import HomeView from './views/HomeView.vue';
+import ProgramacionView from './views/ProgramacionView.vue';
 import Header from './components/Header.vue';
 import Block from './components/Block.vue'
 import Footer from './components/Footer.vue'
@@ -211,53 +213,25 @@ const obras = [
 </script>
 
 <template>
-<Header></Header>
-<nav>
-   <RouterLink to="/">Home</RouterLink>
-   <RouterLink to="/about">About</RouterLink>
-   
-</nav>
-<main>
-    <RouterView />
-</main>
+    <Header></Header>
+    <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
 
-<main class="main">
+    </nav>
+    <main>
+        <RouterView />
+    </main>
 
-<section class="performance-block">
-    <div class="performance-block__info">
-        <h2 class="performance-block__title">Próxima Función</h2>
-        <a href="./src/assets/img/html/Funciones/RomeoJulieta.html" class="performance-block__button">Comprar Entradas</a>
-    </div>
-    <div class="performance-block__image">
-        <img src="./assets/img/fotos-descripción-obras-teatro/romo-julieta/ROMEO-Y-JULIETA.jpeg"
-            alt="Función de Teatro" class="image__img">
-    </div>
-    <div class="performance-block__name">
-        <h2 class="performance-block__name-title">Romeo y Julieta</h2>
-        <a class="performance-block__name-text">"Romeo y Julieta" es una obra de teatro escrita por William
-            Shakespeare en el siglo XVI. La trama sigue a dos jóvenes amantes, Romeo y Julieta, cuyas familias
-            rivales generan conflictos. A pesar de las adversidades, se enamoran y casan en secreto, pero una
-            serie de malentendidos y tragedias lleva a un desenlace fatal. La obra explora temas como el amor,
-            la rivalidad familiar y el destino, convirtiéndose en una de las historias de amor más conocidas de
-            la literatura.</a>
-    </div>
-</section>
+    <main class="main">
+        <div>
+            <HomeView v-for="obra in obras" :key="obra.slug" :name="obra.name" :images="obra.images[0]" />
+        </div>
+        <div>
+            <ProgramacionView v-for="obra in obras" :key="obra.slug" :name="obra.name" :images="obra.images[0]" />
+        </div>
+        <div>
 
-<article>
-    <div class="title-posters">
-        <h2 class="title-posers_txt">Nuestras funciones</h2>
-    </div>
-    <section class="poster-container" >
-        <Block v-for="obra in obras" :name="obra.name" :images="obra.images[0]"/>
-    </section>
-   
-</article>
-<div class="button-frame">
-    <div class="button-seeMore">
-        <a class="button-seeMore_txt" href="/html/programacion-obra.html">Ver más</a>
-    </div>
-</div>
-</main>
-
-<Footer></Footer>
+        </div>
+    </main>
 </template>

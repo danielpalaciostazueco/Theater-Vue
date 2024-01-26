@@ -1,5 +1,23 @@
+<script setup lang="ts">
+import { defineProps } from 'vue'
+
+// Definición de props con sus tipos respectivos
+const props = defineProps<{
+    name?: string;
+    images?: string;
+}>()
+</script>
 <template>
-    <div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/Programacion.css">
+        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+        <title>Project-Theater</title>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </head>
+
+    <body>
         <header class="header">
             <div class="header__logo">
                 <a href="/index.html"><img src="/img/logo.png" alt="Logo del Teatro Example" class="logo__image"></a>
@@ -14,32 +32,27 @@
 
         <main>
             <div class="main-block">
-                <h1>Información</h1>
+                <h1>Programación</h1>
             </div>
 
-            <section class="frame-Thorario">
-                <div class="frame-Thorario_title">
-                    <h2>Horarios de taquilla</h2>
-                </div>
-                <div class="frame-Thorario_txt">
-                    <p>Nos complace anunciar que nuestro horario de apertura para la compra de entradas es especialmente
-                        conveniente para nuestros visitantes. De lunes a viernes, nuestras taquillas están abiertas desde
-                        las 8:00 a.m. hasta las 7:00 p.m., permitiendo así que tanto los madrugadores como los que prefieren
-                        las tardes puedan adquirir sus entradas sin inconvenientes. Los fines de semana, extendemos nuestro
-                        horario: abrimos a las 9:00 a.m. y cerramos a las 8:00 p.m., asegurándonos de que incluso aquellos
-                        que disfrutan de un merecido descanso en la mañana puedan planificar su visita. Además, para mayor
-                        comodidad, nuestra página web ofrece la posibilidad de comprar entradas en línea las 24 horas del
-                        día, todos los días de la semana, facilitando aún más el acceso a nuestros eventos y espectáculos.
-                    </p>
+            <section class="poster-container">
+                <div class='show-poster'>
+                    <div class='show-poster__image'>
+                        <!-- Uso de la prop 'images' para establecer la fuente de la imagen -->
+                        <img :src="images" alt="Imagen de la obra" />
+                    </div>
+                    <div class='show-poster__details'>
+                        <!-- Visualización del nombre de la obra a través de la prop 'name' -->
+                        <h3 class='show-poster__details__title'>{{ name }}</h3>
+                    </div>
                 </div>
             </section>
 
-            <!-- Repite la estructura para cada sección de información adicional -->
         </main>
 
         <footer class="footer">
             <div class="footer__logo">
-                <img src="/img/logo2.png" alt="">
+                <img src="/img/logo2.png" alt="Logo del Teatro">
             </div>
             <div class="footer__menu">
                 <a href="/html/programacion-obra.html" class="footer__menu-link">Programación</a>
@@ -53,9 +66,10 @@
                 <img src="/img/facebook.png" alt="">
             </div>
         </footer>
-    </div>
+    </body>
 </template>
 <style>
+/* Estilos Generales */
 body,
 h1,
 h2,
@@ -66,6 +80,7 @@ a {
     margin: 0;
     padding: 0;
     text-decoration: none;
+    color: black;
 }
 
 body {
@@ -74,6 +89,7 @@ body {
     overflow: auto;
 }
 
+/* Estilos de Cabecera */
 .header {
     display: flex;
     align-items: center;
@@ -97,12 +113,8 @@ body {
 .header__nav {
     flex: 2.2;
     display: flex;
-    /* Para que los elementos se distribuyan en línea */
-    text-align: left;
     justify-content: left;
-    /* Para alinear los elementos al final del contenedor */
     gap: 20px;
-    /* Espacio entre los elementos */
 }
 
 .nav__link {
@@ -110,8 +122,7 @@ body {
     text-decoration: none;
 }
 
-/*---------Header--------*/
-
+/* Estilos del Bloque Principal */
 .main-block {
     display: flex;
     align-items: center;
@@ -128,38 +139,64 @@ body {
     margin-left: 20vh;
 }
 
-.frame-Thorario {
+/* Estilos de las Tarjetas de Programación */
+.poster-container {
     display: flex;
-    flex-direction: column;
-    max-width: 600px;
-    margin: auto;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    background-color: white;
+    padding: 20px;
+    margin: 20px;
+    gap: 20px;
 }
 
-.frame-Thorario_title {
-    position: relative;
-    margin-bottom: 25px;
-    color: #000000;
-    font-size: 20px;
+.show-poster {
+    text-align: center;
+    background-color: #1E3367;
+    padding: 20px;
+    width: 300px;
+    height: auto;
 }
 
-.frame-Thorario_title h2::after {
-    content: "";
+.show-poster__image img {
     width: 100%;
-    position: absolute;
-    height: 2px;
-    display: block;
-    margin: 0 auto;
-    background-color: #000000;
+    /* Ajusta el ancho de la imagen al de su contenedor */
+    height: 250px;
+    /* Altura fija para mantener consistencia */
+    object-fit: cover;
+    /* Asegura que la imagen cubra el espacio asignado */
 }
 
-.frame-Thorario_txt {
-    margin-top: 3vh;
-    margin-bottom: 5vh;
-    font-size: 20px;
+.show-poster__details {
+    color: white;
 }
 
+.show-poster__button {
+    padding: 10px 20px;
+    background-color: #fff;
+    color: black;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
-/* Estilos del pie de página */
+/* Estilos para Botones y Pie de Página */
+.button-seeMore {
+    background-color: #1E3367;
+    border-radius: 32px;
+    display: flex;
+    width: 32vh;
+    height: 8vh;
+    margin: 10vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-seeMore_txt {
+    color: white;
+    font-size: x-large;
+}
+
 .footer {
     margin-top: 10vh;
     display: flex;
@@ -193,7 +230,6 @@ body {
 .footer__logo img {
     width: 90px;
     border-radius: 70px;
-
 }
 
 .footer__networks img {
@@ -201,8 +237,8 @@ body {
     margin-right: 4vh;
 }
 
+/* Estilos para Pantallas Pequeñas */
 @media screen and (max-width: 1150px) {
-
     .header {
         margin-top: 5vh;
         display: flex;
@@ -223,26 +259,18 @@ body {
     }
 
     main {
-        margin: 0 15px;
-    }
-
-    .footer {
-        display: flex;
-        justify-content: center;
-    }
-
-    .footer__logo {
-        text-align: center;
-    }
-
-    .footer__menu {
         display: flex;
         flex-direction: column;
+        align-items: center;
     }
 
-    .footer__networks {
-        display: flex;
-        flex-direction: column;
+    .main-block h1 {
+        margin-left: 6vh;
     }
-}
-</style>
+
+    .title-posters {
+        flex-direction: column;
+        align-items: center;
+        margin: 2vh;
+    }
+}</style>

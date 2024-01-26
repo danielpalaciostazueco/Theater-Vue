@@ -1,41 +1,70 @@
+<script setup lang="ts">
+import { defineProps } from 'vue'
+
+// Definición de props con sus tipos respectivos
+const props = defineProps<{
+    name?: string;
+    images?: string;
+    horarios?: string[];
+}>()
+</script>
 <template>
-    <div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/compraEntradas1.css">
+        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+        <title>Project-Thiater</title>
+    </head>
+
+    <body>
+
+        <!-- ----------------header------------ -->
+
         <header class="header">
             <div class="header__logo">
                 <a href="/index.html"><img src="/img/logo.png" alt="Logo del Teatro Example" class="logo__image"></a>
             </div>
             <nav class="header__nav">
+
                 <a href="/html/programacion-obra.html" class="nav__link">Programación</a>
                 <a href="/html/informacion.html" class="nav__link">Información</a>
                 <a href="/html/OtrasActividades.html" class="nav__link">Otras Actividades</a>
                 <a href="/html/Contacto.html" class="nav__link">Contacto</a>
+
             </nav>
         </header>
 
-        <main>
-            <div class="main-block">
-                <h1>Información</h1>
-            </div>
+        <!-- -----------barraa------------- -->
 
-            <section class="frame-Thorario">
-                <div class="frame-Thorario_title">
-                    <h2>Horarios de taquilla</h2>
+        <main>
+            <section class="main-block">
+                <h1 class="main-block__title">Compra de entradas</h1>
+            </section>
+
+            <section class="frame-function">
+                <div class="frame-function__poster">
+                    <img :src="images" alt="Imagen destacada de la obra" />
                 </div>
-                <div class="frame-Thorario_txt">
-                    <p>Nos complace anunciar que nuestro horario de apertura para la compra de entradas es especialmente
-                        conveniente para nuestros visitantes. De lunes a viernes, nuestras taquillas están abiertas desde
-                        las 8:00 a.m. hasta las 7:00 p.m., permitiendo así que tanto los madrugadores como los que prefieren
-                        las tardes puedan adquirir sus entradas sin inconvenientes. Los fines de semana, extendemos nuestro
-                        horario: abrimos a las 9:00 a.m. y cerramos a las 8:00 p.m., asegurándonos de que incluso aquellos
-                        que disfrutan de un merecido descanso en la mañana puedan planificar su visita. Además, para mayor
-                        comodidad, nuestra página web ofrece la posibilidad de comprar entradas en línea las 24 horas del
-                        día, todos los días de la semana, facilitando aún más el acceso a nuestros eventos y espectáculos.
-                    </p>
+                <div class="frame-function__title">
+                    <h2 class="frame-function__title-text">{{ name }}</h2>
                 </div>
             </section>
 
-            <!-- Repite la estructura para cada sección de información adicional -->
+            <div id="container" class="information-container">
+                <h2 class="information-title">Información de Fechas y Horas</h2>
+                <div class="container-frame" id="informacionSeleccionada"></div>
+            </div>
+
+            <div class="horario">
+                <ul class="horarios-txt__list">
+                    <li class='horarios-txt__item'>{{ horarios }}</li>
+                </ul>
+            </div>
+
+
         </main>
+        <!-- ----------------footer------------ -->
 
         <footer class="footer">
             <div class="footer__logo">
@@ -53,7 +82,7 @@
                 <img src="/img/facebook.png" alt="">
             </div>
         </footer>
-    </div>
+    </body>
 </template>
 <style>
 body,
@@ -68,12 +97,14 @@ a {
     text-decoration: none;
 }
 
+/* Estilos generales del cuerpo */
 body {
     font-family: 'Roboto';
     line-height: 1.6;
     overflow: auto;
 }
 
+/* Estilos del encabezado */
 .header {
     display: flex;
     align-items: center;
@@ -97,12 +128,9 @@ body {
 .header__nav {
     flex: 2.2;
     display: flex;
-    /* Para que los elementos se distribuyan en línea */
     text-align: left;
     justify-content: left;
-    /* Para alinear los elementos al final del contenedor */
     gap: 20px;
-    /* Espacio entre los elementos */
 }
 
 .nav__link {
@@ -110,8 +138,7 @@ body {
     text-decoration: none;
 }
 
-/*---------Header--------*/
-
+/* Estilos del bloque principal */
 .main-block {
     display: flex;
     align-items: center;
@@ -128,36 +155,99 @@ body {
     margin-left: 20vh;
 }
 
-.frame-Thorario {
+.show-poster__button {
+    background-color: #1E3367;
+    color: #e9e3e3;
+    border: none;
+    /* padding: 10px 20px; */
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+/* Estilos del marco de la función */
+.frame-function {
     display: flex;
-    flex-direction: column;
-    max-width: 600px;
+    align-items: center;
+    background-color: #1E3367;
+    width: 800px;
+    height: 450px;
+    text-align: center;
+    max-width: 977px;
     margin: auto;
 }
 
-.frame-Thorario_title {
-    position: relative;
-    margin-bottom: 25px;
-    color: #000000;
-    font-size: 20px;
+.frame-function__poster {
+    flex: 1;
 }
 
-.frame-Thorario_title h2::after {
-    content: "";
-    width: 100%;
-    position: absolute;
-    height: 2px;
-    display: block;
-    margin: 0 auto;
-    background-color: #000000;
+.frame-function__poster img {
+    width: 280px;
 }
 
-.frame-Thorario_txt {
-    margin-top: 3vh;
-    margin-bottom: 5vh;
-    font-size: 20px;
+.frame-function__title {
+    flex: 1;
 }
 
+.frame-function__title h2 {
+    font-size: 30px;
+    color: white;
+}
+
+/* Estilos del contenedor */
+#container {
+    text-align: center;
+}
+
+h2 {
+    color: #333;
+}
+
+.container-frame {
+    margin-top: 20px;
+    background-color: #f8f8f8;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    margin-left: 10px;
+}
+
+.horario {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 900px;
+    margin: auto;
+}
+
+.fecha,
+.hora,
+.disponibilidad {
+    flex: 1;
+}
+
+.boton-comprar {
+    background-color: #1E3367;
+    color: white;
+    padding: 8px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.boton-comprar:hover {
+    background-color: #45a049;
+}
 
 /* Estilos del pie de página */
 .footer {
@@ -193,7 +283,6 @@ body {
 .footer__logo img {
     width: 90px;
     border-radius: 70px;
-
 }
 
 .footer__networks img {
@@ -202,6 +291,7 @@ body {
 }
 
 @media screen and (max-width: 1150px) {
+
 
     .header {
         margin-top: 5vh;
@@ -226,6 +316,13 @@ body {
         margin: 0 15px;
     }
 
+    .frame-function {
+        display: flex;
+        flex-direction: column;
+        width: auto;
+        height: 500px;
+    }
+
     .footer {
         display: flex;
         justify-content: center;
@@ -243,6 +340,10 @@ body {
     .footer__networks {
         display: flex;
         flex-direction: column;
+    }
+
+    .main-block h1 {
+        margin-left: 6vh;
     }
 }
 </style>
