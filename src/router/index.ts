@@ -17,7 +17,7 @@ const router = createRouter({
             component: HomeView
         },
         {
-            path: '/Prorgamacion',
+            path: '/Programacion',
             name: 'Programacion',
             component: ProgramacionView
         },

@@ -1,23 +1,9 @@
-<!--
 <template>
-    <div>
-        <header class="header">
-            <div class="header__logo">
-                <a href="/index.html"><img src="/img/logo.png" alt="Logo del Teatro Example" class="logo__image"></a>
-            </div>
-            <nav class="header__nav">
-                <a href="/html/programacion-obra.html" class="nav__link">Programación</a>
-                <a href="/html/informacion.html" class="nav__link">Información</a>
-                <a href="/html/OtrasActividades.html" class="nav__link">Otras Actividades</a>
-                <a href="/html/Contacto.html" class="nav__link">Contacto</a>
-            </nav>
-        </header>
-
+    <body>
         <main>
             <div class="main-block">
                 <h1>Información</h1>
             </div>
-
             <section class="frame-Thorario">
                 <div class="frame-Thorario_title">
                     <h2>Horarios de taquilla</h2>
@@ -34,26 +20,8 @@
                     </p>
                 </div>
             </section>
-
-        </main>
-
-        <footer class="footer">
-            <div class="footer__logo">
-                <img src="/img/logo2.png" alt="">
-            </div>
-            <div class="footer__menu">
-                <a href="/html/programacion-obra.html" class="footer__menu-link">Programación</a>
-                <a href="/html/informacion.html" class="footer__menu-link">Información</a>
-                <a href="/html/OtrasActividades.html" class="footer__menu-link">Otras Actividades</a>
-                <a href="/html/Contacto.html" class="footer__menu-link">Contacto</a>
-            </div>
-            <div class="footer__networks">
-                <img src="/img/tweeter.png" alt="">
-                <img src="/img/instagram.png" alt="">
-                <img src="/img/facebook.png" alt="">
-            </div>
-        </footer>
-    </div>
+        </main> 
+    </body>
 </template>
 <style>
 body,
@@ -246,4 +214,3 @@ body {
     }
 }
 </style>
--->

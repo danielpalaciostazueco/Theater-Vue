@@ -1,13 +1,21 @@
+
+<script setup lang="ts">
+import {RouterLink} from 'vue-router'
+
+</script>
+
 <template>
      <header class="header">
         <div class="header__logo">
-            <a href="/index.html"><img src="../assets/img/logo.png" alt="Logo del Teatro Example" class="logo__image"></a>
+            <RouterLink to="/"><img src="../assets/img/logo.png" alt="Logo del Teatro Example" class="logo__image"></RouterLink>
         </div>
         <nav class="header__nav">
-            <a href="/html/programacion-obra.html" class="nav__link">Programación</a>
-            <a href="/html/informacion.html" class="nav__link">Información</a>
-            <a href="/html/OtrasActividades.html" class="nav__link">Otras Actividades</a>
-            <a href="/html/Contacto.html" class="nav__link">Contacto</a>
+            <nav class="header__nav">
+                <RouterLink to="/Programacion" class="nav__link">Programación</RouterLink>
+                <RouterLink to="/About" class="nav__link">Información</RouterLink>
+                <RouterLink to="/Activities" class="nav__link">Otras Actividades</RouterLink>
+                <RouterLink to="/Contact" class="nav__link">Contacto</RouterLink>
+            </nav>
         </nav>
     </header>
 </template>

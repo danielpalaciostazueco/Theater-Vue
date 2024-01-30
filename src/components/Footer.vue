@@ -1,14 +1,16 @@
-<template>
-    
+<script setup lang="ts">
+import {RouterLink} from 'vue-router'
+</script>
+<template>  
     <footer class="footer">
         <div class="footer__logo">
-            <img src="../assets/img/logo2.png" alt="">
+            <RouterLink to="/"><img src="../assets/img/logo.png" alt="Logo del Teatro Example" class="logo__image"></RouterLink>
         </div>
         <div class="footer__menu">
-            <a href="/html/programacion-obra.html" class="footer__menu-link">Programación</a>
-            <a href="/html/informacion.html" class="footer__menu-link">Información</a>
-            <a href="/html/OtrasActividades.html" class="footer__menu-link">Otras Actividades</a>
-            <a href="/html/Contacto.html" class="footer__menu-link">Contacto</a>
+            <RouterLink to="/Programacion" class="footer__menu-link">Programación</RouterLink>
+            <RouterLink to="/About" class="footer__menu-link">Información</RouterLink>
+            <RouterLink to="Activities" class="footer__menu-link">Otras Actividades</RouterLink>
+            <RouterLink to="/Contact" class="footer__menu-link">Contacto</RouterLink>
         </div>
         <div class="footer__networks">
             <img src="../assets/img/tweeter.png" alt="">

@@ -1,7 +1,6 @@
-<!--
+
 <script setup lang="ts">
 import { defineProps } from 'vue'
-
 // Definición de props con sus tipos respectivos
 const props = defineProps<{
     name?: string;
@@ -10,37 +9,11 @@ const props = defineProps<{
 }>()
 </script>
 <template>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/css/compraEntradas1.css">
-        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
-        <title>Project-Thiater</title>
-    </head>
-
     <body>
-
-
-        <header class="header">
-            <div class="header__logo">
-                <a href="/index.html"><img src="/img/logo.png" alt="Logo del Teatro Example" class="logo__image"></a>
-            </div>
-            <nav class="header__nav">
-
-                <a href="/html/programacion-obra.html" class="nav__link">Programación</a>
-                <a href="/html/informacion.html" class="nav__link">Información</a>
-                <a href="/html/OtrasActividades.html" class="nav__link">Otras Actividades</a>
-                <a href="/html/Contacto.html" class="nav__link">Contacto</a>
-
-            </nav>
-        </header>
-
-
         <main>
             <section class="main-block">
                 <h1 class="main-block__title">Compra de entradas</h1>
             </section>
-
             <section class="frame-function">
                 <div class="frame-function__poster">
                     <img :src="images" alt="Imagen destacada de la obra" />
@@ -49,38 +22,16 @@ const props = defineProps<{
                     <h2 class="frame-function__title-text">{{ name }}</h2>
                 </div>
             </section>
-
             <div id="container" class="information-container">
                 <h2 class="information-title">Información de Fechas y Horas</h2>
                 <div class="container-frame" id="informacionSeleccionada"></div>
             </div>
-
             <div class="horario">
                 <ul class="horarios-txt__list">
                     <li class='horarios-txt__item'>{{ horarios }}</li>
                 </ul>
             </div>
-
-
         </main>
-
-
-        <footer class="footer">
-            <div class="footer__logo">
-                <img src="/img/logo2.png" alt="">
-            </div>
-            <div class="footer__menu">
-                <a href="/html/programacion-obra.html" class="footer__menu-link">Programación</a>
-                <a href="/html/informacion.html" class="footer__menu-link">Información</a>
-                <a href="/html/OtrasActividades.html" class="footer__menu-link">Otras Actividades</a>
-                <a href="/html/Contacto.html" class="footer__menu-link">Contacto</a>
-            </div>
-            <div class="footer__networks">
-                <img src="/img/tweeter.png" alt="">
-                <img src="/img/instagram.png" alt="">
-                <img src="/img/facebook.png" alt="">
-            </div>
-        </footer>
     </body>
 </template>
 <style>
@@ -346,4 +297,3 @@ button {
     }
 }
 </style>
--->
