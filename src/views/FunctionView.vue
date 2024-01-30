@@ -1,3 +1,4 @@
+<!--
 <script setup lang="ts">
 import { defineProps } from 'vue'
 
@@ -46,7 +47,7 @@ const props = defineProps<{
             </div>
             <article>
                 <div class="button-bought" id="boton-comprar">
-                    <!-- Botón de compra o información relacionada -->
+             
                 </div>
             </article>
             <section>
@@ -484,3 +485,4 @@ article {
         font-size: 16px;
     }
 }</style>
+-->

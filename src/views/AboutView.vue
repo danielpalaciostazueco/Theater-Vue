@@ -1,3 +1,4 @@
+<!--
 <template>
     <div>
         <header class="header">
@@ -34,7 +35,6 @@
                 </div>
             </section>
 
-            <!-- Repite la estructura para cada sección de información adicional -->
         </main>
 
         <footer class="footer">
@@ -246,3 +246,4 @@ body {
     }
 }
 </style>
+-->

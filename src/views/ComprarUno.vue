@@ -1,3 +1,4 @@
+<!--
 <script setup lang="ts">
 import { defineProps } from 'vue'
 
@@ -19,7 +20,6 @@ const props = defineProps<{
 
     <body>
 
-        <!-- ----------------header------------ -->
 
         <header class="header">
             <div class="header__logo">
@@ -35,7 +35,6 @@ const props = defineProps<{
             </nav>
         </header>
 
-        <!-- -----------barraa------------- -->
 
         <main>
             <section class="main-block">
@@ -64,7 +63,7 @@ const props = defineProps<{
 
 
         </main>
-        <!-- ----------------footer------------ -->
+
 
         <footer class="footer">
             <div class="footer__logo">
@@ -347,3 +346,4 @@ button {
     }
 }
 </style>
+-->

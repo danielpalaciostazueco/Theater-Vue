@@ -15,15 +15,6 @@ defineProps<{
         <div class="show-poster__details">{{ name }}</div>
     </div>
 </template>
-<script>
-
-defineProps < {
-    name?: string
-    images?: string
-    slug?: string
-} > ()
-
-</script>
 <style>
 .performance-block {
     background-color: #1E3367;

@@ -1,3 +1,4 @@
+<!--
 <script setup lang="ts">
 import { defineProps } from 'vue'
 
@@ -18,7 +19,7 @@ const props = defineProps<{
     </head>
 
     <body>
-        <!-- Header -->
+        
         <header class="header">
             <div class="header__logo">
                 <a href="/index.html"><img src="/img/logo.png" alt="Logo del Teatro Example" class="logo__image"></a>
@@ -31,7 +32,6 @@ const props = defineProps<{
             </nav>
         </header>
 
-        <!-- Main Content -->
         <main>
             <article>
                 <div class="main-block">
@@ -42,7 +42,7 @@ const props = defineProps<{
                         <img :src="images" alt="Imagen destacada de la obra" />
                     </div>
                     <div class="frame-function__title">
-                        <!-- El nombre de la obra se actualiza dinámicamente con JS -->
+                    
                         <h2>{{ name }}</h2>
                     </div>
                 </section>
@@ -53,7 +53,6 @@ const props = defineProps<{
             <button id="buy-button">Comprar</button>
         </main>
 
-        <!-- Footer -->
         <footer class="footer">
             <div class="footer__logo">
                 <img src="/img/logo2.png" alt="">
@@ -381,3 +380,4 @@ section {
     }
 }
 </style>
+-->

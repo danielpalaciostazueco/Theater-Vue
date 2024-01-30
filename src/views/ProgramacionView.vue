@@ -1,3 +1,4 @@
+<!--
 <script setup lang="ts">
 import { defineProps } from 'vue'
 
@@ -20,7 +21,7 @@ const props = defineProps<{
     <body>
         <header class="header">
             <div class="header__logo">
-                <a href="/index.html"><img src="/img/logo.png" alt="Logo del Teatro Example" class="logo__image"></a>
+                <a href="/index.html"><img src="../img/logo.png" alt="Logo del Teatro Example" class="logo__image"></a>
             </div>
             <nav class="header__nav">
                 <a href="/html/programacion-obra.html" class="nav__link">Programación</a>
@@ -38,11 +39,11 @@ const props = defineProps<{
             <section class="poster-container">
                 <div class='show-poster'>
                     <div class='show-poster__image'>
-                        <!-- Uso de la prop 'images' para establecer la fuente de la imagen -->
+                    
                         <img :src="images" alt="Imagen de la obra" />
                     </div>
                     <div class='show-poster__details'>
-                        <!-- Visualización del nombre de la obra a través de la prop 'name' -->
+                  
                         <h3 class='show-poster__details__title'>{{ name }}</h3>
                     </div>
                 </div>
@@ -52,7 +53,7 @@ const props = defineProps<{
 
         <footer class="footer">
             <div class="footer__logo">
-                <img src="/img/logo2.png" alt="Logo del Teatro">
+                <img src="../img/logo2.png" alt="Logo del Teatro">
             </div>
             <div class="footer__menu">
                 <a href="/html/programacion-obra.html" class="footer__menu-link">Programación</a>
@@ -62,8 +63,8 @@ const props = defineProps<{
             </div>
             <div class="footer__networks">
                 <img src="/img/tweeter.png" alt="">
-                <img src="/img/instagram.png" alt="">
-                <img src="/img/facebook.png" alt="">
+                <img src="../img/instagram.png" alt="">
+                <img src="../img/facebook.png" alt="">
             </div>
         </footer>
     </body>
@@ -274,3 +275,4 @@ body {
         margin: 2vh;
     }
 }</style>
+-->
