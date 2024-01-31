@@ -22,7 +22,7 @@ const router = createRouter({
             component: ProgramacionView
         },
         {
-            path: '/Function',
+            path: '/Function/:id',
             name: 'Function',
             component: FunctionView
         },

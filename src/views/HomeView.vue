@@ -210,7 +210,6 @@ const obras = [
         cartel: 'https://ik.imagekit.io/daniel2003/fotos-descripci%C3%B3n-obras-teatro/B-vocal/b-vocal_LG.jpg'
     }
 ]
-
 </script>
 <template>
     <body>
@@ -218,12 +217,10 @@ const obras = [
             <section class="performance-block">
                 <div class="performance-block__info">
                     <h2 class="performance-block__title">Próxima Función</h2>
-                    <RouterLink to="/html/Funciones/RomeoJulieta.html" class="performance-block__button">Comprar Entradas
-                    </RouterLink>
+                    <RouterLink to="/Programacion" class="performance-block__button">Comprar Entradas</RouterLink>
                 </div>
                 <div class="performance-block__image">
-                    <img src="../img/fotos-descripción-obras-teatro/romo-julieta/ROMEO-Y-JULIETA.jpeg"
-                        alt="Función de Teatro" class="image__img" />
+                    <img src="../assets/img/ROMEO-Y-JULIETA.jpeg" alt="Función de Teatro" class="image__img" />
                 </div>
                 <div class="performance-block__name">
                     <h2 class="performance-block__name-title">Romeo y Julieta</h2>
@@ -247,6 +244,7 @@ const obras = [
                         </div>
                         <div class='show-poster__details'>
                             <h3 class='show-poster__details__title'>{{ obra.name }}</h3>
+                            <RouterLink :to="{ path: '/Function/' + obra.slug }" class='show-poster__button'>Comprar Entradas</RouterLink>
                         </div>
                     </div>
                 </section>

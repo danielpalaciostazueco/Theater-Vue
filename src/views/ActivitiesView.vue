@@ -2,7 +2,7 @@
     <body>
         <main>
             <div class="main-block">
-                <h1>Información</h1>
+                <h1>Otras Actividades</h1>
             </div>
 
             <section class="frame-VG">

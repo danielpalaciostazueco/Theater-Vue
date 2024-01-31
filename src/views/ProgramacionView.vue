@@ -11,6 +11,7 @@
                         </div>
                         <div class='show-poster__details'>
                             <h3 class='show-poster__details__title'>{{ obra.name }}</h3>
+                            <RouterLink :to="{ path: '/Function/' + obra.slug }" class='show-poster__button'>Comprar Entradas</RouterLink>
                         </div>
                     </div>
                 </section>
