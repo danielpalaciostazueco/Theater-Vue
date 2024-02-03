@@ -1,6 +1,6 @@
 
 <script setup lang="ts">
-import { defineProps} from 'vue';
+import { defineProps } from 'vue';
 
 
 
@@ -254,7 +254,8 @@ const obra = encontrarSlug(slug);
             </div>
             <article>
                 <div class="button-bought" id="boton-comprar">
-            
+                    <RouterLink :to="{ path: '/ComprarUno/' + obra.slug }" class='show-poster__button'>Comprar e información
+                    </RouterLink>
                 </div>
             </article>
             <section>
@@ -292,6 +293,7 @@ a {
     padding: 0;
     text-decoration: none;
 }
+
 body {
     font-family: 'Roboto';
     line-height: 1.6;
@@ -488,6 +490,7 @@ article {
     list-style-position: inside;
     font-size: 20px;
 }
+
 .imagen-container img {
     max-width: 500px;
 }
@@ -671,4 +674,5 @@ article {
         padding: 10px 20px;
         font-size: 16px;
     }
-}</style>
+}
+</style>

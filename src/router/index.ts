@@ -42,12 +42,12 @@ const router = createRouter({
             component: ActivitiesView
         },
         {
-            path: '/ComprarUno',
+            path: '/ComprarUno/:id',
             name: 'ComprarUno',
             component: ComprarUnoView
         },
         {
-            path: '/ComprarDos',
+            path: '/ComprarDos/:id',
             name: 'ComprarDos',
             component: ComprarDosView
         }    
