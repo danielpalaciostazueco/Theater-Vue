@@ -20,7 +20,7 @@
         </div>
         <article>
           <div class="button-bought" id="boton-comprar">
-            <RouterLink :to="{ path: '/Function/' + obra?.Slug }" class='show-poster__button'>ComprarEntradas</RouterLink>
+            <RouterLink :to="{ path: '/Function/' + obra?.ObraId }" class='show-poster__button'>ComprarEntradas</RouterLink>
           </div>
         </article>
         <section>
@@ -57,7 +57,7 @@
     Imagenes?: string[];
     Actores?: string[];
     Fechas?: string[];
-    Slug?: string;
+    ObraId?: string;
   }
   
   const obra = ref<Obra | null>(null);
