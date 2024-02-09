@@ -2,7 +2,7 @@
     <div>
         <main>
             <div class="main-block">
-                <h1 class="main-block__title">{{ obra?.Nombre }}</h1>
+                <h1 class="main-block__title">{{ obra?.nombre }}</h1>
             </div>
             <section class="horarios" v-if="obra && obra.imagenesArray && obra.imagenesArray.length > 0">
                 <div class="horarios-img">
@@ -11,8 +11,7 @@
                 <div class="horarios-txt">
                     <h2 class="horarios-txt__title">Horarios de la función</h2>
                     <ul class="horarios-txt__list">
-                        <li v-for="horario in obra?.fechasArray" :key="horario" class="horarios-txt__item">{{ horario }}
-                        </li>
+                        <li v-for="horario in obra?.fechasArray" :key="horario" class="horarios-txt__item">{{ horario }}</li>
                     </ul>
                 </div>
             </section>
@@ -21,8 +20,7 @@
             </div>
             <article>
                 <div class="button-bought" id="boton-comprar">
-                    <RouterLink :to="{ path: '/ComprarUno/' + obra?.ObraId }" class='show-poster__button'>ComprarEntradas
-                    </RouterLink>
+                    <RouterLink :to="{ path: '/ComprarUno/' + obra?.obraID }" class='show-poster__button'>Comprar Entradas</RouterLink>
                 </div>
             </article>
             <section>
@@ -31,7 +29,7 @@
                         <h2>Información de la función</h2>
                     </div>
                     <div class="frame-information__txt">
-                        <p>{{ obra?.Descripcion }}</p>
+                        <p>{{ obra?.descripcion }}</p>
                     </div>
                 </div>
                 <div class="frame-repart">
@@ -48,25 +46,25 @@
         </main>
     </div>
 </template>
+
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import type { RouteLocationNormalizedLoaded } from 'vue-router';
 import { useRoute } from 'vue-router';
 
 interface Obra {
-    Nombre?: string;
-    Descripcion?: string;
+    nombre?: string;
+    descripcion?: string;
     imagenesArray?: string[];
     actoresArray?: string[];
     fechasArray?: string[];
-    ObraId?: string;
+    obraID?: string;
 }
 
 const obra = ref<Obra | null>(null);
 
 async function fetchData(idObra: string) {
     try {
-        const response = await fetch(`http://localhost:8001/obras/${idObra}`);
+        const response = await fetch('http://localhost:8001/obras/' + idObra);
         if (response.ok) {
             const data: Obra = await response.json();
             obra.value = data;
@@ -80,12 +78,13 @@ async function fetchData(idObra: string) {
 
 onMounted(() => {
     const route = useRoute();
-    const idObra = route.query.Id as string;
+    const idObra = route.params.Id as string; // Ajusta esto según tu configuración de Vue Router
     if (idObra) {
         fetchData(idObra);
     }
 });
 </script>
+
 <style>
 body,
 h1,

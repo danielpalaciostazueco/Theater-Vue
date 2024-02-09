@@ -2,9 +2,9 @@
 import { ref, onMounted } from 'vue';
 
 interface Obra {
-    Nombre: string;
+    nombre: string;
     imagenesArray: string[];
-    ObraId: string;
+    obraID: string;
 }
 
 const obras = ref<Obra[]>([]);
@@ -49,21 +49,18 @@ onMounted(() => {
                     <h2 class="title-posters_txt">Todas las Obras</h2>
                 </div>
                 <section class="poster-container">
-                    <div v-for="obra in obras" :key="obra.ObraId" class='show-poster'>
-                        <div class='show-poster__image'>
-                            <!-- Asegura proporcionar una ruta válida para las imágenes o gestionarlas dinámicamente -->
-                            <img :src="obra.imagenesArray && obra.imagenesArray.length > 0 ? obra.imagenesArray[0] : 'imagen-predeterminada.jpg'"
-                                alt="Imagen de la obra" />
-                        </div>
-                        <div class='show-poster__details'>
-                            <h3 class='show-poster__details__title'>{{ obra.Nombre }}</h3>
-                            <!-- Asegura que la ruta del RouterLink sea correcta según tu configuración de Vue Router -->
-                            <RouterLink :to="{ name: 'Function', params: { obraId: obra.ObraId } }"
-                                class='show-poster__button'>Comprar
-                                Entradas</RouterLink>
-                        </div>
+                <div v-for="obra in obras" :key="obra.obraID" class='show-poster'>
+                    <div class='show-poster__image'>
+                        <img :src="obra.imagenesArray && obra.imagenesArray.length > 0 ? obra.imagenesArray[0] : 'imagen-predeterminada.jpg'"
+                            alt="Imagen de la obra" />
                     </div>
-                </section>
+                    <div class='show-poster__details'>
+                        <h3 class='show-poster__details__title'>{{ obra.nombre }}</h3>
+                        <RouterLink :to="{ path: '/Function/' + obra.obraID }" class='show-poster__button'>Comprar
+                            Entradas</RouterLink>
+                    </div>
+                </div>
+            </section>
 
             </article>
         </main>

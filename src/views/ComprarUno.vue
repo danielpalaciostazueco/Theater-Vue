@@ -2,7 +2,7 @@
   <div>
     <main>
       <section class="main-block">
-        <h1 class="main-block__title">{{ obra?.Nombre }}</h1>
+        <h1 class="main-block__title">{{ obra?.nombre }}</h1>
       </section>
       <section class="horarios" v-if="obra && obra.imagenesArray && obra.imagenesArray.length > 0">
         <div class="horarios-img">
@@ -13,7 +13,7 @@
           <ul class="horarios-txt__list">
             <li v-for="fecha in obra.fechasArray" :key="fecha" class="horarios-txt__item">
               {{ fecha }}
-              <RouterLink :to="{ name: 'comprarDos', params: { obraId: obra.ObraId, fecha: fecha } }"
+              <RouterLink :to="{ name: 'comprarDos', params: { obraId: obra.ObraID, fecha: fecha } }"
                 class="button-bought__link">Comprar</RouterLink>
             </li>
           </ul>
@@ -25,7 +25,7 @@
             <h2>Información de la función</h2>
           </div>
           <div class="frame-information__txt">
-            <p>{{ obra?.Descripcion }}</p>
+            <p>{{ obra?.descripcion }}</p>
           </div>
         </div>
         <div class="frame-repart">
@@ -48,19 +48,19 @@ import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 interface Obra {
-  Nombre: string;
-  Descripcion: string;
+  nombre: string;
+  descripcion: string;
   imagenesArray: string[];
   actoresArray: string[];
   fechasArray: string[];
-  ObraId: string;
+  ObraID: string;
 }
 
 const obra = ref<Obra | null>(null);
 
 async function fetchObra(idObra: string) {
   try {
-    const response = await fetch(`http://localhost:8001/obras/${idObra}`);
+    const response = await fetch('http://localhost:8001/obras/' + idObra);
     if (!response.ok) throw new Error('Error al obtener los datos de la obra');
     const data = await response.json();
     obra.value = data;
@@ -71,7 +71,7 @@ async function fetchObra(idObra: string) {
 
 onMounted(() => {
   const route = useRoute();
-  const idObra = route.params.obraId as string;
+  const idObra = route.params.Id as string;
   if (idObra) fetchObra(idObra);
 });
 </script>

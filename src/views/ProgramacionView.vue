@@ -5,16 +5,14 @@
                 <h1>Programación</h1>
             </div>
             <section class="poster-container">
-                <div v-for="obra in obras" :key="obra.ObraId" class='show-poster'>
+                <div v-for="obra in obras" :key="obra.obraID" class='show-poster'>
                     <div class='show-poster__image'>
-                        <!-- Asegura proporcionar una ruta válida para las imágenes o gestionarlas dinámicamente -->
                         <img :src="obra.imagenesArray && obra.imagenesArray.length > 0 ? obra.imagenesArray[0] : 'imagen-predeterminada.jpg'"
                             alt="Imagen de la obra" />
                     </div>
                     <div class='show-poster__details'>
-                        <h3 class='show-poster__details__title'>{{ obra.Nombre }}</h3>
-                        <!-- Asegura que la ruta del RouterLink sea correcta según tu configuración de Vue Router -->
-                        <RouterLink :to="{ path: '/Function/' + obra.ObraId }" class='show-poster__button'>Comprar
+                        <h3 class='show-poster__details__title'>{{ obra.nombre }}</h3>
+                        <RouterLink :to="{ path: '/Function/' + obra.obraID }" class='show-poster__button'>Comprar
                             Entradas</RouterLink>
                     </div>
                 </div>
@@ -22,6 +20,7 @@
         </main>
     </body>
 </template>
+
   
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
@@ -29,9 +28,9 @@ import { useRoute } from 'vue-router';
 
 // Define la estructura de los datos de las obras
 interface Obra {
-    Nombre: string;
+    nombre: string;
     imagenesArray: string[];
-    ObraId: string;
+    obraID: string;
 }
 
 // Variable reactiva para almacenar la lista de obras

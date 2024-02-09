@@ -2,14 +2,14 @@
   <div>
     <main>
       <section class="main-block">
-        <h1 class="main-block__title">{{ obra?.Nombre }}</h1>
+        <h1 class="main-block__title">{{ obra?.nombre }}</h1>
       </section>
       <section class="frame-function" v-if="obra && obra.imagenesArray.length > 0">
         <div class="frame-function__poster">
           <img :src="obra.imagenesArray[1]" alt="Imagen destacada de la obra" />
         </div>
         <div class="frame-function__title">
-          <h2>{{ obra.Nombre }}</h2>
+          <h2>{{ obra.nombre }}</h2>
         </div>
       </section>
       <section class="information-section">
@@ -17,7 +17,7 @@
         <ul class="horarios-list">
           <li v-for="fecha in obra?.fechasArray" :key="fecha" class="horarios-item">
             {{ fecha }}
-            <RouterLink :to="{ name: 'comprarEntrada', params: { obraId: obra?.ObraId, fecha: fecha } }"
+            <RouterLink :to="{ name: 'comprarEntrada', params: { obraId: obra?.ObraID, fecha: fecha } }"
               class="button-comprar">Comprar</RouterLink>
           </li>
         </ul>
@@ -25,7 +25,7 @@
       <article>
         <div class="frame-information">
           <h2>Información de la función</h2>
-          <p>{{ obra?.Descripcion }}</p>
+          <p>{{ obra?.descripcion }}</p>
         </div>
         <div class="frame-reparto">
           <h2>Reparto</h2>
@@ -43,21 +43,21 @@ import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 interface Obra {
-  Nombre: string;
-  Descripcion: string;
+  nombre: string;
+  descripcion: string;
   imagenesArray: string[];
   actoresArray: string[];
   fechasArray: string[];
-  ObraId: string;
+  ObraID: string;
 }
 
 const obra = ref<Obra | null>(null);
 
 onMounted(async () => {
   const route = useRoute();
-  const obraId = route.params.obraId as string;
+  const idObra = route.params.Id as string;
   try {
-    const response = await fetch(`http://localhost:8001/obras/${obraId}`);
+    const response = await fetch('http://localhost:8001/obras/' + idObra);
     if (!response.ok) throw new Error('Error al obtener los datos de la obra');
     obra.value = await response.json();
   } catch (error) {
