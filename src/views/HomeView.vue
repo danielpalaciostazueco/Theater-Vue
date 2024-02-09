@@ -2,67 +2,72 @@
 import { ref, onMounted } from 'vue';
 
 interface Obra {
-  Nombre: string;
-  Imagenes: string[];
-  Fechas: string[];
-  ObraId: string;
+    Nombre: string;
+    imagenesArray: string[];
+    ObraId: string;
 }
 
 const obras = ref<Obra[]>([]);
 
 const fetchObras = async () => {
-  try {
-    const response = await fetch('http://localhost:8001/obras');
-    if (!response.ok) {
-      throw new Error('Error al obtener los datos de las obras');
+    try {
+        const response = await fetch('http://localhost:8001/obras');
+        if (!response.ok) {
+            throw new Error('Error al obtener los datos de las obras');
+        }
+        const data = await response.json();
+        obras.value = data;
+    } catch (error) {
+        console.error('Error al obtener los datos de las obras:', error);
     }
-    const data = await response.json();
-    obras.value = data;
-  } catch (error) {
-    console.error('Error al obtener los datos de las obras:', error);
-  }
 };
 
 onMounted(() => {
-  fetchObras();
+    fetchObras();
 });
 </script>
 <template>
-  <body>
-    <main class="main">
-      <section class="performance-block">
-        <div class="performance-block__info">
-          <h2 class="performance-block__title">Próxima Función</h2>
-          <RouterLink to="/Programacion" class="performance-block__button">Comprar Entradas</RouterLink>
-        </div>
-        <div class="performance-block__image">
-          <img src="../assets/img/ROMEO-Y-JULIETA.jpeg" alt="Función de Teatro" class="image__img" />
-        </div>
-        <div class="performance-block__name">
-          <h2 class="performance-block__name-title">Romeo y Julieta</h2>
-          <p class="performance-block__name-text">
-            "Romeo y Julieta" es una obra de teatro escrita por William Shakespeare en el siglo XVI...
-          </p>
-        </div>
-      </section>
-      <article>
-        <div class="title-posters">
-          <h2 class="title-posters_txt">Todas las Obras</h2>
-        </div>
-        <section class="poster-container">
-          <div v-for="obra in obras" :key="obra.ObraId" class='show-poster'>
-            <div class='show-poster__image'>
-              <img :src="obra.Imagenes[0]" alt="Imagen de la obra" />
-            </div>
-            <div class='show-poster__details'>
-              <h3 class='show-poster__details__title'>{{ obra.Nombre }}</h3>
-              <RouterLink :to="{ path: '/Function/' + obra.ObraId}" class='show-poster__button'>Comprar Entradas</RouterLink>
-            </div>
-          </div>
-        </section>
-      </article>
-    </main>
-  </body>
+    <body>
+        <main class="main">
+            <section class="performance-block">
+                <div class="performance-block__info">
+                    <h2 class="performance-block__title">Próxima Función</h2>
+                    <RouterLink to="/Programacion" class="performance-block__button">Comprar Entradas</RouterLink>
+                </div>
+                <div class="performance-block__image">
+                    <img src="../assets/img/ROMEO-Y-JULIETA.jpeg" alt="Función de Teatro" class="image__img" />
+                </div>
+                <div class="performance-block__name">
+                    <h2 class="performance-block__name-title">Romeo y Julieta</h2>
+                    <p class="performance-block__name-text">
+                        "Romeo y Julieta" es una obra de teatro escrita por William Shakespeare en el siglo XVI...
+                    </p>
+                </div>
+            </section>
+            <article>
+                <div class="title-posters">
+                    <h2 class="title-posters_txt">Todas las Obras</h2>
+                </div>
+                <section class="poster-container">
+                    <div v-for="obra in obras" :key="obra.ObraId" class='show-poster'>
+                        <div class='show-poster__image'>
+                            <!-- Asegura proporcionar una ruta válida para las imágenes o gestionarlas dinámicamente -->
+                            <img :src="obra.imagenesArray && obra.imagenesArray.length > 0 ? obra.imagenesArray[0] : 'imagen-predeterminada.jpg'"
+                                alt="Imagen de la obra" />
+                        </div>
+                        <div class='show-poster__details'>
+                            <h3 class='show-poster__details__title'>{{ obra.Nombre }}</h3>
+                            <!-- Asegura que la ruta del RouterLink sea correcta según tu configuración de Vue Router -->
+                            <RouterLink :to="{ name: 'Function', params: { obraId: obra.ObraId } }"
+                                class='show-poster__button'>Comprar
+                                Entradas</RouterLink>
+                        </div>
+                    </div>
+                </section>
+
+            </article>
+        </main>
+    </body>
 </template>
 
 <style>

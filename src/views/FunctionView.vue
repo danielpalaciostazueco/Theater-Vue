@@ -1,89 +1,91 @@
 <template>
     <div>
-      <main>
-        <div class="main-block">
-          <h1 class="main-block__title">{{ obra?.Nombre }}</h1>
-        </div>
-        <section class="horarios" v-if="obra && obra.Imagenes && obra.Imagenes.length > 0">
-          <div class="horarios-img">
-            <img :src="obra.Imagenes[0]" alt="Imagen destacada de la obra" />
-          </div>
-          <div class="horarios-txt">
-            <h2 class="horarios-txt__title">Horarios de la función</h2>
-            <ul class="horarios-txt__list">
-              <li v-for="horario in obra?.Fechas" :key="horario" class="horarios-txt__item">{{ horario }}</li>
-            </ul>
-          </div>
-        </section>
-        <div class="primera-img" v-if="obra && obra.Imagenes && obra.Imagenes.length > 1">
-          <img :src="obra.Imagenes[1]" alt="Imagen destacada de la obra" />
-        </div>
-        <article>
-          <div class="button-bought" id="boton-comprar">
-            <RouterLink :to="{ path: '/Function/' + obra?.ObraId }" class='show-poster__button'>ComprarEntradas</RouterLink>
-          </div>
-        </article>
-        <section>
-          <div class="frame-information">
-            <div class="frame-information__title">
-              <h2>Información de la función</h2>
+        <main>
+            <div class="main-block">
+                <h1 class="main-block__title">{{ obra?.Nombre }}</h1>
             </div>
-            <div class="frame-information__txt">
-              <p>{{ obra?.Descripcion }}</p>
+            <section class="horarios" v-if="obra && obra.imagenesArray && obra.imagenesArray.length > 0">
+                <div class="horarios-img">
+                    <img :src="obra.imagenesArray[0]" alt="Imagen destacada de la obra" />
+                </div>
+                <div class="horarios-txt">
+                    <h2 class="horarios-txt__title">Horarios de la función</h2>
+                    <ul class="horarios-txt__list">
+                        <li v-for="horario in obra?.fechasArray" :key="horario" class="horarios-txt__item">{{ horario }}
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <div class="primera-img" v-if="obra && obra.imagenesArray && obra.imagenesArray.length > 1">
+                <img :src="obra.imagenesArray[1]" alt="Imagen destacada de la obra" />
             </div>
-          </div>
-          <div class="frame-repart">
-            <div class="frame-repart__title">
-              <h2>Reparto</h2>
-            </div>
-            <div class="frame-repart__txt">
-              <ul class="frame-repart__list">
-                <li v-for="actor in obra?.Actores" :key="actor" class="frame-repart__item">{{ actor }}</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-      </main>
+            <article>
+                <div class="button-bought" id="boton-comprar">
+                    <RouterLink :to="{ path: '/ComprarUno/' + obra?.ObraId }" class='show-poster__button'>ComprarEntradas
+                    </RouterLink>
+                </div>
+            </article>
+            <section>
+                <div class="frame-information">
+                    <div class="frame-information__title">
+                        <h2>Información de la función</h2>
+                    </div>
+                    <div class="frame-information__txt">
+                        <p>{{ obra?.Descripcion }}</p>
+                    </div>
+                </div>
+                <div class="frame-repart">
+                    <div class="frame-repart__title">
+                        <h2>Reparto</h2>
+                    </div>
+                    <div class="frame-repart__txt">
+                        <ul class="frame-repart__list">
+                            <li v-for="actor in obra?.actoresArray" :key="actor" class="frame-repart__item">{{ actor }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
-  </template>
-  <script setup lang="ts">
-  import { ref, onMounted } from 'vue';
-  import type { RouteLocationNormalizedLoaded } from 'vue-router';
-  import { useRoute } from 'vue-router';
-  
-  interface Obra {
+</template>
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import type { RouteLocationNormalizedLoaded } from 'vue-router';
+import { useRoute } from 'vue-router';
+
+interface Obra {
     Nombre?: string;
     Descripcion?: string;
-    Imagenes?: string[];
-    Actores?: string[];
-    Fechas?: string[];
+    imagenesArray?: string[];
+    actoresArray?: string[];
+    fechasArray?: string[];
     ObraId?: string;
-  }
-  
-  const obra = ref<Obra | null>(null);
-  
-  async function fetchData(idObra: string) {
+}
+
+const obra = ref<Obra | null>(null);
+
+async function fetchData(idObra: string) {
     try {
-      const response = await fetch(`http://localhost:8001/obras/${idObra}`);
-      if (response.ok) {
-        const data: Obra = await response.json();
-        obra.value = data;
-      } else {
-        console.error('Error al obtener los datos de la obra');
-      }
+        const response = await fetch(`http://localhost:8001/obras/${idObra}`);
+        if (response.ok) {
+            const data: Obra = await response.json();
+            obra.value = data;
+        } else {
+            console.error('Error al obtener los datos de la obra');
+        }
     } catch (error) {
-      console.error('Error en la solicitud fetch:', error);
+        console.error('Error en la solicitud fetch:', error);
     }
-  }
-  
-  onMounted(() => {
+}
+
+onMounted(() => {
     const route = useRoute();
     const idObra = route.query.Id as string;
     if (idObra) {
-      fetchData(idObra);
+        fetchData(idObra);
     }
-  });
-  </script>
+});
+</script>
 <style>
 body,
 h1,

@@ -1,64 +1,64 @@
 <template>
     <body>
-      <main class="main">
-        <div class="main-block">
-          <h1>Programación</h1>
-        </div>
-        <section class="poster-container">
-          <div v-for="obra in obras" :key="obra.ObraId" class='show-poster'>
-            <div class='show-poster__image'>
-              <!-- Asegura proporcionar una ruta válida para las imágenes o gestionarlas dinámicamente -->
-              <img :src="obra.Imagenes[0]" alt="Imagen de la obra" />
+        <main class="main">
+            <div class="main-block">
+                <h1>Programación</h1>
             </div>
-            <div class='show-poster__details'>
-              <h3 class='show-poster__details__title'>{{ obra.Nombre }}</h3>
-              <!-- Asegura que la ruta del RouterLink sea correcta según tu configuración de Vue Router -->
-              <RouterLink :to="{ path: '/Function/' + obra.ObraId }" class='show-poster__button'>Comprar Entradas</RouterLink>
-            </div>
-          </div>
-        </section>
-      </main>
+            <section class="poster-container">
+                <div v-for="obra in obras" :key="obra.ObraId" class='show-poster'>
+                    <div class='show-poster__image'>
+                        <!-- Asegura proporcionar una ruta válida para las imágenes o gestionarlas dinámicamente -->
+                        <img :src="obra.imagenesArray && obra.imagenesArray.length > 0 ? obra.imagenesArray[0] : 'imagen-predeterminada.jpg'"
+                            alt="Imagen de la obra" />
+                    </div>
+                    <div class='show-poster__details'>
+                        <h3 class='show-poster__details__title'>{{ obra.Nombre }}</h3>
+                        <!-- Asegura que la ruta del RouterLink sea correcta según tu configuración de Vue Router -->
+                        <RouterLink :to="{ path: '/Function/' + obra.ObraId }" class='show-poster__button'>Comprar
+                            Entradas</RouterLink>
+                    </div>
+                </div>
+            </section>
+        </main>
     </body>
-  </template>
+</template>
   
-  <script setup lang="ts">
-  import { ref, onMounted } from 'vue';
-  import { useRoute } from 'vue-router';
-  
-  // Define la estructura de los datos de las obras
-  interface Obra {
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+
+// Define la estructura de los datos de las obras
+interface Obra {
     Nombre: string;
-    Imagenes: string[];
-    Fechas: string[];
+    imagenesArray: string[];
     ObraId: string;
-  }
-  
-  // Variable reactiva para almacenar la lista de obras
-  const obras = ref<Obra[]>([]);
-  
-  // Función para obtener las obras desde el backend
-  const fetchObras = async () => {
+}
+
+// Variable reactiva para almacenar la lista de obras
+const obras = ref<Obra[]>([]);
+
+// Función para obtener las obras desde el backend
+const fetchObras = async () => {
     try {
-      const response = await fetch('http://localhost:8001/obras');
-      if (!response.ok) {
-        throw new Error('Error al obtener los datos de las obras');
-      }
-      const data = await response.json();
-      obras.value = data;
+        const response = await fetch('http://localhost:8001/obras');
+        if (!response.ok) {
+            throw new Error('Error al obtener los datos de las obras');
+        }
+        const data = await response.json();
+        obras.value = data;
     } catch (error) {
-      console.error('Error al obtener los datos de las obras:', error);
+        console.error('Error al obtener los datos de las obras:', error);
     }
-  };
-  
-  // Llamada a la función fetchObras cuando el componente se monta
-  onMounted(() => {
+};
+
+// Llamada a la función fetchObras cuando el componente se monta
+onMounted(() => {
     fetchObras();
-  });
-  </script>
+});
+</script>
 
 
 <style>
-
 body,
 h1,
 h2,
@@ -262,4 +262,5 @@ body {
         align-items: center;
         margin: 2vh;
     }
-}</style>
+}
+</style>
