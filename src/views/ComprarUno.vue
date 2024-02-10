@@ -1,48 +1,33 @@
+
 <template>
-  <div>
-    <main>
-      <section class="main-block">
-        <h1 class="main-block__title">{{ obra?.nombre }}</h1>
-      </section>
-      <section class="horarios" v-if="obra && obra.imagenesArray && obra.imagenesArray.length > 0">
-        <div class="horarios-img">
-          <img :src="obra.imagenesArray[1]" alt="Imagen destacada de la obra" />
-        </div>
-        <div class="horarios-txt">
-          <h2 class="horarios-txt__title">Información de Fechas y Horas</h2>
-          <ul class="horarios-txt__list">
-            <li v-for="fecha in obra.fechasArray" :key="fecha" class="horarios-txt__item">
-              {{ fecha }}
-              <RouterLink :to="{ name: 'comprarDos', params: { obraId: obra.ObraID, fecha: fecha } }"
-                class="button-bought__link">Comprar</RouterLink>
-            </li>
-          </ul>
-        </div>
-      </section>
-      <article>
-        <div class="frame-information">
-          <div class="frame-information__title">
-            <h2>Información de la función</h2>
-          </div>
-          <div class="frame-information__txt">
-            <p>{{ obra?.descripcion }}</p>
-          </div>
-        </div>
-        <div class="frame-repart">
-          <div class="frame-repart__title">
-            <h2>Reparto</h2>
-          </div>
-          <div class="frame-repart__txt">
-            <ul class="frame-repart__list">
-              <li v-for="actor in obra?.actoresArray" :key="actor" class="frame-repart__item">{{ actor }}</li>
-            </ul>
-          </div>
-        </div>
-      </article>
-    </main>
-  </div>
+  <main>
+    <section class="main-block">
+      <h1 class="main-block__title">Compra de entradas</h1>
+    </section>
+
+    <section class="frame-function" v-if="obra">
+      <div class="frame-function__poster">
+        <img :src="obra.imagenesArray[0]" alt="Imagen de la obra" v-if="obra.imagenesArray.length > 0" />
+      </div>
+      <div class="frame-function__title">
+        <h2 class="frame-function__title-text">{{ obra.nombre }}</h2>
+      </div>
+    </section>
+
+    <div id="container" class="information-container">
+      <h2 class="information-title">Información de Fechas y Horas</h2>
+      <div class="container-frame">
+        <ul class="horarios-txt__list">
+          <li v-for="fecha in obra?.fechasArray" :key="fecha" class='horarios-txt__item'>
+            {{ fecha }}
+            <RouterLink :to="{ path: '/comprarDos/' + obra?.obraID }" class="show-poster__button">Comprar</RouterLink>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </main>
 </template>
-  
+
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
@@ -53,14 +38,14 @@ interface Obra {
   imagenesArray: string[];
   actoresArray: string[];
   fechasArray: string[];
-  ObraID: string;
+  obraID: string;
 }
 
 const obra = ref<Obra | null>(null);
 
 async function fetchObra(idObra: string) {
   try {
-    const response = await fetch('http://localhost:8001/obras/' + idObra);
+    const response = await fetch(`http://localhost:8001/obras/${idObra}`);
     if (!response.ok) throw new Error('Error al obtener los datos de la obra');
     const data = await response.json();
     obra.value = data;
@@ -75,6 +60,7 @@ onMounted(() => {
   if (idObra) fetchObra(idObra);
 });
 </script>
+
 <style>
 body,
 h1,

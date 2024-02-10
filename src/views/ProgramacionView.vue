@@ -68,7 +68,6 @@ a {
     margin: 0;
     padding: 0;
     text-decoration: none;
-    color: black;
 }
 
 body {
@@ -77,189 +76,175 @@ body {
     overflow: auto;
 }
 
-/* Estilos de Cabecera */
-.header {
-    display: flex;
-    align-items: center;
-    background-color: #ffffff;
-    color: #000000;
-    height: 23vh;
-    max-width: 1000px;
-    margin: auto;
-}
-
-.header__logo {
-    flex: 1;
-    text-align: center;
-}
-
-.logo__image {
-    max-width: 140px;
-    height: auto;
-}
-
-.header__nav {
-    flex: 2.2;
-    display: flex;
-    justify-content: left;
-    gap: 20px;
-}
-
-.nav__link {
-    color: #000000;
-    text-decoration: none;
-}
-
-/* Estilos del Bloque Principal */
-.main-block {
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    width: 100%;
+.performance-block {
     background-color: #1E3367;
-    height: 13vh;
+    display: flex;
+    align-items: center;
+    min-height: 60vh;
+}
+
+.performance-block__info {
+    flex: 0.7;
+    text-align: center;
     margin-bottom: 10vh;
 }
 
-.main-block h1 {
-    color: white;
-    font-size: xx-large;
-    margin-left: 20vh;
+.performance-block__title {
+    color: #ffffff;
+    margin-bottom: 5vh;
+    font-size: xxx-large;
 }
 
-/* Estilos de las Tarjetas de Programación */
+.performance-block__button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: x-large;
+}
+
+.performance-block__image {
+    flex: 0.7;
+    text-align: center;
+}
+
+.performance-block__image img {
+    width: 350px;
+}
+
+.performance-block__name {
+    flex: 1;
+    text-align: left;
+    align-self: start;
+    margin-top: 10vh;
+}
+
+.performance-block__name-title {
+    font-size: xx-large;
+    color: white;
+    margin-bottom: 5vh;
+}
+
+.performance-block__name-text {
+    color: white;
+    text-align: center;
+}
+
+.title-posters {
+    display: flex;
+    justify-content: center;
+    margin: 7vh;
+}
+
+.title-posers_txt {
+    font-size: xx-large;
+}
+
 .poster-container {
     display: flex;
     justify-content: space-evenly;
-    flex-wrap: wrap;
     background-color: white;
     padding: 20px;
     margin: 20px;
-    gap: 20px;
 }
 
 .show-poster {
     text-align: center;
     background-color: #1E3367;
     padding: 20px;
-    width: 300px;
-    height: auto;
+    width: 264px;
+    /* Ajusta el ancho de la tarjeta */
+    border: #ffffff 2px solid;
+    box-sizing: border-box;
+    /* Incluye el borde en el tamaño total */
+}
+
+.show-poster__image {
+    margin-bottom: 10px;
 }
 
 .show-poster__image img {
     width: 100%;
-    /* Ajusta el ancho de la imagen al de su contenedor */
-    height: 250px;
-    /* Altura fija para mantener consistencia */
-    object-fit: cover;
-    /* Asegura que la imagen cubra el espacio asignado */
+    height: 20vh;
+}
+
+.poster__img {
+    height: 300px;
+    /* Ajusta la altura de la imagen */
+    width: 100%;
+    /* Haz que la imagen ocupe el ancho completo de la tarjeta */
 }
 
 .show-poster__details {
     color: white;
 }
 
+.show-poster__title {
+    margin-bottom: 10px;
+}
+
 .show-poster__button {
     padding: 10px 20px;
     background-color: #fff;
-    color: black;
+    color: #1E3367;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 
-/* Estilos para Botones y Pie de Página */
-.button-seeMore {
-    background-color: #1E3367;
-    border-radius: 32px;
-    display: flex;
-    width: 32vh;
-    height: 8vh;
-    margin: 10vh;
-    justify-content: center;
-    align-items: center;
-}
 
-.button-seeMore_txt {
-    color: white;
-    font-size: x-large;
-}
 
-.footer {
-    margin-top: 10vh;
-    display: flex;
-    align-items: center;
-    background-color: #1E3367;
-    text-align: center;
-    width: 100%;
-    height: 25vh;
-}
-
-.footer__logo {
-    flex: 0.7;
-    text-align: right;
-}
-
-.footer__menu {
-    flex: 1;
-    text-align: center;
-}
-
-.footer__menu a {
-    color: white;
-    margin-right: 2vh;
-}
-
-.footer__networks {
-    flex: 0.7;
-    text-align: left;
-}
-
-.footer__logo img {
-    width: 90px;
-    border-radius: 70px;
-}
-
-.footer__networks img {
-    width: 40px;
-    margin-right: 4vh;
-}
-
-/* Estilos para Pantallas Pequeñas */
 @media screen and (max-width: 1150px) {
-    .header {
-        margin-top: 5vh;
-        display: flex;
-        height: auto;
-        text-align: center;
-        margin-bottom: 5vh;
-    }
-
-    .header__logo {
-        margin-left: 5vh;
-    }
-
-    .header__nav {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        margin-top: 10px;
-    }
-
-    main {
+    .performance-block {
         display: flex;
         flex-direction: column;
-        align-items: center;
+    }
+
+    .performance-block__name {
+        display: none;
     }
 
     .main-block h1 {
         margin-left: 6vh;
     }
 
+    article {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     .title-posters {
         flex-direction: column;
         align-items: center;
         margin: 2vh;
+    }
+
+    .title-posers_txt {
+        font-size: x-large;
+    }
+
+    .poster-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .show-poster {
+        margin-bottom: 7vh;
+    }
+
+    .poster-container img {
+        margin-bottom: 10px;
+    }
+
+    .show-poster {
+        padding: 15px;
+    }
+
+    .show-poster__image {
+        margin-bottom: 10px;
     }
 }
 </style>

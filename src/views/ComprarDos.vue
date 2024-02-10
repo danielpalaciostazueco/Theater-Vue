@@ -1,42 +1,30 @@
 <template>
-  <div>
-    <main>
-      <section class="main-block">
-        <h1 class="main-block__title">{{ obra?.nombre }}</h1>
-      </section>
-      <section class="frame-function" v-if="obra && obra.imagenesArray.length > 0">
+  <main>
+    <article>
+      <div class="main-block">
+        <h1>Compra de entradas</h1>
+      </div>
+      <section class="frame-function" v-if="obra">
         <div class="frame-function__poster">
-          <img :src="obra.imagenesArray[1]" alt="Imagen destacada de la obra" />
+          <!-- Se muestra la primera imagen de la obra si existe -->
+          <img :src=obra.imagenesArray[0] alt="Imagen de la obra">
         </div>
         <div class="frame-function__title">
+          <!-- Se muestra el nombre de la obra -->
           <h2>{{ obra.nombre }}</h2>
         </div>
       </section>
-      <section class="information-section">
-        <h2 class="information-title">Información de Fechas y Horas</h2>
-        <ul class="horarios-list">
-          <li v-for="fecha in obra?.fechasArray" :key="fecha" class="horarios-item">
-            {{ fecha }}
-            <RouterLink :to="{ name: 'comprarEntrada', params: { obraId: obra?.ObraID, fecha: fecha } }"
-              class="button-comprar">Comprar</RouterLink>
-          </li>
-        </ul>
-      </section>
-      <article>
-        <div class="frame-information">
-          <h2>Información de la función</h2>
-          <p>{{ obra?.descripcion }}</p>
-        </div>
-        <div class="frame-reparto">
-          <h2>Reparto</h2>
-          <ul>
-            <li v-for="actor in obra?.actoresArray" :key="actor">{{ actor }}</li>
-          </ul>
-        </div>
-      </article>
-    </main>
-  </div>
+    </article>
+
+    <!-- Aquí añadiremos la sección de selección de asientos -->
+    <div id="cinema-seats" class="cinema-seats">
+      <!-- Esta sección puede ser dinámica basada en los datos de la obra o estática para el demo -->
+    </div>
+    <p id="total-price">Precio Total: 0 €</p>
+    <button id="buy-button">Comprar</button>
+  </main>
 </template>
+
   
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';

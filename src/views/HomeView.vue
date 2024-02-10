@@ -49,18 +49,18 @@ onMounted(() => {
                     <h2 class="title-posters_txt">Todas las Obras</h2>
                 </div>
                 <section class="poster-container">
-                <div v-for="obra in obras" :key="obra.obraID" class='show-poster'>
-                    <div class='show-poster__image'>
-                        <img :src="obra.imagenesArray && obra.imagenesArray.length > 0 ? obra.imagenesArray[0] : 'imagen-predeterminada.jpg'"
-                            alt="Imagen de la obra" />
+                    <div v-for="obra in obras" :key="obra.obraID" class='show-poster'>
+                        <div class='show-poster__image'>
+                            <img :src="obra.imagenesArray && obra.imagenesArray.length > 0 ? obra.imagenesArray[0] : 'imagen-predeterminada.jpg'"
+                                alt="Imagen de la obra" />
+                        </div>
+                        <div class='show-poster__details'>
+                            <h3 class='show-poster__details__title'>{{ obra.nombre }}</h3>
+                            <RouterLink :to="{ path: '/Function/' + obra.obraID }" class='show-poster__button'>Comprar
+                                Entradas</RouterLink>
+                        </div>
                     </div>
-                    <div class='show-poster__details'>
-                        <h3 class='show-poster__details__title'>{{ obra.nombre }}</h3>
-                        <RouterLink :to="{ path: '/Function/' + obra.obraID }" class='show-poster__button'>Comprar
-                            Entradas</RouterLink>
-                    </div>
-                </div>
-            </section>
+                </section>
 
             </article>
         </main>
@@ -86,39 +86,6 @@ body {
     overflow: auto;
 }
 
-.header {
-    display: flex;
-    align-items: center;
-    background-color: #ffffff;
-    color: #000000;
-    height: 23vh;
-    max-width: 1000px;
-    margin: auto;
-}
-
-.header__logo {
-    flex: 1;
-    text-align: center;
-}
-
-.logo__image {
-    max-width: 140px;
-    height: auto;
-}
-
-.header__nav {
-    flex: 2.2;
-    display: flex;
-    text-align: left;
-    justify-content: left;
-    gap: 20px;
-}
-
-.nav__link {
-    color: #000000;
-    text-decoration: none;
-}
-
 .performance-block {
     background-color: #1E3367;
     display: flex;
@@ -142,7 +109,7 @@ body {
     display: inline-block;
     padding: 10px 20px;
     background-color: #ffffff;
-    color: #000000;
+    color: #ffffff;
     text-decoration: none;
     border-radius: 8px;
     font-size: x-large;
@@ -185,152 +152,61 @@ body {
     font-size: xx-large;
 }
 
-/* Ajusta el contenedor principal para que tenga un wrap y un margen negativo para compensar los márgenes de los elementos hijos */
 .poster-container {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-evenly;
-    align-items: stretch;
     background-color: white;
     padding: 20px;
-    margin: -10px;
-    /* Compensa el margen de los elementos hijos */
+    margin: 20px;
 }
 
-/* Ajusta los estilos de cada tarjeta para que tengan un ancho flexible y un margen estable */
 .show-poster {
     text-align: center;
     background-color: #1E3367;
     padding: 20px;
-    margin: 10px;
-    /* Asegura que el margen sea la mitad del negativo en .poster-container */
-    width: calc(33.333% - 40px);
-    /* Asegura que tres elementos quepan en una fila teniendo en cuenta los márgenes */
-    border: #000000 2px solid;
+    width: 264px;
+    /* Ajusta el ancho de la tarjeta */
+    border: #ffffff 2px solid;
     box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    /* Incluye el borde en el tamaño total */
 }
 
-/* Asegúrate de que las imágenes se escalen correctamente dentro de las tarjetas */
-.show-poster__image img {
-    width: 100%;
-    height: auto;
+.show-poster__image {
     margin-bottom: 10px;
 }
 
-/* Estilos para los detalles de las tarjetas */
+.show-poster__image img {
+    width: 100%;
+    height: 20vh;
+}
+
+.poster__img {
+    height: 300px;
+    /* Ajusta la altura de la imagen */
+    width: 100%;
+    /* Haz que la imagen ocupe el ancho completo de la tarjeta */
+}
+
 .show-poster__details {
     color: white;
 }
 
-/* Estilos para el botón dentro de cada tarjeta */
+.show-poster__title {
+    margin-bottom: 10px;
+}
+
 .show-poster__button {
     padding: 10px 20px;
     background-color: #fff;
-    color: black;
+    color: #1E3367;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 
-.button-frame {
-    display: flex;
-    justify-content: left;
-    margin-top: 10vh;
-}
-
-.button-seeMore {
-    background-color: #1E3367;
-    border-radius: 32px;
-    display: flex;
-    width: 32vh;
-    height: 8vh;
-    margin-left: 30vh;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 7vh;
-}
-
-.button-seeMore_txt {
-    color: white;
-    font-size: x-large;
-}
-
-.footer {
-    margin-top: 13vh;
-    display: flex;
-    align-items: center;
-    background-color: #1E3367;
-    text-align: center;
-    width: 100%;
-    height: 25vh;
-}
-
-.footer {
-    margin-top: 10vh;
-    display: flex;
-    align-items: center;
-    background-color: #1E3367;
-    text-align: center;
-    width: 100%;
-    height: 25vh;
-}
-
-.footer__logo {
-    flex: 0.7;
-    text-align: right;
-}
-
-.footer__menu {
-    flex: 1;
-    text-align: center;
-}
-
-.footer__menu a {
-    color: white;
-    margin-right: 2vh;
-}
-
-.footer__networks {
-    flex: 0.7;
-    text-align: left;
-}
-
-.footer__logo img {
-    width: 90px;
-    border-radius: 70px;
-}
-
-.footer__networks img {
-    width: 40px;
-    margin-right: 4vh;
-}
 
 
 @media screen and (max-width: 1150px) {
-
-
-    .header {
-        margin-top: 5vh;
-        display: flex;
-        height: auto;
-        text-align: center;
-        margin-bottom: 5vh;
-    }
-
-    .header__logo {
-        margin-left: 5vh;
-    }
-
-    .header__nav {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        margin-top: 10px;
-    }
-
     .performance-block {
         display: flex;
         flex-direction: column;
@@ -360,85 +236,25 @@ body {
         font-size: x-large;
     }
 
-    /* Ajusta el contenedor principal para que tenga un wrap y un margen negativo para compensar los márgenes de los elementos hijos */
     .poster-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-        align-items: stretch;
-        background-color: white;
-        padding: 20px;
-        margin: -10px;
-        /* Compensa el margen de los elementos hijos */
-    }
-
-    /* Ajusta los estilos de cada tarjeta para que tengan un ancho flexible y un margen estable */
-    .show-poster {
-        text-align: center;
-        background-color: #1E3367;
-        padding: 20px;
-        margin: 10px;
-        /* Asegura que el margen sea la mitad del negativo en .poster-container */
-        width: calc(33.333% - 40px);
-        /* Asegura que tres elementos quepan en una fila teniendo en cuenta los márgenes */
-        border: #000000 2px solid;
-        box-sizing: border-box;
-        display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        align-items: center;
     }
 
-    /* Asegúrate de que las imágenes se escalen correctamente dentro de las tarjetas */
-    .show-poster__image img {
-        width: 100%;
-        height: auto;
+    .show-poster {
+        margin-bottom: 7vh;
+    }
+
+    .poster-container img {
         margin-bottom: 10px;
     }
 
-    /* Estilos para los detalles de las tarjetas */
-    .show-poster__details {
-        color: white;
+    .show-poster {
+        padding: 15px;
     }
 
-    /* Estilos para el botón dentro de cada tarjeta */
-    .show-poster__button {
-        padding: 10px 20px;
-        background-color: #fff;
-        color: black;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .button-frame {
-        width: 70%;
-        height: auto;
-        margin: 5vh;
-    }
-
-    .button-seeMore {
-        margin-left: 0;
-    }
-
-    .footer {
-        display: flex;
-        justify-content: center;
-    }
-
-    .footer__logo {
-        text-align: center;
-    }
-
-    .footer__menu {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .footer__networks {
-        display: flex;
-        flex-direction: column;
+    .show-poster__image {
+        margin-bottom: 10px;
     }
 }
-
-/* media queries */
 </style>
