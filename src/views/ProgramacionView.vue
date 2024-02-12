@@ -155,10 +155,10 @@ body {
     background-color: #1E3367;
     padding: 20px;
     width: 264px;
-    /* Ajusta el ancho de la tarjeta */
+
     border: #ffffff 2px solid;
     box-sizing: border-box;
-    /* Incluye el borde en el tamaño total */
+
 }
 
 .show-poster__image {
@@ -172,13 +172,14 @@ body {
 
 .poster__img {
     height: 300px;
-    /* Ajusta la altura de la imagen */
+
     width: 100%;
-    /* Haz que la imagen ocupe el ancho completo de la tarjeta */
+
 }
 
 .show-poster__details {
     color: white;
+    font-size: smaller;
 }
 
 .show-poster__title {
@@ -186,12 +187,12 @@ body {
 }
 
 .show-poster__button {
-    padding: 10px 20px;
-    background-color: #fff;
-    color: #1E3367;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    padding: 10px 20px !important;
+    background-color: #fff !important;
+    color: #1E3367 !important;
+    border: none !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
 }
 
 

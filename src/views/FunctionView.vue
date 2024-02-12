@@ -11,7 +11,8 @@
                 <div class="horarios-txt">
                     <h2 class="horarios-txt__title">Horarios de la función</h2>
                     <ul class="horarios-txt__list">
-                        <li v-for="horario in obra?.fechasArray" :key="horario" class="horarios-txt__item">{{ horario }}</li>
+                        <li v-for="horario in obra?.fechasArray" :key="horario" class="horarios-txt__item">{{ horario }}
+                        </li>
                     </ul>
                 </div>
             </section>
@@ -20,7 +21,8 @@
             </div>
             <article>
                 <div class="button-bought" id="boton-comprar">
-                    <RouterLink :to="{ path: '/ComprarUno/' + obra?.obraID }" class='show-poster__button'>Comprar Entradas</RouterLink>
+                    <RouterLink :to="{ path: '/ComprarUno/' + obra?.obraID }" class='show-poster__button'>Comprar Entradas
+                    </RouterLink>
                 </div>
             </article>
             <section>
@@ -241,11 +243,11 @@ article {
 }
 
 .show-poster__button {
-    background-color: #1E3367;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
+    background-color: #1E3367 !important;
+    color: #fff !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    font-size: 16px !important;
 }
 
 .frame-information {

@@ -133,12 +133,12 @@ body {
 }
 
 .show-poster__button {
-  background-color: #1E3367;
-  color: #e9e3e3;
-  border: none;
+  background-color: #1E3367 !important;
+  color: #e9e3e3 !important;
+  border: none !important;
   /* padding: 10px 20px; */
-  font-size: 16px;
-  margin-left: 10px;
+  font-size: 16px !important;
+  margin-left: 10px !important;
 }
 
 /* Estilos del marco de la función */

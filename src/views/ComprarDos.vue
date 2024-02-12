@@ -1,6 +1,6 @@
 <template>
   <main>
-    <article>
+    <article class="article-block">
       <div class="main-block">
         <h1>Compra de entradas</h1>
       </div>
@@ -68,49 +68,13 @@ a {
 }
 
 
-
-/* Estilos del encabezado */
-.header {
-  display: flex;
-  align-items: center;
-  background-color: #ffffff;
-  color: #000000;
-  height: 23vh;
-  max-width: 1000px;
-  margin: auto;
-}
-
-.header__logo {
-  flex: 1;
-  text-align: center;
-}
-
-.logo__image {
-  max-width: 140px;
-  height: auto;
-}
-
-.header__nav {
-  flex: 2.2;
-  display: flex;
-  text-align: left;
-  justify-content: left;
-  gap: 20px;
-}
-
-.nav__link {
-  color: #000000;
-  text-decoration: none;
-}
-
-.article-information {
+.article-block {
   display: flex;
   justify-content: right;
   margin-top: 10vh;
   flex-direction: column;
 }
 
-/* Estilos del bloque principal */
 .main-block {
   display: flex;
   align-items: center;

@@ -40,14 +40,15 @@ onMounted(() => {
                 <div class="performance-block__name">
                     <h2 class="performance-block__name-title">Romeo y Julieta</h2>
                     <p class="performance-block__name-text">
-                        "Romeo y Julieta" es una obra de teatro escrita por William Shakespeare en el siglo XVI...
+                        "Romeo y Julieta" es una obra de teatro escrita por William Shakespeare en el siglo XVI. La trama
+                        sigue a dos jóvenes amantes, Romeo y Julieta, cuyas familias rivales generan conflictos. A pesar de
+                        las adversidades, se enamoran y casan en secreto, pero una serie de malentendidos y tragedias lleva
+                        a un desenlace fatal. La obra explora temas como el amor, la rivalidad familiar y el destino,
+                        convirtiéndose en una de las historias de amor más conocidas de la literatura.
                     </p>
                 </div>
             </section>
             <article>
-                <div class="title-posters">
-                    <h2 class="title-posters_txt">Todas las Obras</h2>
-                </div>
                 <section class="poster-container">
                     <div v-for="obra in obras" :key="obra.obraID" class='show-poster'>
                         <div class='show-poster__image'>
@@ -66,7 +67,6 @@ onMounted(() => {
         </main>
     </body>
 </template>
-
 <style>
 body,
 h1,
@@ -100,7 +100,7 @@ body {
 }
 
 .performance-block__title {
-    color: #ffffff;
+    color: #000000;
     margin-bottom: 5vh;
     font-size: xxx-large;
 }
@@ -108,8 +108,8 @@ body {
 .performance-block__button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #ffffff;
-    color: #ffffff;
+    background-color: #fffefe !important;
+    color: #000000 !important;
     text-decoration: none;
     border-radius: 8px;
     font-size: x-large;
@@ -165,10 +165,10 @@ body {
     background-color: #1E3367;
     padding: 20px;
     width: 264px;
-    /* Ajusta el ancho de la tarjeta */
+
     border: #ffffff 2px solid;
     box-sizing: border-box;
-    /* Incluye el borde en el tamaño total */
+
 }
 
 .show-poster__image {
@@ -182,13 +182,13 @@ body {
 
 .poster__img {
     height: 300px;
-    /* Ajusta la altura de la imagen */
+
     width: 100%;
-    /* Haz que la imagen ocupe el ancho completo de la tarjeta */
 }
 
 .show-poster__details {
     color: white;
+    font-size: smaller;
 }
 
 .show-poster__title {
@@ -196,12 +196,12 @@ body {
 }
 
 .show-poster__button {
-    padding: 10px 20px;
-    background-color: #fff;
-    color: #1E3367;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    padding: 10px 20px !important;
+    background-color: #fff !important;
+    color: #1E3367 !important;
+    border: none !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
 }
 
 
