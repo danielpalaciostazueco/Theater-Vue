@@ -21,7 +21,7 @@
       <!-- Esta sección puede ser dinámica basada en los datos de la obra o estática para el demo -->
     </div>
     <p id="total-price">Precio Total: 0 €</p>
-    <button id="buy-button">Comprar</button>
+    <button id="buy-button" @click="postEntradas">Comprar</button>
   </main>
 </template>
 
@@ -52,6 +52,38 @@ onMounted(async () => {
     console.error('Error al obtener los datos de la obra:', error);
   }
 });
+
+
+const postEntradas = async () => {
+  if (!obra.value) {
+    alert('No se ha seleccionado ninguna obra.');
+    return;
+  }
+  const route = useRoute();
+  const fecha = route.params.idFecha as string;
+  const url = `http://localhost:8001/Asientos/${fecha}`;
+  const data = {
+    asientos: [],
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) throw new Error('Error al realizar la compra');
+    const responseData = await response.json();
+    alert('Compra realizada con éxito');
+
+  } catch (error) {
+    console.error('Error al realizar la compra:', error);
+    alert('Error al realizar la compra');
+  }
+};
 </script>
   
 <style>

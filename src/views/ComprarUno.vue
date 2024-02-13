@@ -18,9 +18,11 @@
       <h2 class="information-title">Información de Fechas y Horas</h2>
       <div class="container-frame">
         <ul class="horarios-txt__list">
-          <li v-for="fecha in obra?.fechasArray" :key="fecha" class='horarios-txt__item'>
+          <li v-for="(fecha, index) in obra?.fechasArray" :key="fecha" class='horarios-txt__item'>
             {{ fecha }}
-            <RouterLink :to="{ path: '/comprarDos/' + obra?.obraID }" class="show-poster__button">Comprar</RouterLink>
+            <RouterLink
+              :to="{ path: '/comprarDos/' + obra?.obraID, query: { idFecha: obra?.nombre + ' - ' + (index + 1) } }"
+              class="show-poster__button">Comprar</RouterLink>
           </li>
         </ul>
       </div>
