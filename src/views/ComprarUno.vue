@@ -20,11 +20,13 @@
         <ul class="horarios-txt__list">
           <li v-for="(fecha, index) in obra?.fechasArray" :key="fecha" class='horarios-txt__item'>
             {{ fecha }}
-            <RouterLink
-              :to="{ path: '/comprarDos/' + obra?.obraID, query: { idFecha: obra?.nombre + ' - ' + (index + 1) } }"
-              class="show-poster__button">Comprar</RouterLink>
+            <RouterLink :to="{
+              path: '/comprarDos/' + obra?.obraID,
+              query: { idFecha: obra?.nombre + (index + 1).toString() }
+            }" class="show-poster__button">Comprar</RouterLink>
           </li>
         </ul>
+
       </div>
     </div>
   </main>
