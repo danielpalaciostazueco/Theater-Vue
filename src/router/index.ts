@@ -7,6 +7,8 @@ import ContactView from "../views/ContactView.vue"
 import ActivitiesView from "../views/ActivitiesView.vue"
 import ComprarUnoView from "../views/ComprarUno.vue"
 import ComprarDosView from "../views/ComprarDos.vue"
+import HomeAdminView from "../views/HomeAdminView.vue"
+import AdminPanelView from "../views/AdminPanelView.vue"
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,6 +18,18 @@ const router = createRouter({
             name: 'home',
             component: HomeView
         },
+        {
+            path: '/Admin',
+            name: 'homeAdmin',
+            component: HomeAdminView
+        },
+        {
+            path: '/AdminPanel',
+            name: 'AdminPanel',
+            component: AdminPanelView
+        },
+        
+        
         {
             path: '/Programacion',
             name: 'Programacion',

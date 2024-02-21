@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import {  RouterView } from 'vue-router';
-import Header from './components/Header.vue';
-import Footer from './components/Footer.vue';
+import { RouterView } from 'vue-router';
+import { useRoute } from 'vue-router';
+import Header from './components/HeaderComponent.vue';
+import Footer from './components/FooterComponent.vue';
+const route = useRoute();
 </script>
 
 <template>
-    <Header></Header>
+    <Header v-if="route.path !== '/Admin' && route.path !== '/AdminPanel'"></Header>
     <RouterView></RouterView>
     <Footer></Footer>
 </template>

@@ -6,87 +6,177 @@
       </div>
       <section class="frame-function" v-if="obra">
         <div class="frame-function__poster">
-          <!-- Se muestra la primera imagen de la obra si existe -->
-          <img :src=obra.imagenesArray[0] alt="Imagen de la obra">
+          <img :src="obra?.imagenes.split(',')[0]" alt="Imagen de la obra">
         </div>
         <div class="frame-function__title">
-          <!-- Se muestra el nombre de la obra -->
-          <h2>{{ obra.nombre }}</h2>
+          <h2>{{ obra?.nombre }}</h2>
         </div>
       </section>
     </article>
 
-    <!-- Aquí añadiremos la sección de selección de asientos -->
-    <div id="cinema-seats" class="cinema-seats">
-      <!-- Esta sección puede ser dinámica basada en los datos de la obra o estática para el demo -->
+    <div ref="cinemaSeatsContainer" class="cinema-seats"></div>
+    <div class="cinema-button">
+      <div>
+        <p>Precio Total: {{ calcularTotal }} €</p>
+      </div>
+      <div>
+        <button @click="comprarAsientos">Comprar</button>
+      </div>
     </div>
-    <p id="total-price">Precio Total: 0 €</p>
-    <button id="buy-button" @click="postEntradas">Comprar</button>
   </main>
 </template>
 
-  
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import type { ListFormat } from 'typescript';
+import { ref, onMounted, computed, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
 
 interface Obra {
   nombre: string;
   descripcion: string;
-  imagenesArray: string[];
-  actoresArray: string[];
-  fechasArray: string[];
-  ObraID: string;
+  imagenes: string;
+  actores: string;
+  fechas: string;
+  obraID: string;
+}
+
+interface Asiento {
+  idAsiento: number;
+  isFree: boolean;
+}
+
+interface AsientoOcupado {
+  idAsiento: number
 }
 
 const obra = ref<Obra | null>(null);
+let asientos = ref<Asiento[]>([]);
+const precioPorAsiento = 5;
+const cinemaSeatsContainer = ref<HTMLElement | null>(null);
+const asientosSeleccionados = ref<Asiento[]>([]);
+let asientosOcupados = ref<AsientoOcupado[]>([]);
+const route = useRoute();
+const idObra = route.params.Id as string;
+const idSesion = route.query.idSesion as string;
 
 onMounted(async () => {
-  const route = useRoute();
-  const idObra = route.params.Id as string;
   try {
-    const response = await fetch('http://localhost:8001/obras/' + idObra);
-    if (!response.ok) throw new Error('Error al obtener los datos de la obra');
-    obra.value = await response.json();
+    let respuesta = await fetch(`http://localhost:8001/Obras/${idObra}`);
+    if (respuesta.ok) {
+      obra.value = await respuesta.json();
+    }
   } catch (error) {
-    console.error('Error al obtener los datos de la obra:', error);
+    console.error("Error al cargar la obra:", error);
+  }
+
+  try {
+    let respuestaOcupados = await fetch(`http://localhost:8001/Obras/${idObra}/Session/${idSesion}/Seat`);
+    if (respuestaOcupados.ok) {
+      const datosOcupados = await respuestaOcupados.json();
+      asientosOcupados.value = datosOcupados.map((idAsiento: number) => ({ idAsiento }));
+    }
+
+    let respuesta = await fetch(`http://localhost:8001/Asientos/GetAll`);
+    if (respuesta.ok) {
+      const datos = await respuesta.json();
+      asientos.value = datos.map((asiento: any) => ({
+        idAsiento: asiento.idAsiento,
+        isFree: !asientosOcupados.value.some(ocupado => ocupado.idAsiento === asiento.idAsiento),
+      }));
+    }
+
+    generarButacas();
+  } catch (error) {
+    console.error("Error al cargar los asientos:", error);
   }
 });
 
+function generarButacas() {
+  const anchoAsiento = 40, altoAsiento = 40, espacioEntreAsientos = 10, espacioEntreFilas = 20;
+  let svgHTML = `<svg width="${(anchoAsiento + espacioEntreAsientos) * 5}" height="${(altoAsiento + espacioEntreFilas) * 4}">`;
 
-const postEntradas = async () => {
-  if (!obra.value) {
-    alert('No se ha seleccionado ninguna obra.');
+  asientos.value.forEach((asiento, index) => {
+    const fila = Math.floor(index / 5);
+    const posAsiento = index % 5;
+    const x = posAsiento * (anchoAsiento + espacioEntreAsientos);
+    const y = fila * (altoAsiento + espacioEntreFilas);
+    const color = asiento.isFree ? '#00008B' : 'red';
+    svgHTML += `<rect id="asiento-${asiento.idAsiento}" x="${x}" y="${y}" width="${anchoAsiento}" height="${altoAsiento}" rx="5" ry="5" style="stroke:black; fill:${color}" />`;
+  });
+
+  svgHTML += '</svg>';
+
+  nextTick(() => {
+    if (cinemaSeatsContainer.value) {
+      cinemaSeatsContainer.value.innerHTML = svgHTML;
+      cinemaSeatsContainer.value.querySelectorAll('rect').forEach(rect => {
+        const idAsiento = parseInt(rect.id.replace('asiento-', ''));
+        if (asientos.value.find(a => a.idAsiento === idAsiento && a.isFree)) {
+          rect.addEventListener('click', () => {
+            cambiarColor(rect);
+          });
+        }
+      });
+    }
+  });
+}
+
+function cambiarColor(asiento: SVGElement) {
+  const idAsiento = parseInt(asiento.id.replace('asiento-', ''));
+
+  const indexSeleccionado = asientosSeleccionados.value.findIndex(a => a.idAsiento === idAsiento);
+
+  const estaOcupado = asientosOcupados.value.some(a => a.idAsiento === idAsiento);
+
+
+  if (estaOcupado) {
     return;
   }
-  const route = useRoute();
-  const fecha = route.params.idFecha as string;
-  const url = `http://localhost:8001/Asientos/${fecha}`;
-  const data = {
-    asientos: [],
-  };
 
+  if (indexSeleccionado > -1) {
+    asientosSeleccionados.value.splice(indexSeleccionado, 1);
+    asiento.style.fill = '#00008B'; 
+  } else {
+
+    asientosSeleccionados.value.push({ idAsiento, isFree: false });
+    asiento.style.fill = 'red';
+  }
+}
+
+async function comprarAsientos() {
   try {
-    const response = await fetch(url, {
+
+    const url = `http://localhost:8001/Obras/${idObra}/Session/${idSesion}/AddAsientos`;
+    const asientosParaEnviar = asientosSeleccionados.value.map(asiento => ({
+      idAsiento: asiento.idAsiento,
+      isFree: asiento.isFree
+    }));
+    const respuesta = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(asientosParaEnviar),
     });
 
-    if (!response.ok) throw new Error('Error al realizar la compra');
-    const responseData = await response.json();
-    alert('Compra realizada con éxito');
+    if (!respuesta.ok) {
+      throw new Error('Error en la compra de asientos');
+    }
 
+
+    console.log('Compra realizada con éxito');
+    asientosSeleccionados.value = [];
   } catch (error) {
     console.error('Error al realizar la compra:', error);
-    alert('Error al realizar la compra');
   }
-};
+}
+
+const calcularTotal = computed(() => {
+  return asientosSeleccionados.value.length * precioPorAsiento;
+});
 </script>
-  
-<style>
+
+<style scoped>
 body,
 h1,
 h2,
@@ -188,115 +278,20 @@ section {
   text-align: center;
 }
 
-/* Estilos para el contenedor de los asientos */
-#cinema-seats {
-  text-align: center;
-  margin: 20px auto;
-}
-
-/* Estilos para las filas de asientos */
-.row {
+.cinema-seats {
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
+  padding-top: 30px;
 }
 
-/* Estilos para cada asiento */
-.seat {
-  width: 20px;
-  height: 20px;
-  margin: 5px;
-  background-color: #bdc3c7;
-  border-radius: 3px;
-  /* Opcional: para asientos redondeados */
-  display: block;
+
+.cinema-seats svg {
   cursor: pointer;
 }
 
-/* Estilos para asientos seleccionados */
-.seat.selected {
-  background-color: #3498db;
-}
-
-.seat {
-  width: 20px;
-  height: 20px;
-  margin: 5px;
-  background-color: #bdc3c7;
-  border-radius: 3px;
-  /* Opcional: para asientos redondeados */
-  display: block;
-  cursor: pointer;
-}
-
-
-/* Añadir esta regla para los asientos comprados */
-.seat.comprado {
-  background-color: #ff0000;
-  /* Rojo para indicar que el asiento está comprado */
-  cursor: not-allowed;
-  /* Cambia el cursor para indicar que no se puede seleccionar */
-}
-
-
-/* Estilos para el texto del precio total */
-#total-price {
-  font-size: 16px;
-  text-align: center;
-  margin-top: 20px;
-}
-
-/* Estilos para el botón de compra */
-#buy-button {
-  display: block;
-  margin: 20px auto;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #1E3367;
-  color: white;
-  border: none;
-  border-radius: 5px;
-}
-
-/* Estilos del pie de página */
-.footer {
-  margin-top: 10vh;
+.cinema-button {
   display: flex;
-  align-items: center;
-  background-color: #1E3367;
-  text-align: center;
-  width: 100%;
-  height: 25vh;
-}
-
-.footer__logo {
-  flex: 0.7;
-  text-align: right;
-}
-
-.footer__menu {
-  flex: 1;
-  text-align: center;
-}
-
-.footer__menu a {
-  color: white;
-  margin-right: 2vh;
-}
-
-.footer__networks {
-  flex: 0.7;
-  text-align: left;
-}
-
-.footer__logo img {
-  width: 90px;
-  border-radius: 70px;
-}
-
-.footer__networks img {
-  width: 40px;
-  margin-right: 4vh;
+  justify-content: center;
 }
 </style>
+

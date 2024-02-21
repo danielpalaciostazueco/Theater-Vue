@@ -32,7 +32,7 @@
             </article>
         </main>
 </template>
-<style>
+<style scoped>
 body,
 h1,
 h2,
@@ -51,41 +51,6 @@ body {
     overflow: auto;
 }
 
-.header {
-    display: flex;
-    align-items: center;
-    background-color: #ffffff;
-    color: #000000;
-    height: 23vh;
-    max-width: 1000px;
-    margin: auto;
-}
-
-.header__logo {
-    flex: 1;
-    text-align: center;
-}
-
-.logo__image {
-    max-width: 140px;
-    height: auto;
-}
-
-.header__nav {
-    flex: 2.2;
-    display: flex;
-    /* Para que los elementos se distribuyan en línea */
-    text-align: left;
-    justify-content: left;
-    /* Para alinear los elementos al final del contenedor */
-    gap: 20px;
-    /* Espacio entre los elementos */
-}
-
-.nav__link {
-    color: #000000;
-    text-decoration: none;
-}
 
 body {
     font-family: 'Arial', sans-serif;

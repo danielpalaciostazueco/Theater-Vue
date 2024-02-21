@@ -1,4 +1,3 @@
-
 <template>
   <main>
     <section class="main-block">
@@ -7,26 +6,24 @@
 
     <section class="frame-function" v-if="obra">
       <div class="frame-function__poster">
-        <img :src="obra.imagenesArray[0]" alt="Imagen de la obra" v-if="obra.imagenesArray.length > 0" />
+        <img :src="obra.imagenes.split(',')[0]" alt="Imagen de la obra" v-if="obra.imagenes" />
       </div>
       <div class="frame-function__title">
         <h2 class="frame-function__title-text">{{ obra.nombre }}</h2>
       </div>
     </section>
-
     <div id="container" class="information-container">
       <h2 class="information-title">Información de Fechas y Horas</h2>
       <div class="container-frame">
         <ul class="horarios-txt__list">
-          <li v-for="(fecha, index) in obra?.fechasArray" :key="fecha" class='horarios-txt__item'>
-            {{ fecha }}
+          <li v-for="(fecha, index) in obra?.fechas.split(',') || []" :key="index" class='horarios-txt__item'>
+            {{ fecha.trim() }}
             <RouterLink :to="{
               path: '/comprarDos/' + obra?.obraID,
-              query: { idFecha: obra?.nombre + (index + 1).toString() }
+              query: { idSesion: (index + 1) }
             }" class="show-poster__button">Comprar</RouterLink>
           </li>
         </ul>
-
       </div>
     </div>
   </main>
@@ -36,12 +33,12 @@
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
+
 interface Obra {
   nombre: string;
   descripcion: string;
-  imagenesArray: string[];
-  actoresArray: string[];
-  fechasArray: string[];
+  imagenes: string; 
+  fechas: string; 
   obraID: string;
 }
 
@@ -65,7 +62,8 @@ onMounted(() => {
 });
 </script>
 
-<style>
+
+<style scoped>
 body,
 h1,
 h2,
@@ -85,39 +83,6 @@ body {
   overflow: auto;
 }
 
-/* Estilos del encabezado */
-.header {
-  display: flex;
-  align-items: center;
-  background-color: #ffffff;
-  color: #000000;
-  height: 23vh;
-  max-width: 1000px;
-  margin: auto;
-}
-
-.header__logo {
-  flex: 1;
-  text-align: center;
-}
-
-.logo__image {
-  max-width: 140px;
-  height: auto;
-}
-
-.header__nav {
-  flex: 2.2;
-  display: flex;
-  text-align: left;
-  justify-content: left;
-  gap: 20px;
-}
-
-.nav__link {
-  color: #000000;
-  text-decoration: none;
-}
 
 /* Estilos del bloque principal */
 .main-block {
@@ -137,12 +102,16 @@ body {
 }
 
 .show-poster__button {
-  background-color: #1E3367 !important;
-  color: #e9e3e3 !important;
-  border: none !important;
-  /* padding: 10px 20px; */
-  font-size: 16px !important;
-  margin-left: 10px !important;
+      /* background: #060e83; */
+      background: linear-gradient(0deg,#060e83,#0c19b4);
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    margin-left: 10px;
+    width: 130px;
+    height: 40px;
+    padding: 1px 10px;
+    border-radius: 5px;
 }
 
 /* Estilos del marco de la función */

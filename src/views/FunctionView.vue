@@ -1,28 +1,27 @@
+
 <template>
     <div>
         <main>
             <div class="main-block">
                 <h1 class="main-block__title">{{ obra?.nombre }}</h1>
             </div>
-            <section class="horarios" v-if="obra && obra.imagenesArray && obra.imagenesArray.length > 0">
+            <section class="horarios" v-if="obra && obra.imagenes && obra.imagenes.length > 0">
                 <div class="horarios-img">
-                    <img :src="obra.imagenesArray[0]" alt="Imagen destacada de la obra" />
+                    <img :src="obra.imagenes?.split(',')[0]" alt="Imagen destacada de la obra" />
                 </div>
                 <div class="horarios-txt">
                     <h2 class="horarios-txt__title">Horarios de la función</h2>
                     <ul class="horarios-txt__list">
-                        <li v-for="horario in obra?.fechasArray" :key="horario" class="horarios-txt__item">{{ horario }}
-                        </li>
+                        <li v-for="horario in obra.fechas?.split(',')" :key="horario" class="horarios-txt__item">{{ horario }}</li>
                     </ul>
                 </div>
             </section>
-            <div class="primera-img" v-if="obra && obra.imagenesArray && obra.imagenesArray.length > 1">
-                <img :src="obra.imagenesArray[1]" alt="Imagen destacada de la obra" />
+            <div class="primera-img" v-if="obra && obra.imagenes && obra.imagenes.length > 1">
+                <img :src="obra.imagenes?.split(',')[1]" alt="Imagen destacada de la obra" />
             </div>
             <article>
                 <div class="button-bought" id="boton-comprar">
-                    <RouterLink :to="{ path: '/ComprarUno/' + obra?.obraID }" class='show-poster__button'>Comprar Entradas
-                    </RouterLink>
+                    <RouterLink :to="{ path: '/ComprarUno/' + obra?.obraID }" class='show-poster__button'>Comprar Entradas</RouterLink>
                 </div>
             </article>
             <section>
@@ -40,7 +39,7 @@
                     </div>
                     <div class="frame-repart__txt">
                         <ul class="frame-repart__list">
-                            <li v-for="actor in obra?.actoresArray" :key="actor" class="frame-repart__item">{{ actor }}</li>
+                            <li v-for="actor in obra?.actores?.split(',')" :key="actor" class="frame-repart__item">{{ actor }}</li>
                         </ul>
                     </div>
                 </div>
@@ -56,9 +55,9 @@ import { useRoute } from 'vue-router';
 interface Obra {
     nombre?: string;
     descripcion?: string;
-    imagenesArray?: string[];
-    actoresArray?: string[];
-    fechasArray?: string[];
+    imagenes?: string;
+    actores?: string;
+    fechas?: string;
     obraID?: string;
 }
 
@@ -80,14 +79,15 @@ async function fetchData(idObra: string) {
 
 onMounted(() => {
     const route = useRoute();
-    const idObra = route.params.Id as string; // Ajusta esto según tu configuración de Vue Router
+    const idObra = route.params.Id as string; 
     if (idObra) {
         fetchData(idObra);
     }
 });
 </script>
 
-<style>
+
+<style scoped>
 body,
 h1,
 h2,
@@ -106,46 +106,7 @@ body {
     overflow: auto;
 }
 
-/*---------Header--------*/
-
-.header {
-    display: flex;
-    align-items: center;
-    background-color: #ffffff;
-    color: #000000;
-    height: 23vh;
-    max-width: 1000px;
-    margin: auto;
-}
-
-.header__logo {
-    flex: 1;
-    text-align: center;
-}
-
-.logo__image {
-    max-width: 130px;
-    height: auto;
-}
-
-.header__nav {
-    flex: 2.2;
-    display: flex;
-    /* Para que los elementos se distribuyan en línea */
-    text-align: left;
-    justify-content: left;
-    /* Para alinear los elementos al final del contenedor */
-    gap: 20px;
-    /* Espacio entre los elementos */
-}
-
-.nav__link {
-    color: #000000;
-    text-decoration: none;
-}
-
 /*---------Main--------*/
-
 .main-block {
     display: flex;
     align-items: center;
@@ -178,8 +139,6 @@ body {
 .horarios-img img {
     width: 500px;
 }
-
-
 
 .horarios-txt {
     flex: 1;
@@ -243,11 +202,11 @@ article {
 }
 
 .show-poster__button {
-    background-color: #1E3367 !important;
-    color: #fff !important;
-    border: none !important;
-    padding: 10px 20px !important;
-    font-size: 16px !important;
+    background-color: #1E3367 ;
+    color: #fff ;
+    border: none ;
+    padding: 10px 20px ;
+    font-size: 16px ;
 }
 
 .frame-information {
@@ -305,93 +264,8 @@ article {
     max-width: 500px;
 }
 
-/* Estilos del pie de página */
-
-.footer {
-    margin-top: 10vh;
-    display: flex;
-    align-items: center;
-    background-color: #1E3367;
-    text-align: center;
-    width: 100%;
-    height: 25vh;
-}
-
-.footer__logo {
-    flex: 0.7;
-    text-align: right;
-}
-
-.footer__menu {
-    flex: 1;
-    text-align: center;
-}
-
-.footer__menu a {
-    color: white;
-    margin-right: 2vh;
-}
-
-.footer__networks {
-    flex: 0.7;
-    text-align: left;
-}
-
-.footer__logo img {
-    width: 90px;
-    border-radius: 70px;
-}
-
-.footer__networks img {
-    width: 40px;
-    margin-right: 4vh;
-}
 
 @media screen and (max-width: 1150px) {
-
-    .header {
-        margin-top: 5vh;
-        display: flex;
-        height: auto;
-        text-align: center;
-        margin-bottom: 5vh;
-    }
-
-    .header__logo {
-        margin-left: 5vh;
-    }
-
-    .header__nav {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        margin-top: 10px;
-    }
-
-    main {
-        margin: 0 15px;
-    }
-
-    .header {
-        margin-top: 5vh;
-        display: flex;
-        height: auto;
-        text-align: center;
-        margin-bottom: 5vh;
-    }
-
-    .header__logo {
-        margin-left: 5vh;
-    }
-
-    .header__nav {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        margin-top: 10px;
-    }
-
-
     .main-block h1 {
         margin-left: 6vh;
     }

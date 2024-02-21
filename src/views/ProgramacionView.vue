@@ -7,7 +7,7 @@
             <section class="poster-container">
                 <div v-for="obra in obras" :key="obra.obraID" class='show-poster'>
                     <div class='show-poster__image'>
-                        <img :src="obra.imagenesArray && obra.imagenesArray.length > 0 ? obra.imagenesArray[0] : 'imagen-predeterminada.jpg'"
+                        <img :src="obra.imagenes ? obra.imagenes.split(',')[0] : 'imagen-predeterminada.jpg'"
                             alt="Imagen de la obra" />
                     </div>
                     <div class='show-poster__details'>
@@ -20,23 +20,20 @@
         </main>
     </body>
 </template>
-
   
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
-// Define la estructura de los datos de las obras
+
 interface Obra {
     nombre: string;
-    imagenesArray: string[];
+    imagenes: string; 
     obraID: string;
 }
 
-// Variable reactiva para almacenar la lista de obras
 const obras = ref<Obra[]>([]);
 
-// Función para obtener las obras desde el backend
 const fetchObras = async () => {
     try {
         const response = await fetch('http://localhost:8001/obras');
@@ -50,14 +47,13 @@ const fetchObras = async () => {
     }
 };
 
-// Llamada a la función fetchObras cuando el componente se monta
 onMounted(() => {
     fetchObras();
 });
 </script>
 
 
-<style>
+<style scoped>
 body,
 h1,
 h2,
@@ -187,12 +183,12 @@ body {
 }
 
 .show-poster__button {
-    padding: 10px 20px !important;
-    background-color: #fff !important;
-    color: #1E3367 !important;
-    border: none !important;
-    border-radius: 4px !important;
-    cursor: pointer !important;
+    padding: 10px 20px ;
+    background-color: #fff ;
+    color: #1E3367 ;
+    border: none ;
+    border-radius: 4px ;
+    cursor: pointer ;
 }
 
 

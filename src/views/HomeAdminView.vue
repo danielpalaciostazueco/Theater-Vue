@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+
 
 interface Obra {
   nombre: string;
@@ -11,45 +11,60 @@ interface Obra {
 const obras = ref<Obra[]>([]);
 
 const fetchObras = async () => {
-  try {
-    const response = await fetch('http://localhost:8001/obras');
-    if (!response.ok) {
-      throw new Error('Error al obtener los datos de las obras');
+    try {
+        const response = await fetch('http://localhost:8001/obras');
+        if (!response.ok) {
+            throw new Error('Error al obtener los datos de las obras');
+        }
+        const data = await response.json();
+        obras.value = data;
+    } catch (error) {
+        console.error('Error al obtener los datos de las obras:', error);
     }
-    obras.value = await response.json();
-  } catch (error) {
-    console.error('Error al obtener los datos de las obras:', error);
-  }
 };
 
 onMounted(() => {
-  fetchObras();
+    fetchObras();
 });
-</script>
 
+</script>
 <template>
-  <main class="main">
-    <section class="performance-block">
-      <div class="performance-block__info">
-        <h2 class="performance-block__title">Próxima Función</h2>
-        <RouterLink to="/Programacion" class="performance-block__button">Comprar Entradas</RouterLink>
-      </div>
-      <div class="performance-block__image">
-        <img src="../assets/img/ROMEO-Y-JULIETA.jpeg" alt="Función de Teatro" class="image__img" />
-      </div>
-      <div class="performance-block__name">
-        <h2 class="performance-block__name-title">Romeo y Julieta</h2>
-        <p class="performance-block__name-text">
-          "Romeo y Julieta" es una obra de teatro escrita por William Shakespeare en el siglo XVI. La trama
-          sigue a dos jóvenes amantes, Romeo y Julieta, cuyas familias rivales generan conflictos. A pesar de
-          las adversidades, se enamoran y casan en secreto, pero una serie de malentendidos y tragedias lleva
-          a un desenlace fatal. La obra explora temas como el amor, la rivalidad familiar y el destino,
-          convirtiéndose en una de las historias de amor más conocidas de la literatura.
-        </p>
-      </div>
-    </section>
-    <article>
-      <section class="poster-container">
+    <header class="header">
+        <div class="header__logo">
+            <RouterLink to="/"></RouterLink>
+            <canvas ref="canvasRef" width="100" height="106"></canvas>
+        </div>
+        <nav class="header__nav">
+            <RouterLink to="/Programacion" class="nav__link">Programación</RouterLink>
+            <RouterLink to="/About" class="nav__link">Información</RouterLink>
+            <RouterLink to="/Activities" class="nav__link">Otras Actividades</RouterLink>
+            <RouterLink to="/Contact" class="nav__link">Contacto</RouterLink>
+            <RouterLink to="/AdminPanel" class="nav__link">Admin</RouterLink>
+        </nav>
+    </header>
+    <body>
+        <main class="main">
+            <section class="performance-block">
+                <div class="performance-block__info">
+                    <h2 class="performance-block__title">Próxima Función</h2>
+                    <RouterLink to="/Programacion" class="performance-block__button">Comprar Entradas</RouterLink>
+                </div>
+                <div class="performance-block__image">
+                    <img src="../assets/img/ROMEO-Y-JULIETA.jpeg" alt="Función de Teatro" class="image__img" />
+                </div>
+                <div class="performance-block__name">
+                    <h2 class="performance-block__name-title">Romeo y Julieta</h2>
+                    <p class="performance-block__name-text">
+                        "Romeo y Julieta" es una obra de teatro escrita por William Shakespeare en el siglo XVI. La trama
+                        sigue a dos jóvenes amantes, Romeo y Julieta, cuyas familias rivales generan conflictos. A pesar de
+                        las adversidades, se enamoran y casan en secreto, pero una serie de malentendidos y tragedias lleva
+                        a un desenlace fatal. La obra explora temas como el amor, la rivalidad familiar y el destino,
+                        convirtiéndose en una de las historias de amor más conocidas de la literatura.
+                    </p>
+                </div>
+            </section>
+            <article>
+                <section class="poster-container">
                 <div v-for="obra in obras" :key="obra.obraID" class='show-poster'>
                     <div class='show-poster__image'>
                         <img :src="obra.imagenes.split(',')[0] " alt="Imagen de la obra" />
@@ -61,11 +76,10 @@ onMounted(() => {
                     </div>
                 </div>
             </section>
-    </article>
-  </main>
+            </article>
+        </main>
+    </body>
 </template>
-
-  
 <style scoped>
 body,
 h1,
@@ -79,6 +93,37 @@ a {
     text-decoration: none;
 }
 
+.header {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    color: #000000;
+    height: 23vh;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.header__logo {
+    flex: 1;
+    text-align: center;
+}
+
+.logo__image {
+    max-width: 140px;
+    height: auto;
+}
+
+.header__nav {
+    flex: 2.2;
+    display: flex;
+    justify-content: left;
+    gap: 20px;
+}
+
+.nav__link {
+    color: #000000;
+    text-decoration: none;
+}
 body {
     font-family: 'Roboto';
     line-height: 1.6;
@@ -99,7 +144,7 @@ body {
 }
 
 .performance-block__title {
-    color: #ffffff;
+    color: #fffcfc;
     margin-bottom: 5vh;
     font-size: xxx-large;
 }
@@ -206,6 +251,18 @@ body {
 
 
 @media screen and (max-width: 1150px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+        margin-top: 5vh;
+        margin-bottom: 5vh;
+    }
+
+    .header__logo,
+    .header__nav {
+        margin-left: 0;
+        margin-top: 10px;
+    }
     .performance-block {
         display: flex;
         flex-direction: column;

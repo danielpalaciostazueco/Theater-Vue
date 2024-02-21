@@ -22,7 +22,7 @@
         </main>
     </body>
 </template>
-<style>
+<style scoped>
 body,
 h1,
 h2,
