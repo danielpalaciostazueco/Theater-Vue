@@ -85,6 +85,7 @@ body {
     overflow: auto;
 }
 
+
 .performance-block {
     background-color: #1E3367;
     display: flex;

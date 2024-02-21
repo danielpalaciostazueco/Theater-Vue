@@ -2,6 +2,7 @@
     <body>
         <main class="main">
             <div class="main-block">
+
                 <h1>Programación</h1>
             </div>
             <section class="poster-container">
@@ -70,6 +71,14 @@ body {
     font-family: 'Roboto';
     line-height: 1.6;
     overflow: auto;
+}
+.main-block{
+    background-color: #1e3367;
+    color: white;
+}
+
+.main-block h1{
+    padding-left: 30px;
 }
 
 .performance-block {

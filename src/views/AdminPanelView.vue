@@ -31,7 +31,6 @@
             </ul>
           </td>
           <td>{{ obra.fechas }}</td>
-          <td>{{ obra.slug }}</td>
           <td><img :src="obra.cartel" alt="Cartel de la obra" style="width: 100px; height: auto;" /></td>
           <td>
             <button @click="editarObra(obra)">Editar</button>
@@ -67,7 +66,6 @@ interface Obra {
   actores: string;
   imagenes: string;
   fechas: string;
-  slug: string;
   cartel: string;
 }
 
@@ -79,7 +77,6 @@ const estadoInicial: Obra = {
   actores: '',
   imagenes: '',
   fechas: '',
-  slug: '',
   cartel: ''
 };
 
@@ -142,8 +139,6 @@ function editarObra(obra: Obra) {
   mostrarFormulario.value = true;
 }
 </script>
-
-
 
 
 
