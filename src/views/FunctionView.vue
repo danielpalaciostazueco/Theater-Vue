@@ -10,9 +10,10 @@
                     <img :src="obra.imagenes?.split(',')[0]" alt="Imagen destacada de la obra" />
                 </div>
                 <div class="horarios-txt">
-                    <h2 class="horarios-txt__title">Horarios de la función</h2>
+                    <h2 class="horarios-txt__title">{{ $t("Function.text1") }}</h2>
                     <ul class="horarios-txt__list">
-                        <li v-for="horario in obra.fechas?.split(',')" :key="horario" class="horarios-txt__item">{{ horario }}</li>
+                        <li v-for="horario in obra.fechas?.split(',')" :key="horario" class="horarios-txt__item">{{ horario
+                        }}</li>
                     </ul>
                 </div>
             </section>
@@ -21,13 +22,15 @@
             </div>
             <article>
                 <div class="button-bought" id="boton-comprar">
-                    <RouterLink :to="{ path: '/ComprarUno/' + obra?.obraID }" class='show-poster__button'>Comprar Entradas</RouterLink>
+                    <RouterLink :to="{ path: '/ComprarUno/' + obra?.obraID }" class='show-poster__button'>
+                        {{ $t("Function.text3") }}
+                    </RouterLink>
                 </div>
             </article>
             <section>
                 <div class="frame-information">
                     <div class="frame-information__title">
-                        <h2>Información de la función</h2>
+                        <h2>{{ $t("Function.text2") }}</h2>
                     </div>
                     <div class="frame-information__txt">
                         <p>{{ obra?.descripcion }}</p>
@@ -35,11 +38,12 @@
                 </div>
                 <div class="frame-repart">
                     <div class="frame-repart__title">
-                        <h2>Reparto</h2>
+                        <h2>{{ $t("Function.text4") }}</h2>
                     </div>
                     <div class="frame-repart__txt">
                         <ul class="frame-repart__list">
-                            <li v-for="actor in obra?.actores?.split(',')" :key="actor" class="frame-repart__item">{{ actor }}</li>
+                            <li v-for="actor in obra?.actores?.split(',')" :key="actor" class="frame-repart__item">{{ actor
+                            }}</li>
                         </ul>
                     </div>
                 </div>
@@ -79,7 +83,7 @@ async function fetchData(idObra: string) {
 
 onMounted(() => {
     const route = useRoute();
-    const idObra = route.params.Id as string; 
+    const idObra = route.params.Id as string;
     if (idObra) {
         fetchData(idObra);
     }
@@ -202,11 +206,11 @@ article {
 }
 
 .show-poster__button {
-    background-color: #1E3367 ;
-    color: #fff ;
-    border: none ;
-    padding: 10px 20px ;
-    font-size: 16px ;
+    background-color: #1E3367;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
 }
 
 .frame-information {

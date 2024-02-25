@@ -3,9 +3,9 @@ import { ref, onMounted } from 'vue';
 
 
 interface Obra {
-  nombre: string;
-  imagenes: string;
-  obraID: string;
+    nombre: string;
+    imagenes: string;
+    obraID: string;
 }
 
 const obras = ref<Obra[]>([]);
@@ -35,47 +35,46 @@ onMounted(() => {
             <canvas ref="canvasRef" width="100" height="106"></canvas>
         </div>
         <nav class="header__nav">
-            <RouterLink to="/Programacion" class="nav__link">Programación</RouterLink>
-            <RouterLink to="/About" class="nav__link">Información</RouterLink>
-            <RouterLink to="/Activities" class="nav__link">Otras Actividades</RouterLink>
-            <RouterLink to="/Contact" class="nav__link">Contacto</RouterLink>
-            <RouterLink to="/AdminPanel" class="nav__link">Admin</RouterLink>
+            <RouterLink to="/Programacion" class="nav__link">{{ $t("HomeAdmin.schedule") }}</RouterLink>
+            <RouterLink to="/About" class="nav__link">{{ $t("HomeAdmin.information") }}</RouterLink>
+            <RouterLink to="/Activities" class="nav__link">{{ $t("HomeAdmin.activities") }}</RouterLink>
+            <RouterLink to="/Contact" class="nav__link">{{ $t("HomeAdmin.contact") }}</RouterLink>
+            <RouterLink to="/AdminPanel" class="nav__link">{{ $t("HomeAdmin.admin") }}</RouterLink>
         </nav>
     </header>
+
     <body>
         <main class="main">
             <section class="performance-block">
                 <div class="performance-block__info">
-                    <h2 class="performance-block__title">Próxima Función</h2>
-                    <RouterLink to="/Programacion" class="performance-block__button">Comprar Entradas</RouterLink>
+                    <h2 class="performance-block__title">{{ $t("HomeAdmin.text1") }}</h2>
+                    <RouterLink to="/Programacion" class="performance-block__button">{{ $t("HomeAdmin.text4") }}
+                    </RouterLink>
                 </div>
                 <div class="performance-block__image">
                     <img src="../assets/img/ROMEO-Y-JULIETA.jpeg" alt="Función de Teatro" class="image__img" />
                 </div>
                 <div class="performance-block__name">
-                    <h2 class="performance-block__name-title">Romeo y Julieta</h2>
+                    <h2 class="performance-block__name-title">{{ $t("HomeAdmin.text2") }}</h2>
                     <p class="performance-block__name-text">
-                        "Romeo y Julieta" es una obra de teatro escrita por William Shakespeare en el siglo XVI. La trama
-                        sigue a dos jóvenes amantes, Romeo y Julieta, cuyas familias rivales generan conflictos. A pesar de
-                        las adversidades, se enamoran y casan en secreto, pero una serie de malentendidos y tragedias lleva
-                        a un desenlace fatal. La obra explora temas como el amor, la rivalidad familiar y el destino,
-                        convirtiéndose en una de las historias de amor más conocidas de la literatura.
+                        {{ $t("HomeAdmin.text3") }}
                     </p>
                 </div>
             </section>
             <article>
                 <section class="poster-container">
-                <div v-for="obra in obras" :key="obra.obraID" class='show-poster'>
-                    <div class='show-poster__image'>
-                        <img :src="obra.imagenes.split(',')[0] " alt="Imagen de la obra" />
+                    <div v-for="obra in obras" :key="obra.obraID" class='show-poster'>
+                        <div class='show-poster__image'>
+                            <img :src="obra.imagenes.split(',')[0]" alt="Imagen de la obra" />
+                        </div>
+                        <div class='show-poster__details'>
+                            <h3 class='show-poster__details__title'>{{ obra.nombre }}</h3>
+                            <RouterLink :to="{ path: '/Function/' + obra.obraID }" class='show-poster__button'>
+                                {{ $t("HomeAdmin.text4") }}
+                            </RouterLink>
+                        </div>
                     </div>
-                    <div class='show-poster__details'>
-                        <h3 class='show-poster__details__title'>{{ obra.nombre }}</h3>
-                        <RouterLink :to="{ path: '/Function/' + obra.obraID }" class='show-poster__button'>Comprar
-                            Entradas</RouterLink>
-                    </div>
-                </div>
-            </section>
+                </section>
             </article>
         </main>
     </body>
@@ -124,6 +123,7 @@ a {
     color: #000000;
     text-decoration: none;
 }
+
 body {
     font-family: 'Roboto';
     line-height: 1.6;
@@ -152,8 +152,8 @@ body {
 .performance-block__button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #fffefe ;
-    color: #000000 ;
+    background-color: #fffefe;
+    color: #000000;
     text-decoration: none;
     border-radius: 8px;
     font-size: x-large;
@@ -240,12 +240,12 @@ body {
 }
 
 .show-poster__button {
-    padding: 10px 20px ;
-    background-color: #fff ;
-    color: #1E3367 ;
-    border: none ;
-    border-radius: 4px ;
-    cursor: pointer ;
+    padding: 10px 20px;
+    background-color: #fff;
+    color: #1E3367;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 
@@ -263,6 +263,7 @@ body {
         margin-left: 0;
         margin-top: 10px;
     }
+
     .performance-block {
         display: flex;
         flex-direction: column;

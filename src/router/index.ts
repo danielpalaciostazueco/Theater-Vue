@@ -9,18 +9,37 @@ import ComprarUnoView from "../views/ComprarUno.vue"
 import ComprarDosView from "../views/ComprarDos.vue"
 import HomeAdminView from "../views/HomeAdminView.vue"
 import AdminPanelView from "../views/AdminPanelView.vue"
+import LoginView from "../views/LoginView.vue"
+import LoginAdminView from "../views/LoginAdminView.vue"
+import LoginUserView from "../views/LoginUserView.vue"
+
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
             path: '/',
-            name: 'home',
+            name: 'Login',
+            component: LoginView
+        },
+        {
+            path: '/LoginUser',
+            name: 'LoginUser',
+            component: LoginUserView
+        },
+        {
+            path: '/LoginAdmin',
+            name: 'LoginAdmin',
+            component: LoginAdminView
+        },     
+        {
+            path: '/Home',
+            name: 'Home',
             component: HomeView
         },
         {
-            path: '/Admin',
-            name: 'homeAdmin',
+            path: '/HomeAdmin',
+            name: 'HomeAdmin',
             component: HomeAdminView
         },
         {
@@ -28,8 +47,6 @@ const router = createRouter({
             name: 'AdminPanel',
             component: AdminPanelView
         },
-        
-        
         {
             path: '/Programacion',
             name: 'Programacion',

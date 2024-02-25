@@ -1,20 +1,20 @@
 <template>
   <div class="gestion-obras">
-    <h2 class="titulo">Gestión de Obras</h2>
-    <button @click="nuevaObra" class="boton-agregar">Añadir Nueva Obra</button>
+    <h2 class="titulo">{{ $t("AdminPanel.title") }}</h2>
+    <button @click="nuevaObra" class="boton-agregar">{{ $t("AdminPanel.create") }}</button>
     <table class="tabla-obras">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Descripción</th>
-          <th>Autores</th>
-          <th>Duración</th>
-          <th>Actores</th>
-          <th>Imágenes</th>
-          <th>Fechas</th>
-          <th>Cartel</th>
-          <th>Acciones</th>
+          <th>{{ $t("AdminPanel.id") }}</th>
+          <th>{{ $t("AdminPanel.name") }}</th>
+          <th>{{ $t("AdminPanel.description") }}</th>
+          <th>{{ $t("AdminPanel.authors") }}</th>
+          <th>{{ $t("AdminPanel.duration") }}</th>
+          <th>{{ $t("AdminPanel.actors") }}</th>
+          <th>{{ $t("AdminPanel.images") }}</th>
+          <th>{{ $t("AdminPanel.dates") }}</th>
+          <th>{{ $t("AdminPanel.poster") }}</th>
+          <th>{{ $t("AdminPanel.actions") }}</th>
         </tr>
       </thead>
       <tbody>
@@ -40,16 +40,16 @@
       </tbody>
     </table>
     <div v-if="mostrarFormulario">
-      <input v-model="obraEditando.nombre" placeholder="Nombre" />
-      <textarea v-model="obraEditando.descripcion" placeholder="Descripción"></textarea>
-      <input v-model="obraEditando.autores" placeholder="Autores (separados por comas)" />
-      <input v-model="obraEditando.duracion" type="number" placeholder="Duración (en horas)" />
-      <input v-model="obraEditando.actores" placeholder="Actores (separados por comas)" />
-      <input v-model="obraEditando.imagenes" placeholder="URL de Imágenes (separadas por comas)" />
-      <input v-model="obraEditando.fechas" placeholder="Fechas (separadas por comas)" />
-      <input v-model="obraEditando.cartel" placeholder="URL del Cartel" />
-      <button @click="guardarObra">Guardar</button>
-      <button @click="cerrarFormulario">Cancelar</button>
+      <input v-model="obraEditando.nombre" :placeholder="$t('AdminPanel.placeholders.name')" />
+      <textarea v-model="obraEditando.descripcion" :placeholder="$t('AdminPanel.placeholders.description')"></textarea>
+      <input v-model="obraEditando.autores" :placeholder="$t('AdminPanel.placeholders.authors')" />
+      <input v-model="obraEditando.duracion" type="number" :placeholder="$t('AdminPanel.placeholders.duration')" />
+      <input v-model="obraEditando.actores" :placeholder="$t('AdminPanel.placeholders.actors')" />
+      <input v-model="obraEditando.imagenes" :placeholder="$t('AdminPanel.placeholders.images')" />
+      <input v-model="obraEditando.fechas" :placeholder="$t('AdminPanel.placeholders.dates')" />
+      <input v-model="obraEditando.cartel" :placeholder="$t('AdminPanel.placeholders.poster')" />
+      <button @click="guardarObra">{{ $t("AdminPanel.save") }}</button>
+      <button @click="cerrarFormulario">{{ $t("AdminPanel.cancel") }}</button>
     </div>
   </div>
 </template>
@@ -80,9 +80,9 @@ const estadoInicial: Obra = {
   cartel: ''
 };
 
-const obras = ref<Obra[]>([]); 
+const obras = ref<Obra[]>([]);
 const obraEditando = ref<Obra>({ ...estadoInicial });
-const mostrarFormulario = ref(false); 
+const mostrarFormulario = ref(false);
 
 onMounted(cargarObras);
 

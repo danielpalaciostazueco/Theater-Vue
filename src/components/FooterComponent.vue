@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import {RouterLink} from 'vue-router'
+import { RouterLink } from 'vue-router'
 </script>
-<template>  
+<template>
     <footer class="footer">
         <div class="footer__logo">
-            <RouterLink to="/"><img src="../assets/img/logo.png" alt="Logo del Teatro Example" class="logo__image"></RouterLink>
+            <img src="../assets/img/logo.png" alt="Logo del Teatro Example" class="logo__image">
         </div>
         <div class="footer__menu">
-            <RouterLink to="/Programacion" class="footer__menu-link">Programación</RouterLink>
-            <RouterLink to="/About" class="footer__menu-link">Información</RouterLink>
-            <RouterLink to="Activities" class="footer__menu-link">Otras Actividades</RouterLink>
-            <RouterLink to="/Contact" class="footer__menu-link">Contacto</RouterLink>
+            <RouterLink to="/Programacion" class="footer__menu-link">{{ $t("Footer.schedule") }}</RouterLink>
+            <RouterLink to="/About" class="footer__menu-link">{{ $t("Footer.information") }}</RouterLink>
+            <RouterLink to="Activities" class="footer__menu-link">{{ $t("Footer.activities") }}</RouterLink>
+            <RouterLink to="/Contact" class="footer__menu-link">{{ $t("Footer.contact") }}</RouterLink>
         </div>
         <div class="footer__networks">
-            <img src="../assets/img/tweeter.png" alt="">
             <img src="../assets/img/instagram.png" alt="">
             <img src="../assets/img/facebook.png" alt="">
         </div>
     </footer>
 </template>
+
 <style>
 .footer {
     margin-top: 13vh;
@@ -69,5 +69,4 @@ import {RouterLink} from 'vue-router'
     width: 40px;
     margin-right: 4vh;
 }
-
 </style>

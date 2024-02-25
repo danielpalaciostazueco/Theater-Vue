@@ -7,7 +7,8 @@ const route = useRoute();
 </script>
 
 <template>
-    <Header v-if="route.path !== '/Admin' && route.path !== '/AdminPanel'"></Header>
+    <Header v-if="route.path !== '/Admin' && route.path !== '/AdminPanel' && route.path !== '/'
+        && route.path !== '/LoginUser' && route.path !== '/LoginAdmin'"></Header>
     <RouterView></RouterView>
-    <Footer></Footer>
+    <Footer v-if="route.path !== '/' && route.path !== '/LoginUser' && route.path !== '/LoginAdmin'"></Footer>
 </template>

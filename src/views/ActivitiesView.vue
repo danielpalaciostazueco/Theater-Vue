@@ -2,21 +2,17 @@
     <body>
         <main>
             <div class="main-block">
-                <h1>Otras Actividades</h1>
+                <h1>{{ $t("Activities.activities") }}</h1>
             </div>
 
             <section class="frame-VG">
                 <div class="frame-VG_title">
-                    <h2>Visitas Guiadas</h2>
+                    <h2>{{ $t("Activities.text") }}</h2>
                 </div>
                 <div class="frame-VG_txt">
-                    <p>Descubre los secretos detrás del escenario con nuestras emocionantes visitas guiadas al teatro Al
-                        UrbanTheater. Únete a nosotros para explorar los rincones ocultos de este icónico espacio cultural.
-                        Nuestros guías expertos te llevarán a través de los bastidores, revelando la rica historia del
-                        teatro y compartiendo anécdotas fascinantes sobre las producciones que han iluminado nuestro
-                        escenario a lo largo de los años. Desde los camerinos hasta el telón principal, experimentarás la
-                        magia del teatro desde una perspectiva única. ¡Sumérgete en la historia y el encanto que hacen de
-                        nuestro teatro un lugar verdaderamente especial!</p>
+                    <p>
+                        {{ $t("Activities.text2") }}
+                    </p>
                 </div>
             </section>
         </main>

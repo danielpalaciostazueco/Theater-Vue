@@ -3,68 +3,66 @@ import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 interface Obra {
-  nombre: string;
-  imagenes: string;
-  obraID: string;
+    nombre: string;
+    imagenes: string;
+    obraID: string;
 }
 
 const obras = ref<Obra[]>([]);
 
 const fetchObras = async () => {
-  try {
-    const response = await fetch('http://localhost:8001/obras');
-    if (!response.ok) {
-      throw new Error('Error al obtener los datos de las obras');
+    try {
+        const response = await fetch('http://localhost:8001/obras');
+        if (!response.ok) {
+            throw new Error('Error al obtener los datos de las obras');
+        }
+        obras.value = await response.json();
+    } catch (error) {
+        console.error('Error al obtener los datos de las obras:', error);
     }
-    obras.value = await response.json();
-  } catch (error) {
-    console.error('Error al obtener los datos de las obras:', error);
-  }
 };
 
 onMounted(() => {
-  fetchObras();
+    fetchObras();
 });
 </script>
-
 <template>
-  <main class="main">
-    <section class="performance-block">
-      <div class="performance-block__info">
-        <h2 class="performance-block__title">Próxima Función</h2>
-        <RouterLink to="/Programacion" class="performance-block__button">Comprar Entradas</RouterLink>
-      </div>
-      <div class="performance-block__image">
-        <img src="../assets/img/ROMEO-Y-JULIETA.jpeg" alt="Función de Teatro" class="image__img" />
-      </div>
-      <div class="performance-block__name">
-        <h2 class="performance-block__name-title">Romeo y Julieta</h2>
-        <p class="performance-block__name-text">
-          "Romeo y Julieta" es una obra de teatro escrita por William Shakespeare en el siglo XVI. La trama
-          sigue a dos jóvenes amantes, Romeo y Julieta, cuyas familias rivales generan conflictos. A pesar de
-          las adversidades, se enamoran y casan en secreto, pero una serie de malentendidos y tragedias lleva
-          a un desenlace fatal. La obra explora temas como el amor, la rivalidad familiar y el destino,
-          convirtiéndose en una de las historias de amor más conocidas de la literatura.
-        </p>
-      </div>
-    </section>
-    <article>
-      <section class="poster-container">
-                <div v-for="obra in obras" :key="obra.obraID" class='show-poster'>
-                    <div class='show-poster__image'>
-                        <img :src="obra.imagenes.split(',')[0] " alt="Imagen de la obra" />
-                    </div>
-                    <div class='show-poster__details'>
-                        <h3 class='show-poster__details__title'>{{ obra.nombre }}</h3>
-                        <RouterLink :to="{ path: '/Function/' + obra.obraID }" class='show-poster__button'>Comprar
-                            Entradas</RouterLink>
-                    </div>
+    <body>
+        <main class="main">
+            <section class="performance-block">
+                <div class="performance-block__info">
+                    <h2 class="performance-block__title">{{ $t("HomeAdmin.text1") }}</h2>
+                    <RouterLink to="/Programacion" class="performance-block__button">{{ $t("HomeAdmin.text4") }}
+                    </RouterLink>
+                </div>
+                <div class="performance-block__image">
+                    <img src="../assets/img/ROMEO-Y-JULIETA.jpeg" alt="Función de Teatro" class="image__img" />
+                </div>
+                <div class="performance-block__name">
+                    <h2 class="performance-block__name-title">{{ $t("HomeAdmin.text2") }}</h2>
+                    <p class="performance-block__name-text">
+                        {{ $t("HomeAdmin.text3") }}
+                    </p>
                 </div>
             </section>
-    </article>
-  </main>
+            <article>
+                <section class="poster-container">
+                    <div v-for="obra in obras" :key="obra.obraID" class='show-poster'>
+                        <div class='show-poster__image'>
+                            <img :src="obra.imagenes.split(',')[0]" alt="Imagen de la obra" />
+                        </div>
+                        <div class='show-poster__details'>
+                            <h3 class='show-poster__details__title'>{{ obra.nombre }}</h3>
+                            <RouterLink :to="{ path: '/Function/' + obra.obraID }" class='show-poster__button'>
+                                {{ $t("HomeAdmin.text4") }}
+                            </RouterLink>
+                        </div>
+                    </div>
+                </section>
+            </article>
+        </main>
+    </body>
 </template>
-
   
 <style scoped>
 body,
@@ -108,8 +106,8 @@ body {
 .performance-block__button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #fffefe ;
-    color: #000000 ;
+    background-color: #fffefe;
+    color: #000000;
     text-decoration: none;
     border-radius: 8px;
     font-size: x-large;
@@ -196,12 +194,12 @@ body {
 }
 
 .show-poster__button {
-    padding: 10px 20px ;
-    background-color: #fff ;
-    color: #1E3367 ;
-    border: none ;
-    border-radius: 4px ;
-    cursor: pointer ;
+    padding: 10px 20px;
+    background-color: #fff;
+    color: #1E3367;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 

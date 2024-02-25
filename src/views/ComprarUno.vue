@@ -1,7 +1,7 @@
 <template>
   <main>
     <section class="main-block">
-      <h1 class="main-block__title">Compra de entradas</h1>
+      <h1 class="main-block__title">{{ $t("Comprar1.information") }}</h1>
     </section>
 
     <section class="frame-function" v-if="obra">
@@ -13,7 +13,7 @@
       </div>
     </section>
     <div id="container" class="information-container">
-      <h2 class="information-title">Información de Fechas y Horas</h2>
+      <h2 class="information-title">{{ $t("Comprar1.text") }}</h2>
       <div class="container-frame">
         <ul class="horarios-txt__list">
           <li v-for="(fecha, index) in obra?.fechas.split(',') || []" :key="index" class='horarios-txt__item'>
@@ -21,7 +21,7 @@
             <RouterLink :to="{
               path: '/comprarDos/' + obra?.obraID,
               query: { idSesion: (index + 1) }
-            }" class="show-poster__button">Comprar</RouterLink>
+            }" class="show-poster__button">{{ $t("Comprar1.text2") }}</RouterLink>
           </li>
         </ul>
       </div>
@@ -37,8 +37,8 @@ import { useRoute } from 'vue-router';
 interface Obra {
   nombre: string;
   descripcion: string;
-  imagenes: string; 
-  fechas: string; 
+  imagenes: string;
+  fechas: string;
   obraID: string;
 }
 
@@ -102,16 +102,16 @@ body {
 }
 
 .show-poster__button {
-      /* background: #060e83; */
-      background: linear-gradient(0deg,#060e83,#0c19b4);
-    color: #fff;
-    border: none;
-    font-size: 16px;
-    margin-left: 10px;
-    width: 130px;
-    height: 40px;
-    padding: 1px 10px;
-    border-radius: 5px;
+  /* background: #060e83; */
+  background: linear-gradient(0deg, #060e83, #0c19b4);
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  margin-left: 10px;
+  width: 130px;
+  height: 40px;
+  padding: 1px 10px;
+  border-radius: 5px;
 }
 
 /* Estilos del marco de la función */

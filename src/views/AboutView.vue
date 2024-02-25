@@ -2,25 +2,19 @@
     <body>
         <main>
             <div class="main-block">
-                <h1>Información</h1>
+                <h1>{{ $t("About.information") }}</h1>
             </div>
             <section class="frame-Thorario">
                 <div class="frame-Thorario_title">
-                    <h2>Horarios de taquilla</h2>
+                    <h2>{{ $t("About.text") }}</h2>
                 </div>
                 <div class="frame-Thorario_txt">
-                    <p>Nos complace anunciar que nuestro horario de apertura para la compra de entradas es especialmente
-                        conveniente para nuestros visitantes. De lunes a viernes, nuestras taquillas están abiertas desde
-                        las 8:00 a.m. hasta las 7:00 p.m., permitiendo así que tanto los madrugadores como los que prefieren
-                        las tardes puedan adquirir sus entradas sin inconvenientes. Los fines de semana, extendemos nuestro
-                        horario: abrimos a las 9:00 a.m. y cerramos a las 8:00 p.m., asegurándonos de que incluso aquellos
-                        que disfrutan de un merecido descanso en la mañana puedan planificar su visita. Además, para mayor
-                        comodidad, nuestra página web ofrece la posibilidad de comprar entradas en línea las 24 horas del
-                        día, todos los días de la semana, facilitando aún más el acceso a nuestros eventos y espectáculos.
+                    <p>
+                        {{ $t("About.text2") }}
                     </p>
                 </div>
             </section>
-        </main> 
+        </main>
     </body>
 </template>
 <style scoped>

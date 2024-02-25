@@ -3,7 +3,7 @@
         <main class="main">
             <div class="main-block">
 
-                <h1>Programación</h1>
+                <h1>{{ $t("Programacion.text1") }}</h1>
             </div>
             <section class="poster-container">
                 <div v-for="obra in obras" :key="obra.obraID" class='show-poster'>
@@ -13,8 +13,9 @@
                     </div>
                     <div class='show-poster__details'>
                         <h3 class='show-poster__details__title'>{{ obra.nombre }}</h3>
-                        <RouterLink :to="{ path: '/Function/' + obra.obraID }" class='show-poster__button'>Comprar
-                            Entradas</RouterLink>
+                        <RouterLink :to="{ path: '/Function/' + obra.obraID }" class='show-poster__button'>
+                            {{ $t("Programacion.text2") }}
+                        </RouterLink>
                     </div>
                 </div>
             </section>
@@ -29,7 +30,7 @@ import { useRoute } from 'vue-router';
 
 interface Obra {
     nombre: string;
-    imagenes: string; 
+    imagenes: string;
     obraID: string;
 }
 
@@ -72,12 +73,13 @@ body {
     line-height: 1.6;
     overflow: auto;
 }
-.main-block{
+
+.main-block {
     background-color: #1e3367;
     color: white;
 }
 
-.main-block h1{
+.main-block h1 {
     padding-left: 30px;
 }
 
@@ -192,12 +194,12 @@ body {
 }
 
 .show-poster__button {
-    padding: 10px 20px ;
-    background-color: #fff ;
-    color: #1E3367 ;
-    border: none ;
-    border-radius: 4px ;
-    cursor: pointer ;
+    padding: 10px 20px;
+    background-color: #fff;
+    color: #1E3367;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 

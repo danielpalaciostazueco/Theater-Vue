@@ -2,7 +2,7 @@
   <main>
     <article class="article-block">
       <div class="main-block">
-        <h1>Compra de entradas</h1>
+        <h1>{{ $t("Comprar2.information") }}</h1>
       </div>
       <section class="frame-function" v-if="obra">
         <div class="frame-function__poster">
@@ -17,10 +17,10 @@
     <div ref="cinemaSeatsContainer" class="cinema-seats"></div>
     <div class="cinema-button">
       <div>
-        <p>Precio Total: {{ calcularTotal }} €</p>
+        <p>{{ $t("Comprar2.text") }} {{ calcularTotal }} €</p>
       </div>
       <div>
-        <button @click="comprarAsientos">Comprar</button>
+        <button @click="comprarAsientos">{{ $t("Comprar2.text2") }}</button>
       </div>
     </div>
   </main>
@@ -93,15 +93,32 @@ onMounted(async () => {
 
 function generarButacas() {
   const anchoAsiento = 40, altoAsiento = 40, espacioEntreAsientos = 10, espacioEntreFilas = 20;
-  let svgHTML = `<svg width="${(anchoAsiento + espacioEntreAsientos) * 5}" height="${(altoAsiento + espacioEntreFilas) * 4}">`;
+  const anchoReposabrazos = 10, altoReposabrazos = altoAsiento;
+  const anchoSvg = (anchoAsiento + espacioEntreAsientos + anchoReposabrazos * 2) * 5;
+
+  const anchoPantalla = anchoSvg * 0.8;
+  const altoPantalla = 100;
+  const xPantalla = (anchoSvg - anchoPantalla) / 2;
+  const yPantalla = 20;
+
+  let svgHTML = `<svg width="350" height="400">`;
+
+  svgHTML += `<rect x="${xPantalla}" y="${yPantalla}" width="${anchoPantalla}" height="${altoPantalla}" style="fill:#9f9f9f; stroke:white; stroke-width:2" />`;
 
   asientos.value.forEach((asiento, index) => {
     const fila = Math.floor(index / 5);
     const posAsiento = index % 5;
-    const x = posAsiento * (anchoAsiento + espacioEntreAsientos);
-    const y = fila * (altoAsiento + espacioEntreFilas);
+    const x = posAsiento * (anchoAsiento + espacioEntreAsientos + anchoReposabrazos * 2);
+    const y = fila * (altoAsiento + espacioEntreFilas) + altoPantalla + yPantalla * 2;
     const color = asiento.isFree ? '#00008B' : 'red';
-    svgHTML += `<rect id="asiento-${asiento.idAsiento}" x="${x}" y="${y}" width="${anchoAsiento}" height="${altoAsiento}" rx="5" ry="5" style="stroke:black; fill:${color}" />`;
+
+    svgHTML += `<rect id="asiento-${asiento.idAsiento}" x="${x + anchoReposabrazos}" y="${y}" width="${anchoAsiento}" height="${altoAsiento}" rx="5" ry="5" style="stroke:black; fill:${color}" />`;
+
+
+    svgHTML += `<rect x="${x}" y="${y}" width="${anchoReposabrazos}" height="${altoReposabrazos}" style="fill:grey" />`;
+
+
+    svgHTML += `<rect x="${x + anchoAsiento + anchoReposabrazos}" y="${y}" width="${anchoReposabrazos}" height="${altoReposabrazos}" style="fill:grey" />`;
   });
 
   svgHTML += '</svg>';
@@ -121,6 +138,8 @@ function generarButacas() {
   });
 }
 
+
+
 function cambiarColor(asiento: SVGElement) {
   const idAsiento = parseInt(asiento.id.replace('asiento-', ''));
 
@@ -135,7 +154,7 @@ function cambiarColor(asiento: SVGElement) {
 
   if (indexSeleccionado > -1) {
     asientosSeleccionados.value.splice(indexSeleccionado, 1);
-    asiento.style.fill = '#00008B'; 
+    asiento.style.fill = '#00008B';
   } else {
 
     asientosSeleccionados.value.push({ idAsiento, isFree: false });
@@ -292,6 +311,7 @@ section {
 .cinema-button {
   display: flex;
   justify-content: center;
+  padding-top: 20px;
 }
 </style>
 
