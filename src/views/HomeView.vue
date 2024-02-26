@@ -19,7 +19,7 @@
             </section>
             <article>
                 <section class="poster-container">
-                    <div v-for="obra in obras" :key="obra.obraID" class='show-poster'>
+                    <div v-for="obra in store.obras" :key="obra.obraID" class='show-poster'>
                         <div class='show-poster__image'>
                             <img :src="obra.imagenes.split(',')[0]" alt="Imagen de la obra" />
                         </div>
@@ -37,6 +37,7 @@
 </template>
 
 <script setup lang="ts">
+import { useListadoObrasStore } from '@/store/Obra-Store';
 import { ref, onMounted } from 'vue';
 import { RouterLink } from 'vue-router';
 
@@ -48,7 +49,7 @@ interface Obra {
 
 const obras = ref<Obra[]>([]);
 
-
+const store = useListadoObrasStore();
 
 
 const fetchObras = async () => {
@@ -67,6 +68,7 @@ const fetchObras = async () => {
 
 onMounted(() => {
     fetchObras();
+    store.cargarObras()
 });
 </script>  
 

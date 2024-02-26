@@ -12,7 +12,6 @@
     </nav>
     <section class="search-block" style="text-align: right; padding: 20px;">
       <input v-model="nombreBuscado" placeholder="Buscar obra por nombre..." />
-      <button @click="buscarObra">Buscar</button>
     </section>
   </header>
 </template>
