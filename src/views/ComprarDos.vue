@@ -36,7 +36,6 @@ interface Obra {
   descripcion: string;
   imagenes: string;
   actores: string;
-  fechas: string;
   obraID: string;
 }
 

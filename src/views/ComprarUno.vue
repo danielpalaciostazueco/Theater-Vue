@@ -1,12 +1,12 @@
 <template>
   <main>
     <section class="main-block">
-      <h1 class="main-block__title">{{ $t("Comprar1.information") }}</h1>
+      <h1 class="main-block__title">{{ obra?.nombre }}</h1>
     </section>
 
     <section class="frame-function" v-if="obra">
       <div class="frame-function__poster">
-        <img :src="obra.imagenes.split(',')[0]" alt="Imagen de la obra" v-if="obra.imagenes" />
+        <img :src="obra.imagenes?.split(',')[0]" alt="Imagen de la obra" v-if="obra.imagenes" />
       </div>
       <div class="frame-function__title">
         <h2 class="frame-function__title-text">{{ obra.nombre }}</h2>
@@ -16,11 +16,25 @@
       <h2 class="information-title">{{ $t("Comprar1.text") }}</h2>
       <div class="container-frame">
         <ul class="horarios-txt__list">
-          <li v-for="(fecha, index) in obra?.fechas.split(',') || []" :key="index" class='horarios-txt__item'>
-            {{ fecha.trim() }}
-            <RouterLink :to="{
-              path: '/comprarDos/' + obra?.obraID,
-              query: { idSesion: (index + 1) }
+          <li v-if="obra?.fechaUno" class='horarios-txt__item'>
+            {{ obra.fechaUno }}
+            <RouterLink v-if="obra && obra.obraID" :to="{
+              path: '/comprarDos/' + obra.obraID,
+              query: { idSesion: 1 }
+            }" class="show-poster__button">{{ $t("Comprar1.text2") }}</RouterLink>
+          </li>
+          <li v-if="obra?.fechaDos" class='horarios-txt__item'>
+            {{ obra.fechaDos }}
+            <RouterLink v-if="obra && obra.obraID" :to="{
+              path: '/comprarDos/' + obra.obraID,
+              query: { idSesion: 2 }
+            }" class="show-poster__button">{{ $t("Comprar1.text2") }}</RouterLink>
+          </li>
+          <li v-if="obra?.fechaTres" class='horarios-txt__item'>
+            {{ obra.fechaTres }}
+            <RouterLink v-if="obra && obra.obraID" :to="{
+              path: '/comprarDos/' + obra.obraID,
+              query: { idSesion: 3 }
             }" class="show-poster__button">{{ $t("Comprar1.text2") }}</RouterLink>
           </li>
         </ul>
@@ -33,22 +47,35 @@
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
-
 interface Obra {
   nombre: string;
   descripcion: string;
   imagenes: string;
-  fechas: string;
+  fechaUno?: Date;
+  fechaDos?: Date;
+  fechaTres?: Date;
   obraID: string;
 }
 
 const obra = ref<Obra | null>(null);
+
+
+function formatearFechaISO(fechaISO: string): string {
+  const fecha = new Date(fechaISO);
+  return fecha.toLocaleDateString('es-ES', {
+    year: 'numeric', month: 'long', day: 'numeric'
+  });
+}
 
 async function fetchObra(idObra: string) {
   try {
     const response = await fetch(`http://localhost:8001/obras/${idObra}`);
     if (!response.ok) throw new Error('Error al obtener los datos de la obra');
     const data = await response.json();
+    // Formatea las fechas antes de asignarlas
+    data.fechaUno = data.fechaUno ? formatearFechaISO(data.fechaUno) : undefined;
+    data.fechaDos = data.fechaDos ? formatearFechaISO(data.fechaDos) : undefined;
+    data.fechaTres = data.fechaTres ? formatearFechaISO(data.fechaTres) : undefined;
     obra.value = data;
   } catch (error) {
     console.error('Error en la solicitud fetch:', error);
@@ -61,7 +88,6 @@ onMounted(() => {
   if (idObra) fetchObra(idObra);
 });
 </script>
-
 
 <style scoped>
 body,

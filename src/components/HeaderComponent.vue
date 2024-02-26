@@ -10,18 +10,23 @@
       <RouterLink to="/Activities" class="nav__link">{{ $t("Header.activities") }}</RouterLink>
       <RouterLink to="/Contact" class="nav__link">{{ $t("Header.contact") }}</RouterLink>
     </nav>
+    <section class="search-block" style="text-align: right; padding: 20px;">
+      <input v-model="nombreBuscado" placeholder="Buscar obra por nombre..." />
+      <button @click="buscarObra">Buscar</button>
+    </section>
   </header>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
+const nombreBuscado = ref('');
+const router = useRouter();
 
-// Asumiendo que las imágenes se mueven al directorio público y se accede a ellas directamente
 const mask1Src = '/Careta-Morada.png';
 const mask2Src = '/Careta-amarilla.png';
 
-const separation = ref(0); // Inicialmente unidas
+const separation = ref(0);
 const movingApart = ref(false);
 
 const canvasRef = ref<HTMLCanvasElement | null>(null);
@@ -65,20 +70,20 @@ function drawMasks(ctx: CanvasRenderingContext2D, mask1: HTMLImageElement, mask2
   ctx.fill();
   ctx.stroke();
 
-  // Ajusta la posición para tener en cuenta la nueva separación
+
   ctx.drawImage(mask1, 100 - mask1.width / 2 - separation.value, 50, 100, 100);
   ctx.drawImage(mask2, 100 - mask2.width / 2 + separation.value, 50, 100, 100);
 }
 
 function handleMouseEnter() {
   movingApart.value = true;
-  separation.value = 10; // Cambia este valor para ajustar la separación al pasar el ratón
+  separation.value = 10;
   redrawMasks();
 }
 
 function handleMouseLeave() {
   movingApart.value = false;
-  separation.value = 0; // Las máscaras vuelven a unirse
+  separation.value = 0;
   redrawMasks();
 }
 
@@ -98,10 +103,27 @@ function redrawMasks() {
     };
   }
 }
+
+const buscarObra = async () => {
+  if (!nombreBuscado.value) {
+    alert('Por favor, ingrese un nombre para buscar.');
+    return;
+  }
+  try {
+    const response = await fetch(`http://localhost:8001/Obras/Nombre/${nombreBuscado.value}`);
+    if (response.ok) {
+      const obraEncontrada = await response.json();
+      router.push(`/ComprarUno/${obraEncontrada.obraID}`);
+    } else {
+      alert('Obra no encontrada.');
+    }
+  } catch (error) {
+    console.error('Error al buscar la obra:', error);
+  }
+};
 </script>
 
 <style>
-/* Los estilos se mantienen iguales, ya que no hay indicación de problemas en ellos */
 .header {
   display: flex;
   align-items: center;

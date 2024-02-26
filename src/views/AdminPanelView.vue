@@ -12,7 +12,9 @@
           <th>{{ $t("AdminPanel.duration") }}</th>
           <th>{{ $t("AdminPanel.actors") }}</th>
           <th>{{ $t("AdminPanel.images") }}</th>
-          <th>{{ $t("AdminPanel.dates") }}</th>
+          <th>{{ $t("AdminPanel.date1") }}</th>
+          <th>{{ $t("AdminPanel.date2") }}</th>
+          <th>{{ $t("AdminPanel.date3") }}</th>
           <th>{{ $t("AdminPanel.poster") }}</th>
           <th>{{ $t("AdminPanel.actions") }}</th>
         </tr>
@@ -30,30 +32,33 @@
               <li v-for="imagen in obra.imagenes.split(',')" :key="imagen">{{ imagen }}</li>
             </ul>
           </td>
-          <td>{{ obra.fechas }}</td>
+          <td>{{ obra.fechaUno }}</td>
+          <td>{{ obra.fechaDos }}</td>
+          <td>{{ obra.fechaTres }}</td>
           <td><img :src="obra.cartel" alt="Cartel de la obra" style="width: 100px; height: auto;" /></td>
           <td>
             <button @click="editarObra(obra)">Editar</button>
-            <button @click="obra.obraID && borrarObra(obra.obraID)">Borrar</button>
+            <button @click="borrarObra(obra.obraID!)">Borrar</button>
           </td>
         </tr>
       </tbody>
     </table>
     <div v-if="mostrarFormulario">
-      <input v-model="obraEditando.nombre" :placeholder="$t('AdminPanel.placeholders.name')" />
-      <textarea v-model="obraEditando.descripcion" :placeholder="$t('AdminPanel.placeholders.description')"></textarea>
-      <input v-model="obraEditando.autores" :placeholder="$t('AdminPanel.placeholders.authors')" />
-      <input v-model="obraEditando.duracion" type="number" :placeholder="$t('AdminPanel.placeholders.duration')" />
-      <input v-model="obraEditando.actores" :placeholder="$t('AdminPanel.placeholders.actors')" />
-      <input v-model="obraEditando.imagenes" :placeholder="$t('AdminPanel.placeholders.images')" />
-      <input v-model="obraEditando.fechas" :placeholder="$t('AdminPanel.placeholders.dates')" />
-      <input v-model="obraEditando.cartel" :placeholder="$t('AdminPanel.placeholders.poster')" />
-      <button @click="guardarObra">{{ $t("AdminPanel.save") }}</button>
-      <button @click="cerrarFormulario">{{ $t("AdminPanel.cancel") }}</button>
+      <input v-model="obraEditando.nombre" placeholder="Nombre" />
+      <textarea v-model="obraEditando.descripcion" placeholder="Descripción"></textarea>
+      <input v-model="obraEditando.autores" placeholder="Autores" />
+      <input v-model="obraEditando.duracion" type="number" placeholder="Duración" />
+      <input v-model="obraEditando.actores" placeholder="Actores" />
+      <input v-model="obraEditando.imagenes" placeholder="Imágenes" />
+      <input type="date" v-model="obraEditando.fechaUno" placeholder="Fecha 1" />
+      <input type="date" v-model="obraEditando.fechaDos" placeholder="Fecha 2" />
+      <input type="date" v-model="obraEditando.fechaTres" placeholder="Fecha 3" />
+      <input v-model="obraEditando.cartel" placeholder="Cartel" />
+      <button @click="guardarObra">Guardar</button>
+      <button @click="cerrarFormulario">Cancelar</button>
     </div>
   </div>
 </template>
-
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 
@@ -65,37 +70,68 @@ interface Obra {
   duracion: number | null;
   actores: string;
   imagenes: string;
-  fechas: string;
+  fechaUno: string;
+  fechaDos: string;
+  fechaTres: string;
   cartel: string;
 }
 
-const estadoInicial: Obra = {
-  nombre: '',
-  descripcion: '',
-  autores: '',
-  duracion: null,
-  actores: '',
-  imagenes: '',
-  fechas: '',
-  cartel: ''
-};
-
 const obras = ref<Obra[]>([]);
-const obraEditando = ref<Obra>({ ...estadoInicial });
+const obraEditando = ref<Obra>({ ...estadoInicial() });
 const mostrarFormulario = ref(false);
+
+function estadoInicial(): Obra {
+  return {
+    nombre: '',
+    descripcion: '',
+    autores: '',
+    duracion: null,
+    actores: '',
+    imagenes: '',
+    fechaUno: '',
+    fechaDos: '',
+    fechaTres: '',
+    cartel: '',
+  };
+}
+
+
+function convertirFechaAString(fecha: Date): string {
+  return fecha.toISOString().substring(0, 10);
+}
+
+
+function convertirStringAFecha(fechaStr: string): Date {
+  return new Date(fechaStr);
+}
 
 onMounted(cargarObras);
 
 async function cargarObras() {
   try {
     const response = await fetch('http://localhost:8001/Obras');
-    obras.value = await response.json();
+    const data = await response.json();
+    obras.value = data.map((obra: any) => ({
+      ...obra,
+
+      fechaUno: convertirFechaAString(new Date(obra.fechaUno)),
+      fechaDos: convertirFechaAString(new Date(obra.fechaDos)),
+      fechaTres: convertirFechaAString(new Date(obra.fechaTres)),
+    }));
   } catch (error) {
     console.error('Error al cargar las obras:', error);
   }
 }
 
 async function guardarObra() {
+  const obraParaGuardar = {
+    ...obraEditando.value,
+    fechaUno: convertirStringAFecha(obraEditando.value.fechaUno),
+    fechaDos: convertirStringAFecha(obraEditando.value.fechaDos),
+    fechaTres: convertirStringAFecha(obraEditando.value.fechaTres),
+  };
+
+
   const url = obraEditando.value.obraID ? `http://localhost:8001/Obras/${obraEditando.value.obraID}` : 'http://localhost:8001/Obras';
   const method = obraEditando.value.obraID ? 'PUT' : 'POST';
 
@@ -103,10 +139,12 @@ async function guardarObra() {
     const response = await fetch(url, {
       method: method,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(obraEditando.value),
+      body: JSON.stringify(obraParaGuardar),
     });
 
-    if (!response.ok) throw new Error('Error al guardar la obra');
+    if (!response.ok) {
+      throw new Error('Error al guardar la obra');
+    }
     cerrarFormulario();
     await cargarObras();
   } catch (error) {
@@ -114,29 +152,31 @@ async function guardarObra() {
   }
 }
 
-async function borrarObra(obraID: number) {
-  try {
-    const response = await fetch(`http://localhost:8001/Obras/${obraID}`, { method: 'DELETE' });
-    if (!response.ok) throw new Error('Error al borrar la obra');
-    await cargarObras();
-  } catch (error) {
-    console.error('Error al borrar la obra:', error);
-  }
-}
-
 function cerrarFormulario() {
   mostrarFormulario.value = false;
-  obraEditando.value = { ...estadoInicial };
+  obraEditando.value = estadoInicial();
 }
 
 function nuevaObra() {
-  obraEditando.value = { ...estadoInicial };
+  obraEditando.value = estadoInicial();
   mostrarFormulario.value = true;
 }
 
 function editarObra(obra: Obra) {
   obraEditando.value = { ...obra };
   mostrarFormulario.value = true;
+}
+
+async function borrarObra(obraID: number) {
+  try {
+    const response = await fetch(`http://localhost:8001/Obras/${obraID}`, { method: 'DELETE' });
+    if (!response.ok) {
+      throw new Error('Error al borrar la obra');
+    }
+    await cargarObras();
+  } catch (error) {
+    console.error('Error al borrar la obra:', error);
+  }
 }
 </script>
 

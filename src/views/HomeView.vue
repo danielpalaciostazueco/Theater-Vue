@@ -1,31 +1,3 @@
-<script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-
-interface Obra {
-    nombre: string;
-    imagenes: string;
-    obraID: string;
-}
-
-const obras = ref<Obra[]>([]);
-
-const fetchObras = async () => {
-    try {
-        const response = await fetch('http://localhost:8001/obras');
-        if (!response.ok) {
-            throw new Error('Error al obtener los datos de las obras');
-        }
-        obras.value = await response.json();
-    } catch (error) {
-        console.error('Error al obtener los datos de las obras:', error);
-    }
-};
-
-onMounted(() => {
-    fetchObras();
-});
-</script>
 <template>
     <body>
         <main class="main">
@@ -63,7 +35,41 @@ onMounted(() => {
         </main>
     </body>
 </template>
-  
+
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import { RouterLink } from 'vue-router';
+
+interface Obra {
+    nombre: string;
+    imagenes: string;
+    obraID: string;
+}
+
+const obras = ref<Obra[]>([]);
+
+
+
+
+const fetchObras = async () => {
+    try {
+        const response = await fetch('http://localhost:8001/obras');
+        if (!response.ok) {
+            throw new Error('Error al obtener los datos de las obras');
+        }
+        obras.value = await response.json();
+    } catch (error) {
+        console.error('Error al obtener los datos de las obras:', error);
+    }
+};
+
+
+
+onMounted(() => {
+    fetchObras();
+});
+</script>  
+
 <style scoped>
 body,
 h1,

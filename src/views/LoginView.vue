@@ -26,16 +26,15 @@ import { useRouter } from 'vue-router';
 export default defineComponent({
     setup() {
         const router = useRouter();
-        // Ajusta los nombres de las propiedades para que coincidan con tu modelo de backend
         const formData = ref({
-            nombreUsuario: '', // Cambiado de 'nombre' a 'nombreUsuario'
-            contrasena: '', // Ya está correcto
+            nombreUsuario: '',
+            contrasena: '',
         });
 
         const submitForm = async () => {
             const url = 'http://localhost:8001/Usuario';
             try {
-                // Verifica que la estructura del objeto que envías coincide con la esperada por tu backend
+
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: {
@@ -44,15 +43,13 @@ export default defineComponent({
                     body: JSON.stringify({
                         nombreUsuario: formData.value.nombreUsuario,
                         contrasena: formData.value.contrasena,
-                        // idUsuario no se incluye porque es autoincrementable por Entity Framework
                     }),
                 });
 
                 if (response.ok) {
-                    // Procesamiento de la respuesta
                     const data = await response.json();
                     console.log('Registro exitoso:', data);
-                    router.push('/Home'); // Redirige a la página principal tras un registro exitoso
+                    router.push('/Home');
                 } else {
                     console.error('Error en el registro:', response.statusText);
                 }

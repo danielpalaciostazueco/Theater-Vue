@@ -1,33 +1,3 @@
-<script setup lang="ts">
-import { ref, onMounted } from 'vue';
-
-
-interface Obra {
-    nombre: string;
-    imagenes: string;
-    obraID: string;
-}
-
-const obras = ref<Obra[]>([]);
-
-const fetchObras = async () => {
-    try {
-        const response = await fetch('http://localhost:8001/obras');
-        if (!response.ok) {
-            throw new Error('Error al obtener los datos de las obras');
-        }
-        const data = await response.json();
-        obras.value = data;
-    } catch (error) {
-        console.error('Error al obtener los datos de las obras:', error);
-    }
-};
-
-onMounted(() => {
-    fetchObras();
-});
-
-</script>
 <template>
     <header class="header">
         <div class="header__logo">
@@ -41,6 +11,10 @@ onMounted(() => {
             <RouterLink to="/Contact" class="nav__link">{{ $t("HomeAdmin.contact") }}</RouterLink>
             <RouterLink to="/AdminPanel" class="nav__link">{{ $t("HomeAdmin.admin") }}</RouterLink>
         </nav>
+        <section class="search-block" style="text-align: right; padding: 20px;">
+            <input v-model="nombreBuscado" placeholder="Buscar obra por nombre..." />
+            <button @click="buscarObra">Buscar</button>
+        </section>
     </header>
 
     <body>
@@ -79,6 +53,58 @@ onMounted(() => {
         </main>
     </body>
 </template>
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import { RouterLink, useRouter } from 'vue-router'
+
+const nombreBuscado = ref('');
+const router = useRouter();
+
+interface Obra {
+    nombre: string;
+    imagenes: string;
+    obraID: string;
+}
+
+const obras = ref<Obra[]>([]);
+
+const buscarObra = async () => {
+    if (!nombreBuscado.value) {
+        alert('Por favor, ingrese un nombre para buscar.');
+        return;
+    }
+    try {
+        const response = await fetch(`http://localhost:8001/Obras/Nombre/${nombreBuscado.value}`);
+        if (response.ok) {
+            const obraEncontrada = await response.json();
+            router.push(`/ComprarUno/${obraEncontrada.obraID}`);
+        } else {
+            alert('Obra no encontrada.');
+        }
+    } catch (error) {
+        console.error('Error al buscar la obra:', error);
+    }
+};
+const fetchObras = async () => {
+    try {
+        const response = await fetch('http://localhost:8001/obras');
+        if (!response.ok) {
+            throw new Error('Error al obtener los datos de las obras');
+        }
+        const data = await response.json();
+        obras.value = data;
+    } catch (error) {
+        console.error('Error al obtener los datos de las obras:', error);
+    }
+
+};
+
+onMounted(() => {
+    fetchObras();
+});
+
+</script>
+
 <style scoped>
 body,
 h1,

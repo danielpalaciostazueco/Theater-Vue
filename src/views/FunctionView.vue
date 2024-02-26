@@ -1,4 +1,3 @@
-
 <template>
     <div>
         <main>
@@ -12,8 +11,10 @@
                 <div class="horarios-txt">
                     <h2 class="horarios-txt__title">{{ $t("Function.text1") }}</h2>
                     <ul class="horarios-txt__list">
-                        <li v-for="horario in obra.fechas?.split(',')" :key="horario" class="horarios-txt__item">{{ horario
-                        }}</li>
+                        <li v-for="fecha in [obra.fechaUno, obra.fechaDos, obra.fechaTres]"
+                            :key="fecha && fecha.toLocaleString()" class="horarios-txt__item">{{ fecha &&
+                                fecha.toLocaleString() }}
+                        </li>
                     </ul>
                 </div>
             </section>
@@ -51,7 +52,6 @@
         </main>
     </div>
 </template>
-
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
@@ -61,24 +61,18 @@ interface Obra {
     descripcion?: string;
     imagenes?: string;
     actores?: string;
-    fechas?: string;
+    fechaUno?: string;
+    fechaDos?: string;
+    fechaTres?: string;
     obraID?: string;
 }
 
 const obra = ref<Obra | null>(null);
 
-async function fetchData(idObra: string) {
-    try {
-        const response = await fetch('http://localhost:8001/obras/' + idObra);
-        if (response.ok) {
-            const data: Obra = await response.json();
-            obra.value = data;
-        } else {
-            console.error('Error al obtener los datos de la obra');
-        }
-    } catch (error) {
-        console.error('Error en la solicitud fetch:', error);
-    }
+
+const formatearFecha = (fecha: string) => {
+    const opciones: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(fecha).toLocaleDateString('es-ES', opciones);
 }
 
 onMounted(() => {
@@ -88,7 +82,28 @@ onMounted(() => {
         fetchData(idObra);
     }
 });
+
+async function fetchData(idObra: string) {
+    try {
+        const response = await fetch(`http://localhost:8001/obras/${idObra}`);
+        if (response.ok) {
+            const data = await response.json();
+
+            obra.value = {
+                ...data,
+                fechaUno: data.fechaUno ? formatearFecha(data.fechaUno) : undefined,
+                fechaDos: data.fechaDos ? formatearFecha(data.fechaDos) : undefined,
+                fechaTres: data.fechaTres ? formatearFecha(data.fechaTres) : undefined,
+            };
+        } else {
+            console.error('Error al obtener los datos de la obra');
+        }
+    } catch (error) {
+        console.error('Error en la solicitud fetch:', error);
+    }
+}
 </script>
+
 
 
 <style scoped>
