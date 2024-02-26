@@ -11,10 +11,7 @@
                 <div class="horarios-txt">
                     <h2 class="horarios-txt__title">{{ $t("Function.text1") }}</h2>
                     <ul class="horarios-txt__list">
-                        <li v-for="fecha in [obra.fechaUno, obra.fechaDos, obra.fechaTres]"
-                            :key="fecha && fecha.toLocaleString()" class="horarios-txt__item">{{ fecha &&
-                                fecha.toLocaleString() }}
-                        </li>
+                        <li v-for="fecha in [obra.fechaUno, obra.fechaDos, obra.fechaTres]" :key="fecha" class="horarios-txt__item">{{ fecha }}</li>
                     </ul>
                 </div>
             </section>
@@ -43,8 +40,7 @@
                     </div>
                     <div class="frame-repart__txt">
                         <ul class="frame-repart__list">
-                            <li v-for="actor in obra?.actores?.split(',')" :key="actor" class="frame-repart__item">{{ actor
-                            }}</li>
+                            <li v-for="actor in obra?.actores?.split(',')" :key="actor" class="frame-repart__item">{{ actor }}</li>
                         </ul>
                     </div>
                 </div>
@@ -52,56 +48,20 @@
         </main>
     </div>
 </template>
+
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { useListadoObrasFunctionStore } from '@/store/Function-Store';
 
-interface Obra {
-    nombre?: string;
-    descripcion?: string;
-    imagenes?: string;
-    actores?: string;
-    fechaUno?: string;
-    fechaDos?: string;
-    fechaTres?: string;
-    obraID?: string;
-}
+const store = useListadoObrasFunctionStore();
+const route = useRoute();
 
-const obra = ref<Obra | null>(null);
+let obra: { nombre: string; imagenes: string; obraID: string; descripcion: string; fechaUno: string | undefined; fechaDos: string | undefined; fechaTres: string | undefined; actores: string | undefined } | null = null; // Variable para almacenar la obra específica
 
-
-const formatearFecha = (fecha: string) => {
-    const opciones: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(fecha).toLocaleDateString('es-ES', opciones);
-}
-
-onMounted(() => {
-    const route = useRoute();
-    const idObra = route.params.Id as string;
-    if (idObra) {
-        fetchData(idObra);
-    }
+onMounted(async () => {
+    obra = store.obras[0]; 
 });
-
-async function fetchData(idObra: string) {
-    try {
-        const response = await fetch(`http://localhost:8001/obras/${idObra}`);
-        if (response.ok) {
-            const data = await response.json();
-
-            obra.value = {
-                ...data,
-                fechaUno: data.fechaUno ? formatearFecha(data.fechaUno) : undefined,
-                fechaDos: data.fechaDos ? formatearFecha(data.fechaDos) : undefined,
-                fechaTres: data.fechaTres ? formatearFecha(data.fechaTres) : undefined,
-            };
-        } else {
-            console.error('Error al obtener los datos de la obra');
-        }
-    } catch (error) {
-        console.error('Error en la solicitud fetch:', error);
-    }
-}
 </script>
 
 

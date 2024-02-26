@@ -59,125 +59,15 @@
     </div>
   </div>
 </template>
+
+// Script
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { useListadoObrasAdminStore } from './store';
 
-interface Obra {
-  obraID?: number;
-  nombre: string;
-  descripcion: string;
-  autores: string;
-  duracion: number | null;
-  actores: string;
-  imagenes: string;
-  fechaUno: string;
-  fechaDos: string;
-  fechaTres: string;
-  cartel: string;
-}
-
-const obras = ref<Obra[]>([]);
-const obraEditando = ref<Obra>({ ...estadoInicial() });
-const mostrarFormulario = ref(false);
-
-function estadoInicial(): Obra {
-  return {
-    nombre: '',
-    descripcion: '',
-    autores: '',
-    duracion: null,
-    actores: '',
-    imagenes: '',
-    fechaUno: '',
-    fechaDos: '',
-    fechaTres: '',
-    cartel: '',
-  };
-}
-
-
-function convertirFechaAString(fecha: Date): string {
-  return fecha.toISOString().substring(0, 10);
-}
-
-
-function convertirStringAFecha(fechaStr: string): Date {
-  return new Date(fechaStr);
-}
+const { obras, cargarObras, guardarObra, cerrarFormulario, nuevaObra, editarObra, borrarObra, obraEditando, mostrarFormulario } = useListadoObrasAdminStore();
 
 onMounted(cargarObras);
-
-async function cargarObras() {
-  try {
-    const response = await fetch('http://localhost:8001/Obras');
-    const data = await response.json();
-    obras.value = data.map((obra: any) => ({
-      ...obra,
-
-      fechaUno: convertirFechaAString(new Date(obra.fechaUno)),
-      fechaDos: convertirFechaAString(new Date(obra.fechaDos)),
-      fechaTres: convertirFechaAString(new Date(obra.fechaTres)),
-    }));
-  } catch (error) {
-    console.error('Error al cargar las obras:', error);
-  }
-}
-
-async function guardarObra() {
-  const obraParaGuardar = {
-    ...obraEditando.value,
-    fechaUno: convertirStringAFecha(obraEditando.value.fechaUno),
-    fechaDos: convertirStringAFecha(obraEditando.value.fechaDos),
-    fechaTres: convertirStringAFecha(obraEditando.value.fechaTres),
-  };
-
-
-  const url = obraEditando.value.obraID ? `http://localhost:8001/Obras/${obraEditando.value.obraID}` : 'http://localhost:8001/Obras';
-  const method = obraEditando.value.obraID ? 'PUT' : 'POST';
-
-  try {
-    const response = await fetch(url, {
-      method: method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(obraParaGuardar),
-    });
-
-    if (!response.ok) {
-      throw new Error('Error al guardar la obra');
-    }
-    cerrarFormulario();
-    await cargarObras();
-  } catch (error) {
-    console.error('Error al guardar la obra:', error);
-  }
-}
-
-function cerrarFormulario() {
-  mostrarFormulario.value = false;
-  obraEditando.value = estadoInicial();
-}
-
-function nuevaObra() {
-  obraEditando.value = estadoInicial();
-  mostrarFormulario.value = true;
-}
-
-function editarObra(obra: Obra) {
-  obraEditando.value = { ...obra };
-  mostrarFormulario.value = true;
-}
-
-async function borrarObra(obraID: number) {
-  try {
-    const response = await fetch(`http://localhost:8001/Obras/${obraID}`, { method: 'DELETE' });
-    if (!response.ok) {
-      throw new Error('Error al borrar la obra');
-    }
-    await cargarObras();
-  } catch (error) {
-    console.error('Error al borrar la obra:', error);
-  }
-}
 </script>
 
 

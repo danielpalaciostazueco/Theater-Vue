@@ -37,18 +37,18 @@
             </section>
             <article>
                 <section class="poster-container">
-                    <div v-for="obra in obras" :key="obra.obraID" class='show-poster'>
-                        <div class='show-poster__image'>
-                            <img :src="obra.imagenes.split(',')[0]" alt="Imagen de la obra" />
-                        </div>
-                        <div class='show-poster__details'>
-                            <h3 class='show-poster__details__title'>{{ obra.nombre }}</h3>
-                            <RouterLink :to="{ path: '/Function/' + obra.obraID }" class='show-poster__button'>
-                                {{ $t("HomeAdmin.text4") }}
-                            </RouterLink>
-                        </div>
-                    </div>
-                </section>
+          <div v-for="obra in store.obras" :key="obra.obraID" class="show-poster">
+            <div class="show-poster__image">
+              <img :src="obra.imagenes.split(',')[0]" alt="Imagen de la obra" />
+            </div>
+            <div class="show-poster__details">
+              <h3 class="show-poster__details__title">{{ obra.nombre }}</h3>
+              <RouterLink :to="{ path: '/Function/' + obra.obraID }" class="show-poster__button">
+                {{ $t('HomeAdmin.text4') }}
+              </RouterLink>
+            </div>
+          </div>
+        </section>
             </article>
         </main>
     </body>
@@ -56,17 +56,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { RouterLink, useRouter } from 'vue-router'
-
+import { useListadoObrasStore } from '@/store/Obra-Store'
 const nombreBuscado = ref('');
 const router = useRouter();
 
-interface Obra {
-    nombre: string;
-    imagenes: string;
-    obraID: string;
-}
 
-const obras = ref<Obra[]>([]);
 
 const buscarObra = async () => {
     if (!nombreBuscado.value) {
@@ -85,23 +79,12 @@ const buscarObra = async () => {
         console.error('Error al buscar la obra:', error);
     }
 };
-const fetchObras = async () => {
-    try {
-        const response = await fetch('http://localhost:8001/obras');
-        if (!response.ok) {
-            throw new Error('Error al obtener los datos de las obras');
-        }
-        const data = await response.json();
-        obras.value = data;
-    } catch (error) {
-        console.error('Error al obtener los datos de las obras:', error);
-    }
 
-};
+const store = useListadoObrasStore()
 
 onMounted(() => {
-    fetchObras();
-});
+  store.cargarObras()
+})
 
 </script>
 

@@ -6,52 +6,31 @@
                 <h1>{{ $t("Programacion.text1") }}</h1>
             </div>
             <section class="poster-container">
-                <div v-for="obra in obras" :key="obra.obraID" class='show-poster'>
-                    <div class='show-poster__image'>
-                        <img :src="obra.imagenes ? obra.imagenes.split(',')[0] : 'imagen-predeterminada.jpg'"
-                            alt="Imagen de la obra" />
-                    </div>
-                    <div class='show-poster__details'>
-                        <h3 class='show-poster__details__title'>{{ obra.nombre }}</h3>
-                        <RouterLink :to="{ path: '/Function/' + obra.obraID }" class='show-poster__button'>
-                            {{ $t("Programacion.text2") }}
-                        </RouterLink>
-                    </div>
-                </div>
-            </section>
+          <div v-for="obra in store.obras" :key="obra.obraID" class="show-poster">
+            <div class="show-poster__image">
+              <img :src="obra.imagenes.split(',')[0]" alt="Imagen de la obra" />
+            </div>
+            <div class="show-poster__details">
+              <h3 class="show-poster__details__title">{{ obra.nombre }}</h3>
+              <RouterLink :to="{ path: '/Function/' + obra.obraID }" class="show-poster__button">
+                {{ $t('HomeAdmin.text4') }}
+              </RouterLink>
+            </div>
+          </div>
+        </section>
         </main>
     </body>
 </template>
-  
+
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-
-
-interface Obra {
-    nombre: string;
-    imagenes: string;
-    obraID: string;
-}
-
-const obras = ref<Obra[]>([]);
-
-const fetchObras = async () => {
-    try {
-        const response = await fetch('http://localhost:8001/obras');
-        if (!response.ok) {
-            throw new Error('Error al obtener los datos de las obras');
-        }
-        const data = await response.json();
-        obras.value = data;
-    } catch (error) {
-        console.error('Error al obtener los datos de las obras:', error);
-    }
-};
+import { useListadoObrasStore } from '@/store/Obra-Store'
+import { ref, onMounted } from 'vue'
+import { RouterLink } from 'vue-router'
+const store = useListadoObrasStore()
 
 onMounted(() => {
-    fetchObras();
-});
+  store.cargarObras()
+})
 </script>
 
 
