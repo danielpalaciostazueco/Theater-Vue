@@ -35,10 +35,10 @@
           <td>{{ obra.fechaUno }}</td>
           <td>{{ obra.fechaDos }}</td>
           <td>{{ obra.fechaTres }}</td>
-          <td><img :src="obra.cartel" alt="Cartel de la obra" style="width: 100px; height: auto;" /></td>
+          <td><img :src="obra.cartel" alt="Cartel" style="width: 100px; height: auto;" /></td>
           <td>
             <button @click="editarObra(obra)">Editar</button>
-            <button @click="borrarObra(obra.obraID!)">Borrar</button>
+            <button @click="borrarObra(obra.obraID)">Borrar</button>
           </td>
         </tr>
       </tbody>
@@ -54,22 +54,56 @@
       <input type="date" v-model="obraEditando.fechaDos" placeholder="Fecha 2" />
       <input type="date" v-model="obraEditando.fechaTres" placeholder="Fecha 3" />
       <input v-model="obraEditando.cartel" placeholder="Cartel" />
-      <button @click="guardarObra">Guardar</button>
+      <button @click="guardarActualizarObra">Guardar</button>
       <button @click="cerrarFormulario">Cancelar</button>
     </div>
   </div>
 </template>
 
-// Script
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useListadoObrasAdminStore } from './store';
+import { onMounted, ref } from 'vue';
+import { useListadoObrasAdminStore } from '../store/Admin-Store';
 
-const { obras, cargarObras, guardarObra, cerrarFormulario, nuevaObra, editarObra, borrarObra, obraEditando, mostrarFormulario } = useListadoObrasAdminStore();
 
-onMounted(cargarObras);
+const store = useListadoObrasAdminStore();
+
+const mostrarFormulario = ref(false);
+
+
+const obras = store.obras;
+const obraEditando = store.obraEditando;
+
+const nuevaObra = () => {
+  store.resetObraEditando();
+  mostrarFormulario.value = true;
+};
+
+const editarObra = (obra: any) => {
+  store.actualizarObra(obra);
+  mostrarFormulario.value = true;
+};
+
+const guardarActualizarObra = () => {
+  if (obraEditando.obraID) {
+    store.actualizarObra(obraEditando);
+  } else {
+    store.guardarObra(obraEditando);
+  }
+  cerrarFormulario();
+};
+
+const borrarObra = (obraID: string) => {
+  store.borrarObra(obraID);
+};
+
+const cerrarFormulario = () => {
+  mostrarFormulario.value = false;
+};
+
+onMounted(() => {
+  store.cargarObras();
+});
 </script>
-
 
 
 <style scoped>

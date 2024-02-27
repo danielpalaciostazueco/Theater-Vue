@@ -4,16 +4,11 @@
       <section class="performance-block">
         <div class="performance-block__info">
           <h2 class="performance-block__title">{{ $t('HomeAdmin.text1') }}</h2>
-          <RouterLink to="/Programacion" class="performance-block__button"
-            >{{ $t('HomeAdmin.text4') }}
+          <RouterLink to="/Programacion" class="performance-block__button">{{ $t('HomeAdmin.text4') }}
           </RouterLink>
         </div>
         <div class="performance-block__image">
-          <img
-            src="../assets/img/ROMEO-Y-JULIETA.jpeg"
-            alt="Función de Teatro"
-            class="image__img"
-          />
+          <img src="../assets/img/ROMEO-Y-JULIETA.jpeg" alt="Función de Teatro" class="image__img" />
         </div>
         <div class="performance-block__name">
           <h2 class="performance-block__name-title">{{ $t('HomeAdmin.text2') }}</h2>
@@ -42,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { useListadoObrasStore } from '@/store/Obra-Store'
+import { useListadoObrasStore } from '../store/Obra-Store'
 import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 const store = useListadoObrasStore()

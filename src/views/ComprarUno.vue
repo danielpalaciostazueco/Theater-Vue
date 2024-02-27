@@ -1,39 +1,39 @@
 <template>
   <main>
     <section class="main-block">
-      <h1 class="main-block__title">{{ obra?.nombre }}</h1>
+      <h1 class="main-block__title">{{ store.storeObras[0].nombre }}</h1>
     </section>
 
-    <section class="frame-function" v-if="obra">
+    <section class="frame-function" v-if="store.storeObras[0]">
       <div class="frame-function__poster">
-        <img :src="obra.imagenes?.split(',')[0]" alt="Imagen de la obra" v-if="obra.imagenes" />
+        <img :src="store.storeObras[0].imagenes[0]" alt="Imagen de la obra" v-if="store.storeObras[0].imagenes" />
       </div>
       <div class="frame-function__title">
-        <h2 class="frame-function__title-text">{{ obra.nombre }}</h2>
+        <h2 class="frame-function__title-text">{{ store.storeObras[0].nombre }}</h2>
       </div>
     </section>
     <div id="container" class="information-container">
       <h2 class="information-title">{{ $t("Comprar1.text") }}</h2>
       <div class="container-frame">
         <ul class="horarios-txt__list">
-          <li v-if="obra?.fechaUno" class='horarios-txt__item'>
-            {{ obra.fechaUno }}
-            <RouterLink v-if="obra && obra.obraID" :to="{
-              path: '/comprarDos/' + obra.obraID,
+          <li v-if="store.storeObras[0].fechaUno" class='horarios-txt__item'>
+            {{ store.storeObras[0].fechaUno }}
+            <RouterLink v-if="store.storeObras[0] && store.storeObras[0].obraID" :to="{
+              path: '/comprarDos/' + store.storeObras[0].obraID,
               query: { idSesion: 1 }
             }" class="show-poster__button">{{ $t("Comprar1.text2") }}</RouterLink>
           </li>
-          <li v-if="obra?.fechaDos" class='horarios-txt__item'>
-            {{ obra.fechaDos }}
-            <RouterLink v-if="obra && obra.obraID" :to="{
-              path: '/comprarDos/' + obra.obraID,
+          <li v-if="store.storeObras[0].fechaDos" class='horarios-txt__item'>
+            {{ store.storeObras[0].fechaDos }}
+            <RouterLink v-if="store.storeObras[0] && store.storeObras[0].obraID" :to="{
+              path: '/comprarDos/' + store.storeObras[0].obraID,
               query: { idSesion: 2 }
             }" class="show-poster__button">{{ $t("Comprar1.text2") }}</RouterLink>
           </li>
-          <li v-if="obra?.fechaTres" class='horarios-txt__item'>
-            {{ obra.fechaTres }}
-            <RouterLink v-if="obra && obra.obraID" :to="{
-              path: '/comprarDos/' + obra.obraID,
+          <li v-if="store.storeObras[0].fechaTres" class='horarios-txt__item'>
+            {{ store.storeObras[0].fechaTres }}
+            <RouterLink v-if="store.storeObras[0] && store.storeObras[0].obraID" :to="{
+              path: '/comprarDos/' + store.storeObras[0].obraID,
               query: { idSesion: 3 }
             }" class="show-poster__button">{{ $t("Comprar1.text2") }}</RouterLink>
           </li>
@@ -44,48 +44,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { onMounted, } from 'vue';
+import { useRoute, RouterLink } from 'vue-router';
+import { useListadoObrasComprar1Store } from '../store/Comprar-1-Store';
 
-interface Obra {
-  nombre: string;
-  descripcion: string;
-  imagenes: string;
-  fechaUno?: Date;
-  fechaDos?: Date;
-  fechaTres?: Date;
-  obraID: string;
-}
+const store = useListadoObrasComprar1Store();
+const route = useRoute();
+const idObra = route.params.Id as string;
 
-const obra = ref<Obra | null>(null);
-
-
-function formatearFechaISO(fechaISO: string): string {
-  const fecha = new Date(fechaISO);
-  return fecha.toLocaleDateString('es-ES', {
-    year: 'numeric', month: 'long', day: 'numeric'
-  });
-}
-
-async function fetchObra(idObra: string) {
-  try {
-    const response = await fetch(`http://localhost:8001/obras/${idObra}`);
-    if (!response.ok) throw new Error('Error al obtener los datos de la obra');
-    const data = await response.json();
-    // Formatea las fechas antes de asignarlas
-    data.fechaUno = data.fechaUno ? formatearFechaISO(data.fechaUno) : undefined;
-    data.fechaDos = data.fechaDos ? formatearFechaISO(data.fechaDos) : undefined;
-    data.fechaTres = data.fechaTres ? formatearFechaISO(data.fechaTres) : undefined;
-    obra.value = data;
-  } catch (error) {
-    console.error('Error en la solicitud fetch:', error);
-  }
-}
-
-onMounted(() => {
-  const route = useRoute();
-  const idObra = route.params.Id as string;
-  if (idObra) fetchObra(idObra);
+onMounted(async () => {
+  await store.cargarObras(idObra);
 });
 </script>
 

@@ -1,8 +1,5 @@
-
 import { defineStore } from 'pinia';
-import { reactive } from 'vue';
-
-const obra = reactive(Array<Obra>())
+import { ref } from 'vue';
 
 interface Obra {
   nombre: string;
@@ -11,16 +8,18 @@ interface Obra {
 }
 
 export const useListadoObrasStore = defineStore('listadoObras', () => {
-  const obras = reactive<Array<Obra>>([]);
-
+  const obras = ref<Array<Obra>>([]);
+  let data: any;
   const cargarObras = async () => {
     try {
       const response = await fetch('http://localhost:8001/obras');
       if (!response.ok) {
-        throw new Error('Error al obtener los datos de las obras');
+       const response = await fetch('http://localhost:8001/obras');
+       data = await response.json();
       }
-      const data = await response.json();
-      data.forEach((obra: Obra) => obras.push(obra)); 
+       data = await response.json();
+      obras.value = []; 
+      data.forEach((obra: Obra) => obras.value.push(obra)); 
     } catch (error) {
       console.error('Error al obtener los datos de las obras:', error);
     }
@@ -28,9 +27,4 @@ export const useListadoObrasStore = defineStore('listadoObras', () => {
 
   return { obras, cargarObras };
 });
-
-
-
-
-
 

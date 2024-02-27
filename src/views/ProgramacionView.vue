@@ -6,18 +6,18 @@
                 <h1>{{ $t("Programacion.text1") }}</h1>
             </div>
             <section class="poster-container">
-          <div v-for="obra in store.obras" :key="obra.obraID" class="show-poster">
-            <div class="show-poster__image">
-              <img :src="obra.imagenes.split(',')[0]" alt="Imagen de la obra" />
-            </div>
-            <div class="show-poster__details">
-              <h3 class="show-poster__details__title">{{ obra.nombre }}</h3>
-              <RouterLink :to="{ path: '/Function/' + obra.obraID }" class="show-poster__button">
-                {{ $t('HomeAdmin.text4') }}
-              </RouterLink>
-            </div>
-          </div>
-        </section>
+                <div v-for="obra in store.obras" :key="obra.obraID" class="show-poster">
+                    <div class="show-poster__image">
+                        <img :src="obra.imagenes.split(',')[0]" alt="Imagen de la obra" />
+                    </div>
+                    <div class="show-poster__details">
+                        <h3 class="show-poster__details__title">{{ obra.nombre }}</h3>
+                        <RouterLink :to="{ path: '/Function/' + obra.obraID }" class="show-poster__button">
+                            {{ $t('HomeAdmin.text4') }}
+                        </RouterLink>
+                    </div>
+                </div>
+            </section>
         </main>
     </body>
 </template>
@@ -27,10 +27,8 @@ import { useListadoObrasStore } from '@/store/Obra-Store'
 import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 const store = useListadoObrasStore()
+store.cargarObras()
 
-onMounted(() => {
-  store.cargarObras()
-})
 </script>
 
 

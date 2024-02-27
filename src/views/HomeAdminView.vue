@@ -37,18 +37,18 @@
             </section>
             <article>
                 <section class="poster-container">
-          <div v-for="obra in store.obras" :key="obra.obraID" class="show-poster">
-            <div class="show-poster__image">
-              <img :src="obra.imagenes.split(',')[0]" alt="Imagen de la obra" />
-            </div>
-            <div class="show-poster__details">
-              <h3 class="show-poster__details__title">{{ obra.nombre }}</h3>
-              <RouterLink :to="{ path: '/Function/' + obra.obraID }" class="show-poster__button">
-                {{ $t('HomeAdmin.text4') }}
-              </RouterLink>
-            </div>
-          </div>
-        </section>
+                    <div v-for="obra in store.obras" :key="obra.obraID" class="show-poster">
+                        <div class="show-poster__image">
+                            <img :src="obra.imagenes.split(',')[0]" alt="Imagen de la obra" />
+                        </div>
+                        <div class="show-poster__details">
+                            <h3 class="show-poster__details__title">{{ obra.nombre }}</h3>
+                            <RouterLink :to="{ path: '/Function/' + obra.obraID }" class="show-poster__button">
+                                {{ $t('HomeAdmin.text4') }}
+                            </RouterLink>
+                        </div>
+                    </div>
+                </section>
             </article>
         </main>
     </body>
@@ -56,11 +56,12 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { RouterLink, useRouter } from 'vue-router'
-import { useListadoObrasStore } from '@/store/Obra-Store'
+import { useListadoObrasStore } from '../store/Obra-Store'
 const nombreBuscado = ref('');
 const router = useRouter();
 
-
+const store = useListadoObrasStore()
+store.cargarObras()
 
 const buscarObra = async () => {
     if (!nombreBuscado.value) {
@@ -79,12 +80,6 @@ const buscarObra = async () => {
         console.error('Error al buscar la obra:', error);
     }
 };
-
-const store = useListadoObrasStore()
-
-onMounted(() => {
-  store.cargarObras()
-})
 
 </script>
 

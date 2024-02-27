@@ -1,85 +1,109 @@
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
 
-interface Obra {
-  obraID?: number;
-  nombre: string;
+export interface Obra {
+  obraID: string;
+  nombre: string | null;
   descripcion: string;
   autores: string;
   duracion: number | null;
   actores: string;
   imagenes: string;
-  fechaUno: string | undefined;
-  fechaDos: string | undefined;
-  fechaTres: string | undefined;
+  fechaUno: string;
+  fechaDos: string;
+  fechaTres: string;
   cartel: string;
 }
 
-export const useListadoObrasAdminStore = defineStore('listadoObras', () => {
+
+export const useListadoObrasAdminStore = defineStore('listadoObrasAdmin', () => {
+  const apiUrl = 'http://localhost:8001/Obras';
   const obras = reactive<Array<Obra>>([]);
 
-  const cargarObras = async () => {
+  const obraEditando = reactive<Obra>({
+    obraID: '',
+    nombre: null,
+    descripcion: '',
+    autores: '',
+    duracion: null,
+    actores: '',
+    imagenes: '',
+    fechaUno: '',
+    fechaDos: '',
+    fechaTres: '',
+    cartel: '',
+  });
+
+  async function cargarObras() {
     try {
-      const response = await fetch('http://localhost:8001/obras');
-      if (!response.ok) {
-        throw new Error('Error al obtener los datos de las obras');
-      }
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error('Error al cargar las obras');
       const data = await response.json();
-      
-      data.forEach((obra: Obra) => {
-        obra.fechaUno = obra.fechaUno ? formatearFecha(obra.fechaUno) : undefined;
-        obra.fechaDos = obra.fechaDos ? formatearFecha(obra.fechaDos) : undefined;
-        obra.fechaTres = obra.fechaTres ? formatearFecha(obra.fechaTres) : undefined;
-        obras.push(obra);
-      });
+      obras.splice(0, obras.length, ...data);
     } catch (error) {
-      console.error('Error al obtener los datos de las obras:', error);
-    }
-  };
-
-  const formatearFecha = (fecha: string) => {
-    const opciones: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(fecha).toLocaleDateString('es-ES', opciones);
-  };
-
-  async function borrarObra(obraID: number) {
-    try {
-      const response = await fetch(`http://localhost:8001/Obras/${obraID}`, { method: 'DELETE' });
-      if (!response.ok) {
-        throw new Error('Error al borrar la obra');
-      }
-      await cargarObras();
-    } catch (error) {
-      console.error('Error al borrar la obra:', error);
+      console.error('Error al cargar las obras:', error);
     }
   }
 
-  async function guardarObra() {
-    const obraParaGuardar = {
-     
-     
-
-    };
-  
-    const url = obraEditando.value.obraID ? `http://localhost:8001/Obras/${obraEditando.value.obraID}` : 'http://localhost:8001/Obras';
-    const method = obraEditando.value.obraID ? 'PUT' : 'POST';
-  
+  async function guardarObra(obra: Obra) {
     try {
-      const response = await fetch(url, {
-        method: method,
+      const response = await fetch(apiUrl, {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(obraParaGuardar),
+        body: JSON.stringify(obra),
       });
-  
-      if (!response.ok) {
-        throw new Error('Error al guardar la obra');
-      }
-      cerrarFormulario();
-      await cargarObras();
+      if (!response.ok) throw new Error('Error al guardar la obra');
+      await cargarObras(); // Recargar obras después de guardar
     } catch (error) {
       console.error('Error al guardar la obra:', error);
     }
   }
 
-  return { obras, cargarObras };
+  async function actualizarObra(obra: Obra) {
+    try {
+      const response = await fetch(`${apiUrl}/${obra.obraID}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(obra),
+      });
+      if (!response.ok) throw new Error('Error al actualizar la obra');
+      await cargarObras(); // Recargar obras después de actualizar
+    } catch (error) {
+      console.error('Error al actualizar la obra:', error);
+    }
+  }
+
+  async function borrarObra(obraID: string) {
+    try {
+      const response = await fetch(`${apiUrl}/${obraID}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) throw new Error('Error al borrar la obra');
+      await cargarObras(); // Recargar obras después de borrar
+    } catch (error) {
+      console.error('Error al borrar la obra:', error);
+    }
+  }
+
+ function setObraEditando(obra: Obra) {
+    Object.assign(obraEditando, obra);
+  }
+
+  function resetObraEditando() {
+    Object.assign(obraEditando, {
+      obraID: '',
+      nombre: null,
+      descripcion: '',
+      autores: '',
+      duracion: null,
+      actores: '',
+      imagenes: '',
+      fechaUno: '',
+      fechaDos: '',
+      fechaTres: '',
+      cartel: '',
+    });
+  }
+
+  return { obras, obraEditando, cargarObras, guardarObra, actualizarObra, borrarObra, resetObraEditando, setObraEditando };
 });

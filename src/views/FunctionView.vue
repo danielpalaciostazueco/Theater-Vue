@@ -2,25 +2,26 @@
     <div>
         <main>
             <div class="main-block">
-                <h1 class="main-block__title">{{ obra?.nombre }}</h1>
+                <h1 class="main-block__title" v-if="store.storeObras.length > 0">{{ store.storeObras[0].nombre }}</h1>
             </div>
-            <section class="horarios" v-if="obra && obra.imagenes && obra.imagenes.length > 0">
+            <section class="horarios" v-if="store.storeObras.length > 0">
                 <div class="horarios-img">
-                    <img :src="obra.imagenes?.split(',')[0]" alt="Imagen destacada de la obra" />
+                    <img :src="store.storeObras[0].imagenes[0]" alt="Imagen destacada de la obra" />
                 </div>
                 <div class="horarios-txt">
-                    <h2 class="horarios-txt__title">{{ $t("Function.text1") }}</h2>
+                    <h2 class="horarios-txt__title">Fechas de la obra</h2>
                     <ul class="horarios-txt__list">
-                        <li v-for="fecha in [obra.fechaUno, obra.fechaDos, obra.fechaTres]" :key="fecha" class="horarios-txt__item">{{ fecha }}</li>
+                        <li v-for="fecha in [store.storeObras[0].fechaUno, store.storeObras[0].fechaDos, store.storeObras[0].fechaTres]"
+                            :key="fecha" class="horarios-txt__item">{{ fecha }}</li>
                     </ul>
                 </div>
             </section>
-            <div class="primera-img" v-if="obra && obra.imagenes && obra.imagenes.length > 1">
-                <img :src="obra.imagenes?.split(',')[1]" alt="Imagen destacada de la obra" />
+            <div class="primera-img">
+                <img :src="store.storeObras[0].imagenes[1]" alt="Imagen destacada de la obra" />
             </div>
             <article>
                 <div class="button-bought" id="boton-comprar">
-                    <RouterLink :to="{ path: '/ComprarUno/' + obra?.obraID }" class='show-poster__button'>
+                    <RouterLink :to="{ path: '/ComprarUno/' + store.storeObras[0].obraID }" class='show-poster__button'>
                         {{ $t("Function.text3") }}
                     </RouterLink>
                 </div>
@@ -28,19 +29,20 @@
             <section>
                 <div class="frame-information">
                     <div class="frame-information__title">
-                        <h2>{{ $t("Function.text2") }}</h2>
+                        <h2>Información de la obra</h2>
                     </div>
                     <div class="frame-information__txt">
-                        <p>{{ obra?.descripcion }}</p>
+                        <p>{{ store.storeObras[0].descripcion }}</p>
                     </div>
                 </div>
                 <div class="frame-repart">
                     <div class="frame-repart__title">
-                        <h2>{{ $t("Function.text4") }}</h2>
+                        <h2>Reparto</h2>
                     </div>
                     <div class="frame-repart__txt">
                         <ul class="frame-repart__list">
-                            <li v-for="actor in obra?.actores?.split(',')" :key="actor" class="frame-repart__item">{{ actor }}</li>
+                            <li v-for="actor in store.storeObras[0].actores " :key="actor" class="frame-repart__item">{{
+                                actor }}</li>
                         </ul>
                     </div>
                 </div>
@@ -50,20 +52,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-import { useListadoObrasFunctionStore } from '@/store/Function-Store';
+import { onMounted, } from 'vue';
+import { useRoute, RouterLink } from 'vue-router';
+import { useListadoObrasFunctionStore } from '../store/Function-Store';
 
 const store = useListadoObrasFunctionStore();
 const route = useRoute();
-
-let obra: { nombre: string; imagenes: string; obraID: string; descripcion: string; fechaUno: string | undefined; fechaDos: string | undefined; fechaTres: string | undefined; actores: string | undefined } | null = null; // Variable para almacenar la obra específica
+const idObra = route.params.Id as string;
 
 onMounted(async () => {
-    obra = store.obras[0]; 
+    await store.cargarObras(idObra);
 });
 </script>
-
 
 
 <style scoped>

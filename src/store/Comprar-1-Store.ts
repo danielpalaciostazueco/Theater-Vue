@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { reactive, ref } from 'vue';
+import { reactive } from 'vue';
 
 interface Obra {
   nombre: string;
@@ -9,10 +9,9 @@ interface Obra {
   fechaUno: string;
   fechaDos: string;
   fechaTres: string;
-  actores: string[];
 }
 
-export const useListadoObrasFunctionStore = defineStore('listadoObrasFuncion', () => {
+export const useListadoObrasComprar1Store = defineStore('listadoObrasComprar1', () => {
   const storeObras = reactive<Obra[]>([]);
 
 
@@ -32,7 +31,6 @@ export const useListadoObrasFunctionStore = defineStore('listadoObrasFuncion', (
         fechaUno: formatearFecha(data.fechaUno),
         fechaDos: formatearFecha(data.fechaDos),
         fechaTres: formatearFecha(data.fechaTres),
-        actores: data.actores.split(','),
       });
     } catch (error) {
       console.error('Error al obtener los datos de la obra:', error);
