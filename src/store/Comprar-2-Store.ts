@@ -16,8 +16,10 @@ interface AsientoOcupado {
   idAsiento: number;
 }
 
-export const useListadoObrasComprar2Store = defineStore('listadoObrasComprar2', () => {
-  const obra = ref<Obra | null>(null);
+export const useListadoObrasComprar2Store = defineStore('listadoObrasCompra2', () =>{
+
+
+  const storeObras = reactive<Obra[]>([]);
   const asientos = ref<Asiento[]>([]);
   const asientosOcupados = ref<AsientoOcupado[]>([]);
   const precioPorAsiento = 5;
@@ -29,13 +31,20 @@ export const useListadoObrasComprar2Store = defineStore('listadoObrasComprar2', 
         throw new Error('Error al obtener los datos de la obra');
       }
       const data = await response.json();
-      obra.value = {
+      storeObras.length = 0; 
+      storeObras.push( {
         nombre: data.nombre,
         imagenes: data.imagenes.split(','),
         obraID: data.obraID,
-      };
+      });
     } catch (error) {
       console.error('Error al obtener los datos de la obra:', error);
+    }
+  }
+  function toggleSeleccionAsiento(idAsiento: number) {
+    const asientoIndex = asientos.value.findIndex(asiento => asiento.idAsiento === idAsiento);
+    if (asientoIndex !== -1) {
+      asientos.value[asientoIndex].isFree = !asientos.value[asientoIndex].isFree;
     }
   }
 
@@ -88,5 +97,5 @@ export const useListadoObrasComprar2Store = defineStore('listadoObrasComprar2', 
     }
   }
 
-  return { obra, asientos, asientosOcupados, cargarObra, cargarAsientosOcupados, cargarTodosLosAsientos, comprarAsientos, precioPorAsiento };
-});
+  return { storeObras, asientos, asientosOcupados, cargarObra, cargarAsientosOcupados, cargarTodosLosAsientos, comprarAsientos, precioPorAsiento ,toggleSeleccionAsiento };
+})

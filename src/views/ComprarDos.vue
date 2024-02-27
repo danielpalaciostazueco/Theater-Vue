@@ -4,35 +4,32 @@
       <div class="main-block">
         <h1>{{ $t("Comprar2.information") }}</h1>
       </div>
-      <section class="frame-function" v-if="obra">
+      <section class="frame-function" >
         <div class="frame-function__poster">
-          <img :src="obra.imagenes[0]" alt="Imagen de la obra">
+          <img :src="store.storeObras[0].imagenes[0]" alt="Imagen de la obra">
         </div>
         <div class="frame-function__title">
-          <h2>{{ obra.nombre }}</h2>
+          <h2>{{ store.storeObras[0].nombre }}</h2>
         </div>
       </section>
     </article>
 
-    <div class="cinema-seats">
-      <div v-for="asiento in asientos" :key="asiento.idAsiento" class="seat"
-        :class="{ 'occupied': !asiento.isFree, 'selected': asiento.selected }" @click="toggleSeatSelection(asiento)">
-        <span>{{ asiento.idAsiento }}</span>
-      </div>
+    <div class="cinema-seats" id="cinema-seats">
+      
     </div>
     <div class="cinema-button">
       <div>
         <p>{{ $t("Comprar2.text") }} {{ calcularTotal }} €</p>
       </div>
       <div>
-        <button @click="realizarCompra">{{ $t("Comprar2.text2") }}</button>
+        <button @click="realizarCompraYRecargarAsientos">{{ $t("Comprar2.text2") }}</button>
       </div>
     </div>
   </main>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref, computed, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
 import { useListadoObrasComprar2Store } from '../store/Comprar-2-Store';
 
@@ -42,29 +39,39 @@ const idObra = route.params.Id as string;
 const idSesion = route.query.idSesion as string;
 
 const asientosSeleccionados = ref(new Set<number>());
-
-onMounted(async () => {
+  onMounted(async () => {
   await store.cargarObra(idObra);
   await store.cargarAsientosOcupados(idObra, idSesion);
   await store.cargarTodosLosAsientos();
+  nextTick(() => {
+    generarButacas();
+  });
 });
 
 const calcularTotal = computed(() => {
   return asientosSeleccionados.value.size * store.precioPorAsiento;
 });
 
-const toggleSeatSelection = (asiento: any) => {
-  if (!asiento.isFree) return;
-  if (asientosSeleccionados.value.has(asiento.idAsiento)) {
-    asientosSeleccionados.value.delete(asiento.idAsiento);
+const toggleSeatSelection = (asientoId: number) => {
+  const asiento = store.asientos.find(a => a.idAsiento === asientoId);
+  if (!asiento || !asiento.isFree) return;
+  
+  if (asientosSeleccionados.value.has(asientoId)) {
+    asientosSeleccionados.value.delete(asientoId);
+    document.getElementById(`asiento-${asientoId}`)!.style.fill = '#00008B'; 
   } else {
-    asientosSeleccionados.value.add(asiento.idAsiento);
+    asientosSeleccionados.value.add(asientoId);
+    document.getElementById(`asiento-${asientoId}`)!.style.fill = 'green'; 
   }
   asientosSeleccionados.value = new Set(asientosSeleccionados.value);
 };
 
+
 const realizarCompra = async () => {
-  const asientosParaComprar = [...asientosSeleccionados.value];
+
+  const asientosParaComprar = Array.from(asientosSeleccionados.value).map(idAsiento => {
+    return { idAsiento, isFree: true }; 
+  });
   if (asientosParaComprar.length > 0) {
     await store.comprarAsientos(asientosParaComprar, idObra, idSesion);
     asientosSeleccionados.value.clear();
@@ -73,9 +80,68 @@ const realizarCompra = async () => {
   }
 };
 
-</script>
+function generarButacas() {
+  // Definiciones iniciales
+  const anchoAsiento = 40, altoAsiento = 40, espacioEntreAsientos = 10, espacioEntreFilas = 20;
+  const anchoReposabrazos = 10, altoReposabrazos = altoAsiento;
+  const anchoSvg = (anchoAsiento + espacioEntreAsientos + anchoReposabrazos * 2) * 5; 
+  // Configuración de la pantalla
+  const anchoPantalla = anchoSvg * 0.8;
+  const altoPantalla = 100;
+  const xPantalla = (anchoSvg - anchoPantalla) / 2;
+  const yPantalla = 20;
+
+  let svgHTML = `<svg width="${anchoSvg}" height="400">`; 
 
 
+  svgHTML += `<rect x="${xPantalla}" y="${yPantalla}" width="${anchoPantalla}" height="${altoPantalla}" style="fill:#9f9f9f; stroke:white; stroke-width:2" />`;
+
+
+   store.asientos.forEach((asiento, index) => {
+    const fila = Math.floor(index / 5);
+    const posAsiento = index % 5;
+    const x = posAsiento * (anchoAsiento + espacioEntreAsientos + anchoReposabrazos * 2);
+    const y = fila * (altoAsiento + espacioEntreFilas) + altoPantalla + yPantalla * 2;
+    const color = asiento.isFree ? '#00008B' : 'red'; 
+
+
+    svgHTML += `<rect id="asiento-${asiento.idAsiento}" x="${x + anchoReposabrazos}" y="${y}" width="${anchoAsiento}" height="${altoAsiento}" rx="5" ry="5" style="stroke:black; fill:${color}; cursor:pointer" />`;
+
+    svgHTML += `<rect x="${x}" y="${y}" width="${anchoReposabrazos}" height="${altoReposabrazos}" style="fill:grey" />`;
+    svgHTML += `<rect x="${x + anchoAsiento + anchoReposabrazos}" y="${y}" width="${anchoReposabrazos}" height="${altoReposabrazos}" style="fill:grey" />`;
+  });
+
+  svgHTML += '</svg>';
+
+
+  document.getElementById('cinema-seats')!.innerHTML = svgHTML;
+  document.querySelectorAll('rect[id^="asiento-"]').forEach((rect) => {
+ 
+  const htmlRect = rect as unknown as HTMLElement; 
+
+  const idAsiento = parseInt(htmlRect.id.replace('asiento-', ''));
+  const asiento = store.asientos.find(a => a.idAsiento === idAsiento);
+  if (asiento && asiento.isFree) {
+    htmlRect.addEventListener('click', () => toggleSeatSelection(idAsiento)); 
+  } else {
+    htmlRect.style.fill = 'red'; 
+    htmlRect.style.cursor = "not-allowed"; 
+  }
+});
+
+
+}
+
+function cambiarColor(asientoSVG: SVGElement) {
+  const idAsiento = parseInt(asientoSVG.id.replace('asiento-', ''));
+  store.toggleSeleccionAsiento(idAsiento);
+}
+
+const realizarCompraYRecargarAsientos = async () => {
+  await realizarCompra();
+  generarButacas(); 
+};
+</script> 
 <style scoped>
 body,
 h1,
@@ -194,5 +260,13 @@ section {
   justify-content: center;
   padding-top: 20px;
 }
+
+.ocupado {
+  fill: red;
+}
+.seleccionado {
+  fill: green;
+}
+
 </style>
 
