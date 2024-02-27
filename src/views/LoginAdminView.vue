@@ -6,8 +6,8 @@
         </div>
         <h2>{{ $t("LoginAdmin.text1") }}</h2>
         <form class="form" @submit.prevent="submitForm">
-            <input type="text" placeholder="Username" v-model="formData.username" required>
-            <input type="password" placeholder="Password" v-model="formData.password" required>
+            <input type="text" placeholder="Username" v-model="store.formData.nombreUsuario" required>
+            <input type="password" placeholder="Password" v-model="store.formData.password" required>
             <button type="submit">{{ $t("LoginAdmin.text1") }}</button>
         </form>
         <footer>
@@ -22,46 +22,10 @@
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
 import { useRouter } from 'vue-router';
+import { useListadoObrasAdminStore } from '../store/Admin-Store';
 
-export default defineComponent({
-    setup() {
-        const router = useRouter();
-        const formData = reactive({
-            username: '',
-            password: '',
-        });
+const store = useListadoObrasAdminStore();
 
-        const submitForm = async () => {
-
-            const url = `http://localhost:8001/Administrador/${encodeURIComponent(formData.username)}/Contrasena/${encodeURIComponent(formData.password)}`;
-
-            try {
-                const response = await fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json',
-                    },
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-
-                    await router.push('/HomeAdmin');
-                } else {
-
-                    console.error('Error en el inicio de sesión: Usuario o contraseña incorrectos');
-                }
-            } catch (error) {
-                console.error('Error en el inicio de sesión:', error);
-            }
-        };
-
-        return {
-            formData,
-            submitForm,
-        };
-    },
-});
 </script>
 <style scoped>
 * {

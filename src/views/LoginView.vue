@@ -1,70 +1,35 @@
 <template>
     <div class="circle"></div>
     <div class="card">
-        <div class="logo">
-            <i class='bx bxs-user'></i>
-        </div>
-        <h2>{{ $t("CreateAccount.text1") }}</h2>
-        <form class="form" @submit.prevent="submitForm">
-            <input type="text" placeholder="Nombre" v-model="formData.nombreUsuario">
-            <input type="password" placeholder="Contraseña" v-model="formData.contrasena">
-            <button type="submit">{{ $t("CreateAccount.text5") }}</button>
-        </form>
-        <footer>
-            {{ $t("CreateAccount.text2") }}
-            <RouterLink to="/LoginUser">{{ $t("CreateAccount.text3") }}</RouterLink>
-            <br>
-            {{ $t("CreateAccount.text4") }}
-            <RouterLink to="/LoginAdmin">{{ $t("CreateAccount.text3") }}</RouterLink>
-        </footer>
+      <div class="logo">
+          <i class='bx bxs-user'></i>
+      </div>
+      <h2>{{ $t("CreateAccount.text1") }}</h2>
+      <form class="form" @submit.prevent="submitForm">
+          <input type="text" placeholder="Nombre" v-model="store.formData.nombreUsuario">
+          <input type="password" placeholder="Contraseña" v-model="store.formData.contrasena">
+          <button type="submit">{{ $t("CreateAccount.text5") }}</button>
+      </form>
+      <footer>
+          {{ $t("CreateAccount.text2") }}
+          <RouterLink to="/LoginUser">{{ $t("CreateAccount.text3") }}</RouterLink>
+          <br>
+          {{ $t("CreateAccount.text4") }}
+          <RouterLink to="/LoginAdmin">{{ $t("CreateAccount.text3") }}</RouterLink>
+      </footer>
     </div>
-</template>
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { useRouter } from 'vue-router';
-
-export default defineComponent({
-    setup() {
-        const router = useRouter();
-        const formData = ref({
-            nombreUsuario: '',
-            contrasena: '',
-        });
-
-        const submitForm = async () => {
-            const url = 'http://localhost:8001/Usuario';
-            try {
-
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        nombreUsuario: formData.value.nombreUsuario,
-                        contrasena: formData.value.contrasena,
-                    }),
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('Registro exitoso:', data);
-                    router.push('/Home');
-                } else {
-                    console.error('Error en el registro:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error en el registro:', error);
-            }
-        };
-
-        return {
-            formData,
-            submitForm,
-        };
-    },
-});
-</script>
+  </template>
+  
+  <script setup lang="ts">
+  import { useListadoObrasLoginStore } from '../store/LoginView-Store'; 
+  
+  const store = useListadoObrasLoginStore();
+  
+  const submitForm = async () => {
+    await store.registrarUsuario();
+  };
+  </script>
+  
 
 
 <style scoped>

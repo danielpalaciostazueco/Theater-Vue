@@ -15,6 +15,7 @@ import { RouterLink } from 'vue-router'
         <div class="footer__networks">
             <img src="../assets/img/instagram.png" alt="">
             <img src="../assets/img/facebook.png" alt="">
+            <img src="../assets/img/tweeter.png" alt=""> 
         </div>
     </footer>
 </template>

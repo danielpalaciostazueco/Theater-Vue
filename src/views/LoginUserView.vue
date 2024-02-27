@@ -6,8 +6,8 @@
         </div>
         <h2>{{ $t("LoginUser.text1") }}</h2>
         <form class="form" @submit.prevent="submitForm">
-            <input type="text" placeholder="Usuario" v-model="formData.username">
-            <input type="password" placeholder="Contraseña" v-model="formData.password">
+            <input type="text" placeholder="Usuario" v-model="store.formData.nombreUsuario">
+            <input type="password" placeholder="Contraseña" v-model="store.formData.contrasena">
             <button type="submit">{{ $t("LoginUser.text1") }}</button>
         </form>
         <footer>
@@ -19,54 +19,15 @@
         </footer>
     </div>
 </template>
-<script lang="ts">
-import { defineComponent, reactive } from 'vue';
-import { useRouter } from 'vue-router';
+<script setup lang="ts">
+import { useListadoObrasLoginUserStore  } from '../store/LoginUser-Store'; 
 
-export default defineComponent({
-    setup() {
-        const router = useRouter();
-        const formData = reactive({
-            username: '',
-            password: '',
-        });
+const store = useListadoObrasLoginUserStore();
 
-        const submitForm = async () => {
-
-            const url = `http://localhost:8001/Usuario/${formData.username}/Contrasena/${formData.password}`;
-
-            try {
-                const response = await fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json',
-                    },
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-
-                    if (data.nombreUsuario === formData.username && data.contrasena === formData.password) {
-                        router.push('/Home');
-                    } else {
-                        console.error('Las credenciales no coinciden');
-                    }
-                } else {
-                    console.error('Error en el inicio de sesión:', await response.text());
-                }
-            } catch (error) {
-                console.error('Error en la petición:', error);
-            }
-        };
-
-        return {
-            formData,
-            submitForm,
-        };
-    },
-});
+const submitForm = async () => {
+  await store.registrarUsuario();
+};
 </script>
-
 
 <style scoped>
 * {
