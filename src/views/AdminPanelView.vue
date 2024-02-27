@@ -63,6 +63,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useListadoObrasAdminStore } from '../store/Admin-Store';
+import type { Store } from 'pinia';
 
 
 const store = useListadoObrasAdminStore();
@@ -78,21 +79,40 @@ const nuevaObra = () => {
   mostrarFormulario.value = true;
 };
 
-const editarObra = (obra: any) => {
-  store.actualizarObra(obra);
+const editarObra = (obra : any  ) => {
+  Object.assign(obraEditando, obra);
   mostrarFormulario.value = true;
 };
 
 const guardarActualizarObra = () => {
+
+  const Datos = {
+    obraID: obraEditando.obraID || 0, 
+    nombre: obraEditando.nombre,
+    descripcion: obraEditando.descripcion,
+    autores: obraEditando.autores,
+    duracion:  obraEditando.duracion, 
+    actores: obraEditando.actores,
+    imagenes: obraEditando.imagenes,
+    fechaUno: obraEditando.fechaUno,
+    fechaDos: obraEditando.fechaDos,
+    fechaTres: obraEditando.fechaTres,
+    cartel: obraEditando.cartel
+  };
+
+ 
+
+
   if (obraEditando.obraID) {
-    store.actualizarObra(obraEditando);
+    store.actualizarObra(Datos);
   } else {
-    store.guardarObra(obraEditando);
+    store.guardarObra(Datos);
   }
   cerrarFormulario();
 };
 
-const borrarObra = (obraID: string) => {
+
+const borrarObra = (obraID: number) => {
   store.borrarObra(obraID);
 };
 
