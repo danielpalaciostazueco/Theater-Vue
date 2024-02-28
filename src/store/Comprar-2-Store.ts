@@ -24,7 +24,7 @@ export const useListadoObrasComprar2Store = defineStore('listadoObrasCompra2', (
 
   async function cargarObra(obraID: string) {
     try {
-      const response = await fetch(`http://localhost:8001/Obras/${obraID}`);
+      const response = await fetch(`http://localhost:8001/Obra/${obraID}`);
       if (!response.ok) {
         throw new Error('Error al obtener los datos de la obra');
       }
@@ -42,7 +42,7 @@ export const useListadoObrasComprar2Store = defineStore('listadoObrasCompra2', (
 
   async function cargarAsientosOcupados(obraID: string, idSesion: string) {
     try {
-      const response = await fetch(`http://localhost:8001/Obras/${obraID}/Session/${idSesion}/Seats`);
+      const response = await fetch(`http://localhost:8001/Obra/${obraID}/Session/${idSesion}/Seats`);
       if (!response.ok) {
         throw new Error('Error al obtener asientos ocupados');
       }
@@ -55,7 +55,7 @@ export const useListadoObrasComprar2Store = defineStore('listadoObrasCompra2', (
 
   async function cargarTodosLosAsientos() {
     try {
-      const response = await fetch(`http://localhost:8001/Asientos`);
+      const response = await fetch(`http://localhost:8001/Asiento`);
       if (!response.ok) {
         throw new Error('Error al obtener todos los asientos');
       }
@@ -76,7 +76,7 @@ export const useListadoObrasComprar2Store = defineStore('listadoObrasCompra2', (
       const payload = {
         asientos: idsAsientosParaComprar
       };
-      const url = `http://localhost:8001/Obras/${obraID}/Session/${idSesion}/Seats`;
+      const url = `http://localhost:8001/Obra/${obraID}/Session/${idSesion}/Seats`;
       const respuesta = await fetch(url, {
         method: 'POST',
         headers: {
@@ -96,11 +96,11 @@ export const useListadoObrasComprar2Store = defineStore('listadoObrasCompra2', (
     }
   }
 
-  // Método para resetear los asientos ocupados y recargar todo al cambiar de sesión
+  
   async function resetearYRecargarAsientos(obraID: string, idSesion: string) {
-    asientosOcupados.value = []; // Limpiar los asientos ocupados
-    await cargarAsientosOcupados(obraID, idSesion); // Recargar asientos ocupados para la nueva sesión
-    await cargarTodosLosAsientos(); // Recargar todos los asientos con la nueva información de ocupación
+    asientosOcupados.value = []; 
+    await cargarAsientosOcupados(obraID, idSesion); 
+    await cargarTodosLosAsientos(); 
   }
 
   return { 
@@ -112,6 +112,6 @@ export const useListadoObrasComprar2Store = defineStore('listadoObrasCompra2', (
     cargarTodosLosAsientos, 
     comprarAsientos, 
     precioPorAsiento, 
-    resetearYRecargarAsientos // Asegúrate de exponer el nuevo método
+    resetearYRecargarAsientos 
   };
 });

@@ -12,9 +12,9 @@ export const useListadoObrasStore = defineStore('listadoObras', () => {
   let data: any;
   const cargarObras = async () => {
     try {
-      const response = await fetch('http://localhost:8001/obras');
+      const response = await fetch('http://localhost:8001/Obra');
       if (!response.ok) {
-       const response = await fetch('http://localhost:8001/obras');
+       const response = await fetch('http://localhost:8001/Obra');
        data = await response.json();
       }
        data = await response.json();
