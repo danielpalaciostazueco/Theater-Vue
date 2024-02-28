@@ -2,6 +2,13 @@ import { defineStore } from 'pinia';
 import { reactive } from 'vue';
 import router from '@/router';
 
+interface Usuario {
+  nombreUsuario : string ;
+  contrasena : string; 
+  rol : number;
+}
+
+export let usuario : Usuario
 export const useListadoObrasLoginStore = defineStore('listadoObrasLogin', () => {
 
   const formData = reactive({
@@ -9,10 +16,8 @@ export const useListadoObrasLoginStore = defineStore('listadoObrasLogin', () => 
     contrasena: '',
   });
 
-
-
   async function registrarUsuario() {
-    const url = 'http://localhost:8001/Usuario';
+    const url = 'http://localhost:8001/Usuario/Register';
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -23,10 +28,8 @@ export const useListadoObrasLoginStore = defineStore('listadoObrasLogin', () => 
       });
 
       if (response.ok) {
-        const data = await response.json();
-        console.log('Registro exitoso:', data);
-        router.push('/Home'); 
-        prompt('Bienvenido' + formData.nombreUsuario)
+         usuario = await response.json(); 
+       
       } else {
         console.error('Error en el registro:', response.statusText);
       }
@@ -35,5 +38,13 @@ export const useListadoObrasLoginStore = defineStore('listadoObrasLogin', () => 
     }
   }
 
-  return { formData,  registrarUsuario };
+  async function isAdmin(usuario : Usuario) {
+    if(usuario.rol == 1){
+      return true
+    }else{
+      return false
+    }
+  }
+
+  return { formData,  registrarUsuario, isAdmin, usuario };
 });

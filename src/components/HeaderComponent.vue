@@ -9,6 +9,7 @@
       <RouterLink to="/About" class="nav__link">{{ $t("Header.information") }}</RouterLink>
       <RouterLink to="/Activities" class="nav__link">{{ $t("Header.activities") }}</RouterLink>
       <RouterLink to="/Contact" class="nav__link">{{ $t("Header.contact") }}</RouterLink>
+      <RouterLink  to="/AdminPanel" class="nav__link">{{ $t("HomeAdmin.admin") }}</RouterLink>
     </nav>
     <section class="search-block" style="text-align: right; padding: 20px;">
       <input v-model="nombreBuscado" placeholder="Buscar obra por nombre..." />
