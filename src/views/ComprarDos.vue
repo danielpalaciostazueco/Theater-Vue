@@ -40,6 +40,7 @@ const idSesion = route.query.idSesion as string;
 
 const asientosSeleccionados = ref(new Set<number>());
   onMounted(async () => {
+  await store.resetearYRecargarAsientos(idObra, idSesion);
   await store.cargarObra(idObra);
   await store.cargarAsientosOcupados(idObra, idSesion);
   await store.cargarTodosLosAsientos();
@@ -128,15 +129,7 @@ function generarButacas() {
     htmlRect.style.cursor = "not-allowed"; 
   }
 });
-
-
 }
-
-function cambiarColor(asientoSVG: SVGElement) {
-  const idAsiento = parseInt(asientoSVG.id.replace('asiento-', ''));
-  store.toggleSeleccionAsiento(idAsiento);
-}
-
 const realizarCompraYRecargarAsientos = async () => {
   await realizarCompra();
   generarButacas(); 

@@ -1,32 +1,9 @@
+
 <template>
-    <div class="circle"></div>
-    <div class="card">
-        <div class="logo">
-            <i class='bx bxs-lock-alt'></i>
-        </div>
-        <h2>{{ $t("LoginAdmin.text1") }}</h2>
-        <form class="form" @submit.prevent="submitForm">
-            <input type="text" placeholder="Username" v-model="store.formData.nombreUsuario" required>
-            <input type="password" placeholder="Password" v-model="store.formData.password" required>
-            <button type="submit">{{ $t("LoginAdmin.text1") }}</button>
-        </form>
-        <footer>
-            {{ $t("LoginAdmin.text2") }}
-            <a href="/">{{ $t("LoginAdmin.text3") }}</a>
-            <br>
-            {{ $t("LoginAdmin.text4") }}
-            <RouterLink to="/LoginUser">{{ $t("LoginAdmin.text3") }}</RouterLink>
-        </footer>
-    </div>
+
+
+    <div></div>
 </template>
-<script lang="ts">
-import { defineComponent, reactive } from 'vue';
-import { useRouter } from 'vue-router';
-import { useListadoObrasAdminStore } from '../store/Admin-Store';
-
-const store = useListadoObrasAdminStore();
-
-</script>
 <style scoped>
 * {
     box-sizing: border-box;
