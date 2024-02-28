@@ -4,7 +4,7 @@
       <div class="main-block">
         <h1>{{ $t("Comprar2.information") }}</h1>
       </div>
-      <section class="frame-function" >
+      <section class="frame-function">
         <div class="frame-function__poster">
           <img :src="store.storeObras[0].imagenes[0]" alt="Imagen de la obra">
         </div>
@@ -15,7 +15,7 @@
     </article>
 
     <div class="cinema-seats" id="cinema-seats">
-      
+
     </div>
     <div class="cinema-button">
       <div>
@@ -32,14 +32,14 @@
 import { onMounted, ref, computed, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
 import { useListadoObrasComprar2Store } from '../store/Comprar-2-Store';
-
+import { jsPDF } from "jspdf";
 const route = useRoute();
 const store = useListadoObrasComprar2Store();
 const idObra = route.params.Id as string;
 const idSesion = route.query.idSesion as string;
 
 const asientosSeleccionados = ref(new Set<number>());
-  onMounted(async () => {
+onMounted(async () => {
   await store.resetearYRecargarAsientos(idObra, idSesion);
   await store.cargarObra(idObra);
   await store.cargarAsientosOcupados(idObra, idSesion);
@@ -56,13 +56,13 @@ const calcularTotal = computed(() => {
 const toggleSeatSelection = (asientoId: number) => {
   const asiento = store.asientos.find(a => a.idAsiento === asientoId);
   if (!asiento || !asiento.isFree) return;
-  
+
   if (asientosSeleccionados.value.has(asientoId)) {
     asientosSeleccionados.value.delete(asientoId);
-    document.getElementById(`asiento-${asientoId}`)!.style.fill = '#00008B'; 
+    document.getElementById(`asiento-${asientoId}`)!.style.fill = '#00008B';
   } else {
     asientosSeleccionados.value.add(asientoId);
-    document.getElementById(`asiento-${asientoId}`)!.style.fill = 'green'; 
+    document.getElementById(`asiento-${asientoId}`)!.style.fill = 'green';
   }
   asientosSeleccionados.value = new Set(asientosSeleccionados.value);
 };
@@ -71,10 +71,11 @@ const toggleSeatSelection = (asientoId: number) => {
 const realizarCompra = async () => {
 
   const asientosParaComprar = Array.from(asientosSeleccionados.value).map(idAsiento => {
-    return { idAsiento, isFree: true }; 
+    return { idAsiento, isFree: true };
   });
   if (asientosParaComprar.length > 0) {
     await store.comprarAsientos(asientosParaComprar, idObra, idSesion);
+    await generarPDF();
     asientosSeleccionados.value.clear();
     await store.cargarAsientosOcupados(idObra, idSesion);
     await store.cargarTodosLosAsientos();
@@ -85,25 +86,25 @@ function generarButacas() {
   // Definiciones iniciales
   const anchoAsiento = 40, altoAsiento = 40, espacioEntreAsientos = 10, espacioEntreFilas = 20;
   const anchoReposabrazos = 10, altoReposabrazos = altoAsiento;
-  const anchoSvg = (anchoAsiento + espacioEntreAsientos + anchoReposabrazos * 2) * 5; 
+  const anchoSvg = (anchoAsiento + espacioEntreAsientos + anchoReposabrazos * 2) * 5;
   // Configuración de la pantalla
   const anchoPantalla = anchoSvg * 0.8;
   const altoPantalla = 100;
   const xPantalla = (anchoSvg - anchoPantalla) / 2;
   const yPantalla = 20;
 
-  let svgHTML = `<svg width="${anchoSvg}" height="400">`; 
+  let svgHTML = `<svg width="${anchoSvg}" height="400">`;
 
 
   svgHTML += `<rect x="${xPantalla}" y="${yPantalla}" width="${anchoPantalla}" height="${altoPantalla}" style="fill:#9f9f9f; stroke:white; stroke-width:2" />`;
 
 
-   store.asientos.forEach((asiento, index) => {
+  store.asientos.forEach((asiento, index) => {
     const fila = Math.floor(index / 5);
     const posAsiento = index % 5;
     const x = posAsiento * (anchoAsiento + espacioEntreAsientos + anchoReposabrazos * 2);
     const y = fila * (altoAsiento + espacioEntreFilas) + altoPantalla + yPantalla * 2;
-    const color = asiento.isFree ? '#00008B' : 'red'; 
+    const color = asiento.isFree ? '#00008B' : 'red';
 
 
     svgHTML += `<rect id="asiento-${asiento.idAsiento}" x="${x + anchoReposabrazos}" y="${y}" width="${anchoAsiento}" height="${altoAsiento}" rx="5" ry="5" style="stroke:black; fill:${color}; cursor:pointer" />`;
@@ -117,23 +118,51 @@ function generarButacas() {
 
   document.getElementById('cinema-seats')!.innerHTML = svgHTML;
   document.querySelectorAll('rect[id^="asiento-"]').forEach((rect) => {
- 
-  const htmlRect = rect as unknown as HTMLElement; 
 
-  const idAsiento = parseInt(htmlRect.id.replace('asiento-', ''));
-  const asiento = store.asientos.find(a => a.idAsiento === idAsiento);
-  if (asiento && asiento.isFree) {
-    htmlRect.addEventListener('click', () => toggleSeatSelection(idAsiento)); 
-  } else {
-    htmlRect.style.fill = 'red'; 
-    htmlRect.style.cursor = "not-allowed"; 
-  }
-});
+    const htmlRect = rect as unknown as HTMLElement;
+
+    const idAsiento = parseInt(htmlRect.id.replace('asiento-', ''));
+    const asiento = store.asientos.find(a => a.idAsiento === idAsiento);
+    if (asiento && asiento.isFree) {
+      htmlRect.addEventListener('click', () => toggleSeatSelection(idAsiento));
+    } else {
+      htmlRect.style.fill = 'red';
+      htmlRect.style.cursor = "not-allowed";
+    }
+  });
 }
 const realizarCompraYRecargarAsientos = async () => {
   await realizarCompra();
-  generarButacas(); 
+  generarButacas();
 };
+
+function generarPDF() {
+  const doc = new jsPDF();
+
+  const fechaActual = new Date();
+  const fechaFormateada = fechaActual.toLocaleDateString("es-ES", {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+
+  doc.setFontSize(16);
+  doc.text("UrbanTheater", 10, 10);
+  doc.setFontSize(12);
+  doc.text(`Fecha: ${fechaFormateada}`, 10, 20);
+
+
+  doc.text("Detalles de la Compra", 10, 30);
+  doc.text(`Obra: ${store.storeObras[0].nombre}`, 10, 40);
+  doc.text(`Sesión ID: ${idSesion}`, 10, 50);
+
+
+  const asientosComprados = Array.from(asientosSeleccionados.value).join(", ");
+  doc.text(`Asientos: ${asientosComprados}`, 10, 60);
+  doc.text(`Total: ${calcularTotal.value} €`, 10, 70);
+  doc.save("compra.pdf");
+}
+
 </script> 
 <style scoped>
 body,
@@ -257,9 +286,9 @@ section {
 .ocupado {
   fill: red;
 }
+
 .seleccionado {
   fill: green;
 }
-
 </style>
 

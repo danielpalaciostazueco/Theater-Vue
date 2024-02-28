@@ -18,8 +18,8 @@ interface AsientoOcupado {
 
 export const useListadoObrasComprar2Store = defineStore('listadoObrasCompra2', () => {
   const storeObras = reactive<Obra[]>([]);
-  const asientos = ref<Asiento[]>([]);
-  const asientosOcupados = ref<AsientoOcupado[]>([]);
+  const asientos = reactive<Asiento[]>([]);
+  const asientosOcupados = reactive<AsientoOcupado[]>([]);
   const precioPorAsiento = 5;
 
   async function cargarObra(obraID: string) {
@@ -40,14 +40,17 @@ export const useListadoObrasComprar2Store = defineStore('listadoObrasCompra2', (
     }
   }
 
-  async function cargarAsientosOcupados(obraID: string, idSesion: string) {
+    async function cargarAsientosOcupados(obraID: string, idSesion: string) {
     try {
       const response = await fetch(`http://localhost:8001/Obra/${obraID}/Session/${idSesion}/Seats`);
-      if (!response.ok) {
+      if (response.ok) {
+        const data = await response.json();
+        asientosOcupados.splice(0, asientosOcupados.length, ...data.map((idAsiento: number) => ({ idAsiento })));
+      } else if (response.status === 404) {
+        asientosOcupados.splice(0, asientosOcupados.length); 
+      } else {
         throw new Error('Error al obtener asientos ocupados');
       }
-      const data = await response.json();
-      asientosOcupados.value = data.map((idAsiento: number) => ({ idAsiento }));
     } catch (error) {
       console.error('Error al obtener asientos ocupados:', error);
     }
@@ -60,15 +63,15 @@ export const useListadoObrasComprar2Store = defineStore('listadoObrasCompra2', (
         throw new Error('Error al obtener todos los asientos');
       }
       const data = await response.json();
-   
-      asientos.value = data.map((asiento: any) => ({
+      asientos.splice(0, asientos.length, ...data.map((asiento: any) => ({
         idAsiento: asiento.idAsiento,
-        isFree: !asientosOcupados.value.some(ocupado => ocupado.idAsiento === asiento.idAsiento),
-      }));
+        isFree: !asientosOcupados.some(ocupado => ocupado.idAsiento === asiento.idAsiento),
+      })));
     } catch (error) {
       console.error('Error al obtener todos los asientos:', error);
     }
   }
+
 
   async function comprarAsientos(asientosParaComprar: Asiento[], obraID: string, idSesion: string) {
     try {
@@ -96,11 +99,10 @@ export const useListadoObrasComprar2Store = defineStore('listadoObrasCompra2', (
     }
   }
 
-  
-  async function resetearYRecargarAsientos(obraID: string, idSesion: string) {
-    asientosOcupados.value = []; 
-    await cargarAsientosOcupados(obraID, idSesion); 
-    await cargarTodosLosAsientos(); 
+async function resetearYRecargarAsientos(obraID: string, idSesion: string) {
+    asientosOcupados.splice(0, asientosOcupados.length); 
+    await cargarAsientosOcupados(obraID, idSesion);
+    await cargarTodosLosAsientos();
   }
 
   return { 
