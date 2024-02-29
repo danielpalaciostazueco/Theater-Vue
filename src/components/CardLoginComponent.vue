@@ -10,11 +10,7 @@
             <button type="submit">{{ $t("CreateAccount.text5") }}</button>
         </form>
         <footer>
-            {{ $t("CreateAccount.text2") }}
-            <RouterLink to="/LoginUser">{{ $t("CreateAccount.text3") }}</RouterLink>
-            <br>
-            {{ $t("CreateAccount.text4") }}
-            <RouterLink to="/LoginAdmin">{{ $t("CreateAccount.text3") }}</RouterLink>
+          
         </footer>
     </div>
 </template>
