@@ -4,7 +4,7 @@ import { RouterLink } from 'vue-router'
 <template>
     <footer class="footer">
         <div class="footer__logo">
-            <img src="../assets/img/logo.png" alt="Logo del Teatro Example" class="logo__image">
+            <RouterLink to="/Home"><img src="../assets/img/logo.png" alt="Logo del Teatro Example" class="logo__image"></RouterLink>
         </div>
         <div class="footer__menu">
             <RouterLink to="/Programacion" class="footer__menu-link">{{ $t("Footer.schedule") }}</RouterLink>

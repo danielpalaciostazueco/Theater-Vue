@@ -38,7 +38,9 @@ export const messages = {
         duration: 'Duration',
         actors: 'Actors',
         images: 'Images',
-        dates : 'Dates',
+        date1:'Date 1',
+        date2:'Date 2',
+        date3:'Date 3',
         poster : 'Poster',
         actions: 'Actions',
         save: 'Save',
@@ -158,6 +160,9 @@ export const messages = {
         actions: 'Acciones',
         save: 'Guardar',
         cancel: 'Cancelar',
+        date1:'Fecha 1',
+        date2:'Fecha 2',
+        date3:'Fecha 3',
       },
   
       Comprar2: {
