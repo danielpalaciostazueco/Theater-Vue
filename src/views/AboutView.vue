@@ -1,9 +1,11 @@
+<script setup lang="ts">
+import MainBlockComponent from '@/components/MainBlockComponent.vue';
+
+</script>
 <template>
     <body>
         <main>
-            <div class="main-block">
-                <h1>{{ $t("About.information") }}</h1>
-            </div>
+            <MainBlockComponent></MainBlockComponent>
             <section class="frame-Thorario">
                 <div class="frame-Thorario_title">
                     <h2>{{ $t("About.text") }}</h2>

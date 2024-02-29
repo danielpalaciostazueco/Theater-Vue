@@ -1,31 +1,30 @@
 <template>
-    <div class="circle"></div>
     <div class="card">
         <div class="logo">
-            <i class='bx bxs-user-circle'></i>
+            <i class='bx bxs-user'></i>
         </div>
-        <h2>{{ $t("LoginUser.text1") }}</h2>
+        <h2>{{ $t("CreateAccount.text1") }}</h2>
         <form class="form" @submit.prevent="submitForm">
-            <input type="text" placeholder="Usuario" v-model="store.formData.nombreUsuario">
+            <input type="text" placeholder="Nombre" v-model="store.formData.nombreUsuario">
             <input type="password" placeholder="Contraseña" v-model="store.formData.contrasena">
-            <button type="submit">{{ $t("LoginUser.text1") }}</button>
+            <button type="submit">{{ $t("CreateAccount.text5") }}</button>
         </form>
         <footer>
-            {{ $t("LoginUser.text2") }}
-            <a href="/">{{ $t("LoginUser.text3") }}</a>
+            {{ $t("CreateAccount.text2") }}
+            <RouterLink to="/LoginUser">{{ $t("CreateAccount.text3") }}</RouterLink>
             <br>
-            {{ $t("LoginUser.text4") }}
-            <RouterLink to="/LoginAdmin">{{ $t("LoginUser.text3") }}</RouterLink>
+            {{ $t("CreateAccount.text4") }}
+            <RouterLink to="/LoginAdmin">{{ $t("CreateAccount.text3") }}</RouterLink>
         </footer>
     </div>
 </template>
 <script setup lang="ts">
-import { useListadoObrasLoginUserStore  } from '../store/LoginUser-Store'; 
+import { useListadoObrasLoginStore } from '../store/LoginView-Store';
 
-const store = useListadoObrasLoginUserStore();
+const store = useListadoObrasLoginStore();
 
 const submitForm = async () => {
-  await store.registrarUsuario();
+    await store.registrarUsuario();
 };
 </script>
 
@@ -36,11 +35,12 @@ const submitForm = async () => {
 
 html,
 body {
-    margin: 0;
     height: 100%;
+    margin: 0;
+    padding: 0;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     background: #f5f5f5;
     font-family: "Ubuntu";
 }
@@ -71,15 +71,14 @@ body {
 .card {
     overflow: hidden;
     position: relative;
-    z-index: 1;
-    width: 100%;
-    max-width: 380px;
-    margin: auto;
+    z-index: 3;
+    width: 360px;
     padding: 160px 30px 38px;
     border-radius: 1.25rem;
     background: #fff;
     text-align: center;
     box-shadow: 0 100px 100px rgba(0, 0, 0, 0.1);
+    margin-left: 80vh;
     margin-top: 30vh;
 }
 
@@ -123,18 +122,19 @@ body {
 }
 
 .form {
-    margin: 0 auto;
+    margin: 0 auto 30px;
     display: grid;
     gap: 18px;
     width: 100%;
     max-width: 300px;
+    /* fija un ancho máximo para los campos del formulario */
 }
 
 .form>input,
 .form>button {
     width: 100%;
     height: 50px;
-    border-radius: 25px;
+    border-radius: 20px;
 }
 
 .form>input {
@@ -142,55 +142,58 @@ body {
     font-family: inherit;
     font-size: 16px;
     padding: 0 24px;
-    color: #11274b;
-    transition: border-color 0.3s;
+    color: #11274c;
+    transition: border 0.3s ease;
 }
 
+.form>input:hover,
 .form>input:focus {
-    outline: none;
     border-color: #216ce7;
 }
 
 .form>input::placeholder {
-    color: #cacaca;
+    color: #cac8c8;
 }
 
 .form>button {
     cursor: pointer;
     background: #216ce7;
-    color: #ffffff;
+    color: #f9f9f9;
     border: none;
     font-family: inherit;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 600;
+    text-align: center;
     letter-spacing: 1px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease;
 }
 
 .form>button:hover {
-    background-color: #1a5cb8;
+    background-color: #143d81;
 }
 
 .card>footer {
-    font-size: 14px;
     color: #7c7c7c;
+    line-height: 1.6;
+    margin-top: 16px;
+    /* Ajustar según sea necesario para el espaciado */
 }
 
-.card>footer>a,
-.card>footer>RouterLink {
+.card>footer>a {
     color: #216ce7;
     text-decoration: none;
-    transition: color 0.3s;
+    transition: color 0.3s ease;
 }
 
-.card>footer>a:hover,
-.card>footer>RouterLink:hover {
-    color: #1a5cb8;
+.card>footer>a:hover {
+    color: orange;
 }
 
+/* Media query para ajustar el tamaño de la tarjeta en pantallas más grandes */
 @media (min-width: 768px) {
     .card {
         width: 360px;
+        /* Ancho de la tarjeta para pantallas más grandes */
     }
 }
 </style>

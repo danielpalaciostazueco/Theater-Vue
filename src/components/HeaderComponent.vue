@@ -11,9 +11,6 @@
       <RouterLink to="/Contact" class="nav__link">{{ $t("Header.contact") }}</RouterLink>
       <RouterLink  to="/AdminPanel" class="nav__link">{{ $t("HomeAdmin.admin") }}</RouterLink>
     </nav>
-    <section class="search-block" style="text-align: right; padding: 20px;">
-      <input v-model="nombreBuscado" placeholder="Buscar obra por nombre..." />
-    </section>
   </header>
 </template>
 
@@ -103,24 +100,6 @@ function redrawMasks() {
     };
   }
 }
-
-const buscarObra = async () => {
-  if (!nombreBuscado.value) {
-    alert('Por favor, ingrese un nombre para buscar.');
-    return;
-  }
-  try {
-    const response = await fetch(`http://localhost:8001/Obras/Nombre/${nombreBuscado.value}`);
-    if (response.ok) {
-      const obraEncontrada = await response.json();
-      router.push(`/ComprarUno/${obraEncontrada.obraID}`);
-    } else {
-      alert('Obra no encontrada.');
-    }
-  } catch (error) {
-    console.error('Error al buscar la obra:', error);
-  }
-};
 </script>
 
 <style>

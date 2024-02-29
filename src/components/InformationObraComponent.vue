@@ -1,17 +1,63 @@
 <template>
-    <div>
-        <main>
-            <MainBlockComponent></MainBlockComponent>
-            <InformationObraComponent></InformationObraComponent>
-        </main>
+    <section class="horarios" v-if="store.storeObras.length > 0">
+        <div class="horarios-img">
+            <img :src="store.storeObras[0].imagenes[0]" alt="Imagen destacada de la obra" />
+        </div>
+        <div class="horarios-txt">
+            <h2 class="horarios-txt__title">Fechas de la obra</h2>
+            <ul class="horarios-txt__list">
+                <li v-for="fecha in [store.storeObras[0].fechaUno, store.storeObras[0].fechaDos, store.storeObras[0].fechaTres]"
+                    :key="fecha" class="horarios-txt__item">{{ fecha }}</li>
+            </ul>
+        </div>
+    </section>
+    <div class="primera-img">
+        <img :src="store.storeObras[0].imagenes[1]" alt="Imagen destacada de la obra" />
     </div>
+    <article>
+        <div class="button-bought" id="boton-comprar">
+            <RouterLink :to="{ path: '/ComprarUno/' + store.storeObras[0].obraID }" class='show-poster__button'>
+                {{ $t("Function.text3") }}
+            </RouterLink>
+        </div>
+    </article>
+    <section>
+        <div class="frame-information">
+            <div class="frame-information__title">
+                <h2>Información de la obra</h2>
+            </div>
+            <div class="frame-information__txt">
+                <p>{{ store.storeObras[0].descripcion }}</p>
+            </div>
+        </div>
+        <div class="frame-repart">
+            <div class="frame-repart__title">
+                <h2>Reparto</h2>
+            </div>
+            <div class="frame-repart__txt">
+                <ul class="frame-repart__list">
+                    <li v-for="actor in store.storeObras[0].actores " :key="actor" class="frame-repart__item">{{
+                        actor }}</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 </template>
 
 <script setup lang="ts">
-import MainBlockComponent from '@/components/MainBlockComponent.vue';
-import InformationObraComponent from '@/components/InformationObraComponent.vue';
-</script>
+import { onMounted, } from 'vue';
+import { useRoute, RouterLink } from 'vue-router';
+import { useListadoObrasFunctionStore } from '../store/Function-Store';
 
+
+const store = useListadoObrasFunctionStore();
+const route = useRoute();
+const idObra = route.params.Id as string;
+
+onMounted(async () => {
+    await store.cargarObras(idObra);
+});
+</script>
 
 <style scoped>
 body,

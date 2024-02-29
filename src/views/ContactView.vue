@@ -1,8 +1,10 @@
+<script setup lang="ts">
+import MainBlockComponent from '@/components/MainBlockComponent.vue';
+
+</script>
 <template>
     <main>
-        <div class="main-block">
-            <h1>{{ $t("Contact.information") }}</h1>
-        </div>
+        <MainBlockComponent></MainBlockComponent>
         <article class="contact-container">
             <div class="map-section">
                 <iframe
