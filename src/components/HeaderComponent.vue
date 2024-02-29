@@ -9,16 +9,18 @@
       <RouterLink to="/About" class="nav__link">{{ $t("Header.information") }}</RouterLink>
       <RouterLink to="/Activities" class="nav__link">{{ $t("Header.activities") }}</RouterLink>
       <RouterLink to="/Contact" class="nav__link">{{ $t("Header.contact") }}</RouterLink>
-      <RouterLink  to="/AdminPanel" class="nav__link">{{ $t("HomeAdmin.admin") }}</RouterLink>
+      <RouterLink  v-if="store.isAdmin(store.cargarUsuarioDesdeLocalStorage)" to="/AdminPanel" class="nav__link">{{ $t("HomeAdmin.admin") }}</RouterLink>
     </nav>
   </header>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
-const nombreBuscado = ref('');
-const router = useRouter();
+import { RouterLink } from 'vue-router'
+import { useListadoObrasLoginStore } from '../store/LoginView-Store';
+const store = useListadoObrasLoginStore();
+
+
 
 const mask1Src = '/Careta-Morada.png';
 const mask2Src = '/Careta-amarilla.png';
@@ -101,6 +103,7 @@ function redrawMasks() {
   }
 }
 </script>
+
 
 <style>
 .header {
