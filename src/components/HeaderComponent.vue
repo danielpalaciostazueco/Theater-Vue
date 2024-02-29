@@ -2,29 +2,38 @@
   <header class="header">
     <div class="header__logo">
       <RouterLink to="/"></RouterLink>
-      <canvas ref="canvasRef" width="100" height="106"></canvas>
-    </div>
+   </div>
     <nav class="header__nav">
       <RouterLink to="/Programacion" class="nav__link">{{ $t("Header.schedule") }}</RouterLink>
       <RouterLink to="/About" class="nav__link">{{ $t("Header.information") }}</RouterLink>
       <RouterLink to="/Activities" class="nav__link">{{ $t("Header.activities") }}</RouterLink>
       <RouterLink to="/Contact" class="nav__link">{{ $t("Header.contact") }}</RouterLink>
-  
       <RouterLink v-if="isAdmin" to="/AdminPanel" class="nav__link">{{ $t("HomeAdmin.admin") }}</RouterLink>
+      <button @click="toggleLanguage" class="nav__link">{{ currentLanguage }}</button>
     </nav>
   </header>
 </template>
+
 <script setup lang="ts">
 import { onMounted, ref, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useListadoObrasLoginStore } from '../store/LoginView-Store';
+import { useI18n } from 'vue-i18n';
 
 const store = useListadoObrasLoginStore();
+const { t, locale } = useI18n();
 
 const isAdmin = computed(() => store.isAdmin());
+const currentLanguage = computed(() => locale.value === 'en' ? 'Español' : 'English');
+
+const toggleLanguage = () => {
+  locale.value = locale.value === 'en' ? 'es' : 'en';
+}
 </script>
 
-<style>
+
+
+<style scoped>
 .header {
   display: flex;
   align-items: center;

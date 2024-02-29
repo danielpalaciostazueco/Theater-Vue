@@ -4,7 +4,7 @@
             <img :src="store.storeObras[0].imagenes[0]" alt="Imagen destacada de la obra" />
         </div>
         <div class="horarios-txt">
-            <h2 class="horarios-txt__title">Fechas de la obra</h2>
+            <h2 class="horarios-txt__title">{{ $t("Function.text1") }}</h2>
             <ul class="horarios-txt__list">
                 <li v-for="fecha in [store.storeObras[0].fechaUno, store.storeObras[0].fechaDos, store.storeObras[0].fechaTres]"
                     :key="fecha" class="horarios-txt__item">{{ fecha }}</li>
@@ -24,7 +24,7 @@
     <section>
         <div class="frame-information">
             <div class="frame-information__title">
-                <h2>Información de la obra</h2>
+                <h2> {{ $t("Function.text2") }}</h2>
             </div>
             <div class="frame-information__txt">
                 <p>{{ store.storeObras[0].descripcion }}</p>
@@ -32,7 +32,7 @@
         </div>
         <div class="frame-repart">
             <div class="frame-repart__title">
-                <h2>Reparto</h2>
+                <h2> {{ $t("Function.text4") }}</h2>
             </div>
             <div class="frame-repart__txt">
                 <ul class="frame-repart__list">
