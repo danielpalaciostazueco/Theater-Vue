@@ -16,7 +16,6 @@
         </div>
     </section>
 </template>
-
 <script setup lang="ts">
 import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
@@ -29,9 +28,8 @@ const storeComprar2 = useListadoObrasComprar2Store();
 
 const idObra = computed(() => route.params.Id as string);
 
-
-const showComprarUno = computed(() => route.path.includes('/ComprarUno'));
-const showComprarDos = computed(() => route.path.includes('/ComprarDos'));
+const showComprarUno = computed(() => route.name === 'ComprarUno');
+const showComprarDos = computed(() => route.name === 'ComprarDos');
 
 onMounted(async () => {
     if (showComprarUno.value) {
@@ -42,6 +40,8 @@ onMounted(async () => {
     }
 });
 </script>
+
+
 <style scoped>
 body,
 h1,

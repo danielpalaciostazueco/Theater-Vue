@@ -2,9 +2,9 @@
     <div class="main-block">
 
         <h1 v-if="variable != null"> {{ $t(variable) }}</h1>
-        <h1 v-if="pathname === '/Function/'"> {{ storeFunction.storeObras[0].nombre }}</h1>
-        <h1 v-if="pathname === '/ComprarUno/'"> {{ storeComprar1.storeObras[0].nombre }}</h1>
-        <h1 v-if="pathname === '/ComprarDos/'"> {{ storeComprar2.storeObras[0].nombre }}</h1>
+        <h1 v-if="showFuction"> {{ storeFunction.storeObras[0].nombre }}</h1>
+        <h1 v-if="showComprarUno"> {{ storeComprar1.storeObras[0].nombre }}</h1>
+        <h1 v-if="showComprarDos"> {{ storeComprar2.storeObras[0].nombre }}</h1>
     </div>
 </template>
 
@@ -14,6 +14,14 @@ import { useListadoObrasFunctionStore } from '@/store/Function-Store';
 import { useRoute } from 'vue-router';
 import { useListadoObrasComprar1Store } from '@/store/Comprar-1-Store';
 import { useListadoObrasComprar2Store } from '@/store/Comprar-2-Store';
+import { computed, onMounted } from 'vue';
+
+
+const route = useRoute();
+const idObra = route.params.Id as string;
+const showComprarUno = computed(() => route.name === 'ComprarUno');
+const showComprarDos = computed(() => route.name === 'ComprarDos');
+const showFuction = computed(() => route.name === 'Function');
 
 let storeFunction = useListadoObrasFunctionStore();
 
@@ -38,24 +46,18 @@ if (pathname === '/Activities') {
     variable = "Activities.activities"
 }
 
-if (pathname === '/Function/') {
-    const route = useRoute();
-    const idObra = route.params.Id as string;
-    storeFunction.cargarObras(idObra);
-}
-
-if (pathname === '/ComprarUno/') {
-    const route = useRoute();
-    const idObra = route.params.Id as string;
-    storeComprar1.cargarObras(idObra);
-}
-
-if (pathname == '/ComprarDos/') {
-    const route = useRoute();
-    const idObra = route.params.Id as string;
-    storeComprar2.cargarObra(idObra);
-}
-
+onMounted(async () => {
+    if (showComprarUno.value) {
+        await storeComprar1.cargarObras(idObra);
+    }
+    if (showComprarDos.value) {
+        await storeComprar2.cargarObra(idObra);
+    }
+    if (showFuction.value) {
+        await storeFunction.cargarObras(idObra);
+    }
+    
+});
 </script>
 
 <style scoped>
