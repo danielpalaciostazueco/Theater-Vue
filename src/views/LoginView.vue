@@ -1,34 +1,11 @@
 <template>
     <div class="circle"></div>
-    <div class="card">
-      <div class="logo">
-          <i class='bx bxs-user'></i>
-      </div>
-      <h2>{{ $t("CreateAccount.text1") }}</h2>
-      <form class="form" @submit.prevent="submitForm">
-          <input type="text" placeholder="Nombre" v-model="store.formData.nombreUsuario">
-          <input type="password" placeholder="Contraseña" v-model="store.formData.contrasena">
-          <button type="submit">{{ $t("CreateAccount.text5") }}</button>
-      </form>
-      <footer>
-          {{ $t("CreateAccount.text2") }}
-          <RouterLink to="/LoginUser">{{ $t("CreateAccount.text3") }}</RouterLink>
-          <br>
-          {{ $t("CreateAccount.text4") }}
-          <RouterLink to="/LoginAdmin">{{ $t("CreateAccount.text3") }}</RouterLink>
-      </footer>
-    </div>
-  </template>
+    <CardLoginComponent></CardLoginComponent>
+</template>
   
-  <script setup lang="ts">
-  import { useListadoObrasLoginStore } from '../store/LoginView-Store'; 
-  
-  const store = useListadoObrasLoginStore();
-  
-  const submitForm = async () => {
-    await store.registrarUsuario();
-  };
-  </script>
+<script setup lang="ts">
+import CardLoginComponent from '@/components/CardLoginComponent.vue';
+</script>
   
 
 

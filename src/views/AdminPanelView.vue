@@ -79,7 +79,7 @@ const nuevaObra = () => {
   mostrarFormulario.value = true;
 };
 
-const editarObra = (obra : any  ) => {
+const editarObra = (obra: any) => {
   Object.assign(obraEditando, obra);
   mostrarFormulario.value = true;
 };
@@ -87,11 +87,11 @@ const editarObra = (obra : any  ) => {
 const guardarActualizarObra = () => {
 
   const Datos = {
-    obraID: obraEditando.obraID || 0, 
+    obraID: obraEditando.obraID || 0,
     nombre: obraEditando.nombre,
     descripcion: obraEditando.descripcion,
     autores: obraEditando.autores,
-    duracion:  obraEditando.duracion, 
+    duracion: obraEditando.duracion,
     actores: obraEditando.actores,
     imagenes: obraEditando.imagenes,
     fechaUno: obraEditando.fechaUno,
@@ -100,7 +100,7 @@ const guardarActualizarObra = () => {
     cartel: obraEditando.cartel
   };
 
- 
+
 
 
   if (obraEditando.obraID) {

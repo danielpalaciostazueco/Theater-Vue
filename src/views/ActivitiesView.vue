@@ -1,10 +1,11 @@
+<script setup lang="ts">
+import MainBlockComponent from '@/components/MainBlockComponent.vue';
+
+</script>
 <template>
     <body>
         <main>
-            <div class="main-block">
-                <h1>{{ $t("Activities.activities") }}</h1>
-            </div>
-
+            <MainBlockComponent></MainBlockComponent>
             <section class="frame-VG">
                 <div class="frame-VG_title">
                     <h2>{{ $t("Activities.text") }}</h2>

@@ -1,60 +1,15 @@
 <template>
   <main>
-    <section class="main-block">
-      <h1 class="main-block__title">{{ store.storeObras[0].nombre }}</h1>
-    </section>
-
-    <section class="frame-function" v-if="store.storeObras[0]">
-      <div class="frame-function__poster">
-        <img :src="store.storeObras[0].imagenes[0]" alt="Imagen de la obra" v-if="store.storeObras[0].imagenes" />
-      </div>
-      <div class="frame-function__title">
-        <h2 class="frame-function__title-text">{{ store.storeObras[0].nombre }}</h2>
-      </div>
-    </section>
-    <div id="container" class="information-container">
-      <h2 class="information-title">{{ $t("Comprar1.text") }}</h2>
-      <div class="container-frame">
-        <ul class="horarios-txt__list">
-          <li v-if="store.storeObras[0].fechaUno" class='horarios-txt__item'>
-            {{ store.storeObras[0].fechaUno }}
-            <RouterLink v-if="store.storeObras[0] && store.storeObras[0].obraID" :to="{
-              path: '/comprarDos/' + store.storeObras[0].obraID,
-              query: { idSesion: 1 }
-            }" class="show-poster__button">{{ $t("Comprar1.text2") }}</RouterLink>
-          </li>
-          <li v-if="store.storeObras[0].fechaDos" class='horarios-txt__item'>
-            {{ store.storeObras[0].fechaDos }}
-            <RouterLink v-if="store.storeObras[0] && store.storeObras[0].obraID" :to="{
-              path: '/comprarDos/' + store.storeObras[0].obraID,
-              query: { idSesion: 2 }
-            }" class="show-poster__button">{{ $t("Comprar1.text2") }}</RouterLink>
-          </li>
-          <li v-if="store.storeObras[0].fechaTres" class='horarios-txt__item'>
-            {{ store.storeObras[0].fechaTres }}
-            <RouterLink v-if="store.storeObras[0] && store.storeObras[0].obraID" :to="{
-              path: '/comprarDos/' + store.storeObras[0].obraID,
-              query: { idSesion: 3 }
-            }" class="show-poster__button">{{ $t("Comprar1.text2") }}</RouterLink>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <MainBlockComponent></MainBlockComponent>
+    <FrameFunctionComponent></FrameFunctionComponent>
+    <InformationContainerComponent></InformationContainerComponent>
   </main>
 </template>
 
 <script setup lang="ts">
-import { onMounted, } from 'vue';
-import { useRoute, RouterLink } from 'vue-router';
-import { useListadoObrasComprar1Store } from '../store/Comprar-1-Store';
-
-const store = useListadoObrasComprar1Store();
-const route = useRoute();
-const idObra = route.params.Id as string;
-
-onMounted(async () => {
-  await store.cargarObras(idObra);
-});
+import MainBlockComponent from '@/components/MainBlockComponent.vue';
+import InformationContainerComponent from '@/components/InformationContainerComponent.vue';
+import FrameFunctionComponent from '@/components/FrameFunctionComponent.vue';
 </script>
 
 <style scoped>

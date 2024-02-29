@@ -1,16 +1,62 @@
 <template>
-    <body>
-        <main class="main">
-            <MainBlockComponent></MainBlockComponent>
-            <CardComponent></CardComponent>
-        </main>
-    </body>
-</template>
-<script setup lang="ts">
-import CardComponent from '../components/CardComponent.vue'
-import MainBlockComponent from '@/components/MainBlockComponent.vue';
-</script>
+    <div class="main-block">
 
+        <h1 v-if="variable != null"> {{ $t(variable) }}</h1>
+        <h1 v-if="pathname === '/Function/'"> {{ storeFunction.storeObras[0].nombre }}</h1>
+        <h1 v-if="pathname === '/ComprarUno/'"> {{ storeComprar1.storeObras[0].nombre }}</h1>
+        <h1 v-if="pathname === '/ComprarDos/'"> {{ storeComprar2.storeObras[0].nombre }}</h1>
+    </div>
+</template>
+
+<script setup lang="ts">
+let variable: string
+import { useListadoObrasFunctionStore } from '@/store/Function-Store';
+import { useRoute } from 'vue-router';
+import { useListadoObrasComprar1Store } from '@/store/Comprar-1-Store';
+import { useListadoObrasComprar2Store } from '@/store/Comprar-2-Store';
+
+let storeFunction = useListadoObrasFunctionStore();
+
+let storeComprar1 = useListadoObrasComprar1Store();
+
+let storeComprar2 = useListadoObrasComprar2Store();
+
+const pathname = window.location.pathname;
+
+if (pathname === '/Programacion') {
+    variable = "Programacion.text1"
+}
+
+if (pathname === '/About') {
+    variable = "About.information"
+}
+if (pathname === '/Contact') {
+    variable = "Contact.information"
+}
+
+if (pathname === '/Activities') {
+    variable = "Activities.activities"
+}
+
+if (pathname === '/Function/') {
+    const route = useRoute();
+    const idObra = route.params.Id as string;
+    storeFunction.cargarObras(idObra);
+}
+
+if (pathname === '/ComprarUno/') {
+    const route = useRoute();
+    const idObra = route.params.Id as string;
+    storeComprar1.cargarObras(idObra);
+}
+
+if (pathname == '/ComprarDos/') {
+    const route = useRoute();
+    const idObra = route.params.Id as string;
+    storeComprar2.cargarObra(idObra);
+}
+
+</script>
 
 <style scoped>
 body,
