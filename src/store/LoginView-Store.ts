@@ -1,20 +1,21 @@
 import { defineStore } from 'pinia';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import router from '@/router';
 
 interface Usuario {
-  nombreUsuario : string ;
-  contrasena : string; 
-  rol : number;
+  nombreUsuario: string;
+  contrasena: string;
+  rol: number;
 }
 
-export let usuario : Usuario
 export const useListadoObrasLoginStore = defineStore('listadoObrasLogin', () => {
-
-  const formData = reactive({
+  const formData = ref({
     nombreUsuario: '',
     contrasena: '',
   });
+
+
+  const usuarios = reactive<Usuario[]>([]);
 
   async function registrarUsuario() {
     const url = 'http://localhost:8001/Usuario/Register';
@@ -24,13 +25,14 @@ export const useListadoObrasLoginStore = defineStore('listadoObrasLogin', () => 
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData), 
+        body: JSON.stringify(formData.value),
       });
 
       if (response.ok) {
-         usuario = await response.json();
-         localStorage.setItem('usuario', JSON.stringify(usuario));
-         router.push('/Home')
+        const usuarioRegistrado: Usuario = await response.json();
+        usuarios.splice(0, usuarios.length, usuarioRegistrado); 
+        localStorage.setItem('usuario', JSON.stringify(usuarioRegistrado));
+        router.push('/Home');
       } else {
         console.error('Error en el registro:', response.statusText);
       }
@@ -39,20 +41,24 @@ export const useListadoObrasLoginStore = defineStore('listadoObrasLogin', () => 
     }
   }
 
- function isAdmin(usuario : any) {
-    if(usuario.rol == 1){
-      return true
-    }else{
-      return false
-    }
+  function isAdmin() {
+    const usuarioLocal = cargarUsuarioDesdeLocalStorage();
+    return usuarioLocal?.rol === 1;
   }
+
   function cargarUsuarioDesdeLocalStorage() {
     const usuarioString = localStorage.getItem('usuario');
     if (usuarioString) {
-      return JSON.parse(usuarioString) as Usuario;
+      const usuarioLocal = JSON.parse(usuarioString);
+
+      usuarios.splice(0, usuarios.length, usuarioLocal); 
+      return usuarioLocal;
     }
     return null;
   }
 
-  return { formData,  registrarUsuario, isAdmin, usuario, cargarUsuarioDesdeLocalStorage };
+
+  cargarUsuarioDesdeLocalStorage();
+
+  return { formData, registrarUsuario, isAdmin, usuarios, cargarUsuarioDesdeLocalStorage };
 });

@@ -9,101 +9,20 @@
       <RouterLink to="/About" class="nav__link">{{ $t("Header.information") }}</RouterLink>
       <RouterLink to="/Activities" class="nav__link">{{ $t("Header.activities") }}</RouterLink>
       <RouterLink to="/Contact" class="nav__link">{{ $t("Header.contact") }}</RouterLink>
-      <RouterLink  v-if="store.isAdmin(store.cargarUsuarioDesdeLocalStorage)" to="/AdminPanel" class="nav__link">{{ $t("HomeAdmin.admin") }}</RouterLink>
+  
+      <RouterLink v-if="isAdmin" to="/AdminPanel" class="nav__link">{{ $t("HomeAdmin.admin") }}</RouterLink>
     </nav>
   </header>
 </template>
-
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useListadoObrasLoginStore } from '../store/LoginView-Store';
+
 const store = useListadoObrasLoginStore();
 
-
-
-const mask1Src = '/Careta-Morada.png';
-const mask2Src = '/Careta-amarilla.png';
-
-const separation = ref(0);
-const movingApart = ref(false);
-
-const canvasRef = ref<HTMLCanvasElement | null>(null);
-
-onMounted(() => {
-  if (canvasRef.value) {
-    const ctx = canvasRef.value.getContext("2d");
-    if (!ctx) return;
-
-    const mask1 = new Image();
-    const mask2 = new Image();
-
-    mask1.onload = () => {
-      drawMasks(ctx, mask1, mask2);
-    };
-    mask2.onload = () => {
-      drawMasks(ctx, mask1, mask2);
-    };
-
-    mask1.onerror = () => {
-      alert("Error al cargar la imagen 1");
-    };
-
-    mask2.onerror = () => {
-      alert("Error al cargar la imagen 2");
-    };
-
-    mask1.src = mask1Src;
-    mask2.src = mask2Src;
-  }
-});
-
-function drawMasks(ctx: CanvasRenderingContext2D, mask1: HTMLImageElement, mask2: HTMLImageElement) {
-  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
-  ctx.lineWidth = 6;
-  ctx.strokeStyle = "blue";
-  ctx.fillStyle = "#87CEEB";
-  ctx.beginPath();
-  ctx.arc(100, 100, 30, 0, 2 * Math.PI);
-  ctx.fill();
-  ctx.stroke();
-
-
-  ctx.drawImage(mask1, 100 - mask1.width / 2 - separation.value, 50, 100, 100);
-  ctx.drawImage(mask2, 100 - mask2.width / 2 + separation.value, 50, 100, 100);
-}
-
-function handleMouseEnter() {
-  movingApart.value = true;
-  separation.value = 10;
-  redrawMasks();
-}
-
-function handleMouseLeave() {
-  movingApart.value = false;
-  separation.value = 0;
-  redrawMasks();
-}
-
-function redrawMasks() {
-  if (canvasRef.value) {
-    const ctx = canvasRef.value.getContext("2d");
-    if (!ctx) return;
-    const mask1 = new Image();
-    const mask2 = new Image();
-    mask1.src = mask1Src;
-    mask2.src = mask2Src;
-    mask1.onload = () => {
-      drawMasks(ctx, mask1, mask2);
-    };
-    mask2.onload = () => {
-      drawMasks(ctx, mask1, mask2);
-    };
-  }
-}
+const isAdmin = computed(() => store.isAdmin());
 </script>
-
 
 <style>
 .header {
