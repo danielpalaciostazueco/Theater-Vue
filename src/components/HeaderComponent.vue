@@ -2,15 +2,15 @@
   <header class="header">
     <div class="header__logo">
       <RouterLink to="/"></RouterLink>
-   </div>
+    </div>
     <nav class="header__nav">
       <RouterLink to="/Programacion" class="nav__link">{{ $t("Header.schedule") }}</RouterLink>
       <RouterLink to="/About" class="nav__link">{{ $t("Header.information") }}</RouterLink>
       <RouterLink to="/Activities" class="nav__link">{{ $t("Header.activities") }}</RouterLink>
       <RouterLink to="/Contact" class="nav__link">{{ $t("Header.contact") }}</RouterLink>
       <RouterLink v-if="isAdmin" to="/AdminPanel" class="nav__link">{{ $t("HomeAdmin.admin") }}</RouterLink>
-      <button @click="toggleLanguage" class="nav__link">{{ currentLanguage }}</button>
     </nav>
+    <button @click="toggleLanguage" class="nav__link">{{ currentLanguage }}</button>
   </header>
 </template>
 
@@ -66,18 +66,20 @@ const toggleLanguage = () => {
   text-decoration: none;
 }
 
-@media screen and (max-width: 1150px) {
+@media screen and (max-width: 768px) {
   .header {
-    flex-direction: column;
     text-align: center;
     margin-top: 5vh;
     margin-bottom: 5vh;
+    display: grid;
   }
 
   .header__logo,
   .header__nav {
-    margin-left: 0;
-    margin-top: 10px;
+
+    display: flex;
+    justify-content: left;
+    gap: 20px;
   }
 }
 </style>

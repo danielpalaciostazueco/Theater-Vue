@@ -173,7 +173,7 @@ body {
 
 
 
-@media screen and (max-width: 1150px) {
+@media screen and (max-width: 768px) {
     .performance-block {
         display: flex;
         flex-direction: column;

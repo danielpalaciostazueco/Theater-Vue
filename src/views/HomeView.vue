@@ -81,8 +81,9 @@ body {
   text-align: center;
 }
 
-.performance-block__image img {
+.performance-block__image img[data-v-5da18407] {
   width: 350px;
+  margin-bottom: 20px;
 }
 
 .performance-block__name {
@@ -98,121 +99,49 @@ body {
   margin-bottom: 5vh;
 }
 
+.image__img {
+  width: 360px;
+}
+
 .performance-block__name-text {
   color: white;
   text-align: center;
 }
 
-.title-posters {
-  display: flex;
-  justify-content: center;
-  margin: 7vh;
-}
 
-.title-posers_txt {
-  font-size: xx-large;
-}
-
-.poster-container {
-  display: flex;
-  justify-content: space-evenly;
-  background-color: white;
-  padding: 20px;
-  margin: 20px;
-}
-
-.show-poster {
-  text-align: center;
-  background-color: #1e3367;
-  padding: 20px;
-  width: 264px;
-
-  border: #ffffff 2px solid;
-  box-sizing: border-box;
-}
-
-.show-poster__image {
-  margin-bottom: 10px;
-}
-
-.show-poster__image img {
-  width: 100%;
-  height: 20vh;
-}
-
-.poster__img {
-  height: 300px;
-
-  width: 100%;
-}
-
-.show-poster__details {
-  color: white;
-  font-size: smaller;
-}
-
-.show-poster__title {
-  margin-bottom: 10px;
-}
-
-.show-poster__button {
-  padding: 10px 20px;
-  background-color: #fff;
-  color: #1e3367;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-@media screen and (max-width: 1150px) {
+@media screen and (max-width: 768px) {
   .performance-block {
     display: flex;
     flex-direction: column;
   }
 
   .performance-block__name {
-    display: none;
+    width: 350px;
+    margin-bottom: 20px;
   }
 
-  .main-block h1 {
-    margin-left: 6vh;
+  .image__img {
+
+    max-width: 300px;
+  }
+
+  .performance-block__name-title {
+    font-size: xx-large;
+    color: #fff;
+    margin-bottom: 5vh;
+    margin-left: 8vh;
+  }
+
+  .performance-block__name-text {
+    color: #fff;
+    text-align: center;
+    margin-left: 5vh;
   }
 
   article {
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-
-  .title-posters {
-    flex-direction: column;
-    align-items: center;
-    margin: 2vh;
-  }
-
-  .title-posers_txt {
-    font-size: x-large;
-  }
-
-  .poster-container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .show-poster {
-    margin-bottom: 7vh;
-  }
-
-  .poster-container img {
-    margin-bottom: 10px;
-  }
-
-  .show-poster {
-    padding: 15px;
-  }
-
-  .show-poster__image {
-    margin-bottom: 10px;
   }
 }
 </style>

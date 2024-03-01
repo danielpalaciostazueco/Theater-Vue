@@ -140,33 +140,30 @@ section {
     margin-top: 15vh;
 }
 
-.container {
-    text-align: center;
-}
+@media screen and (max-width: 768px) {
 
-.cinema-seats {
-    display: flex;
-    justify-content: center;
-    padding-top: 30px;
-}
+    .frame-function {
+        display: flex;
+        align-items: center;
+        background-color: #1e3367;
+        width: 800px;
+        height: 450px;
+        text-align: center;
+        max-width: 323px;
+        margin: auto;
+        margin-top: 5vh;
+    }
 
+    .frame-function__title h2 {
+        font-size: 30px;
+        color: #fff;
+        display: none;
+    }
 
-.cinema-seats svg {
-    cursor: pointer;
-}
+    .frame-function__poster {
 
-.cinema-button {
-    display: flex;
-    justify-content: center;
-    padding-top: 20px;
-}
-
-.ocupado {
-    fill: red;
-}
-
-.seleccionado {
-    fill: green;
+        margin-left: 23px;
+    }
 }
 </style>
 

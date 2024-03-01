@@ -4,7 +4,8 @@ import { RouterLink } from 'vue-router'
 <template>
     <footer class="footer">
         <div class="footer__logo">
-            <RouterLink to="/Home"><img src="../assets/img/logo.png" alt="Logo del Teatro Example" class="logo__image"></RouterLink>
+            <RouterLink to="/Home"><img src="../assets/img/logo.png" alt="Logo del Teatro Example" class="logo__image">
+            </RouterLink>
         </div>
         <div class="footer__menu">
             <RouterLink to="/Programacion" class="footer__menu-link">{{ $t("Footer.schedule") }}</RouterLink>
@@ -15,7 +16,7 @@ import { RouterLink } from 'vue-router'
         <div class="footer__networks">
             <img src="../assets/img/instagram.png" alt="">
             <img src="../assets/img/facebook.png" alt="">
-            <img src="../assets/img/tweeter.png" alt=""> 
+            <img src="../assets/img/tweeter.png" alt="">
         </div>
     </footer>
 </template>
@@ -48,6 +49,7 @@ import { RouterLink } from 'vue-router'
 
 .footer__menu {
     flex: 1;
+    margin-left: 4px;
     text-align: center;
 }
 
