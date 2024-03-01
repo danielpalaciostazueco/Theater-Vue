@@ -42,7 +42,7 @@ export const useListadoObrasComprar2Store = defineStore('listadoObrasCompra2', (
 
     async function cargarAsientosOcupados(obraID: string, idSesion: string) {
     try {
-      const response = await fetch(`http://localhost:8001/Obra/${obraID}/Session/${idSesion}/Seats`);
+      const response = await fetch(`http://localhost:8001/Obra/${obraID}/Session?sessionId=${idSesion}`);
       if (response.ok) {
         const data = await response.json();
         asientosOcupados.splice(0, asientosOcupados.length, ...data.map((idAsiento: number) => ({ idAsiento })));
@@ -79,7 +79,7 @@ export const useListadoObrasComprar2Store = defineStore('listadoObrasCompra2', (
       const payload = {
         asientos: idsAsientosParaComprar
       };
-      const url = `http://localhost:8001/Obra/${obraID}/Session/${idSesion}/Seats`;
+      const url = `http://localhost:8001/Obra/${obraID}/Session?sessionId=${idSesion}`;
       const respuesta = await fetch(url, {
         method: 'POST',
         headers: {
