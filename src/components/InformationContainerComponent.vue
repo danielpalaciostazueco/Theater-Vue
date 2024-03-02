@@ -1,33 +1,34 @@
 <template>
     <div id="container" class="information-container">
         <h2 class="information-title">{{ $t("Comprar1.text") }}</h2>
-        <div class="container-frame">
+        <div class="container-frame" v-if="store.storeObras.length > 0 && store.storeObras[0]">
             <ul class="horarios-txt__list">
                 <li v-if="store.storeObras[0].fechaUno" class='horarios-txt__item'>
                     {{ store.storeObras[0].fechaUno }}
-                    <RouterLink v-if="store.storeObras[0] && store.storeObras[0].obraID" :to="{
+                    <RouterLink :to="{
                         path: '/comprarDos/' + store.storeObras[0].obraID,
                         query: { idSesion: 1 }
-                    }" class="show-poster__button">{{ $t("Comprar1.text2") }}</RouterLink>
+                    }" class="show-poster__button" v-if="store.storeObras[0].obraID">{{ $t("Comprar1.text2") }}</RouterLink>
                 </li>
                 <li v-if="store.storeObras[0].fechaDos" class='horarios-txt__item'>
                     {{ store.storeObras[0].fechaDos }}
-                    <RouterLink v-if="store.storeObras[0] && store.storeObras[0].obraID" :to="{
+                    <RouterLink :to="{
                         path: '/comprarDos/' + store.storeObras[0].obraID,
                         query: { idSesion: 2 }
-                    }" class="show-poster__button">{{ $t("Comprar1.text2") }}</RouterLink>
+                    }" class="show-poster__button" v-if="store.storeObras[0].obraID">{{ $t("Comprar1.text2") }}</RouterLink>
                 </li>
                 <li v-if="store.storeObras[0].fechaTres" class='horarios-txt__item'>
                     {{ store.storeObras[0].fechaTres }}
-                    <RouterLink v-if="store.storeObras[0] && store.storeObras[0].obraID" :to="{
+                    <RouterLink :to="{
                         path: '/comprarDos/' + store.storeObras[0].obraID,
                         query: { idSesion: 3 }
-                    }" class="show-poster__button">{{ $t("Comprar1.text2") }}</RouterLink>
+                    }" class="show-poster__button" v-if="store.storeObras[0].obraID">{{ $t("Comprar1.text2") }}</RouterLink>
                 </li>
             </ul>
         </div>
     </div>
 </template>
+
 <script setup lang="ts">
 import { onMounted, } from 'vue';
 import { useRoute, RouterLink } from 'vue-router';

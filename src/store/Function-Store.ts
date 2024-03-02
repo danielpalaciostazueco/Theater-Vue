@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { reactive, ref } from 'vue';
+import { reactive } from 'vue';
 
 interface Obra {
   nombre: string;
@@ -10,6 +10,7 @@ interface Obra {
   fechaDos: string;
   fechaTres: string;
   actores: string[];
+  duracion: number;
 }
 
 export const useListadoObrasFunctionStore = defineStore('listadoObrasFuncion', () => {
@@ -28,6 +29,7 @@ export const useListadoObrasFunctionStore = defineStore('listadoObrasFuncion', (
         nombre: data.nombre,
         imagenes: data.imagenes.split(','),
         obraID: data.obraID,
+        duracion: data.duracion / 60,
         descripcion: data.descripcion,
         fechaUno: formatearFecha(data.fechaUno),
         fechaDos: formatearFecha(data.fechaDos),
@@ -38,10 +40,21 @@ export const useListadoObrasFunctionStore = defineStore('listadoObrasFuncion', (
       console.error('Error al obtener los datos de la obra:', error);
     }
   }
+  
   function formatearFecha(fecha: string) {
-    const opciones: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(fecha).toLocaleDateString('es-ES', opciones);
+    const opciones: Intl.DateTimeFormatOptions = {
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit', 
+      hour12: false 
+    };
+    
+    const fechaObj = new Date(fecha);
+    return fechaObj.toLocaleDateString('es-ES', opciones) ;
   }
+  
 
   return { cargarObras, storeObras};
 });

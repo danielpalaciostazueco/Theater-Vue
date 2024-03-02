@@ -2,9 +2,9 @@
     <div class="main-block">
 
         <h1 v-if="variable != null"> {{ $t(variable) }}</h1>
-        <h1 v-if="showFuction"> {{ storeFunction.storeObras[0].nombre }}</h1>
-        <h1 v-if="showComprarUno"> {{ storeComprar1.storeObras[0].nombre }}</h1>
-        <h1 v-if="showComprarDos"> {{ storeComprar2.storeObras[0].nombre }}</h1>
+        <h1 v-if="showFuction && storeFunction.storeObras[0] != null"> {{ storeFunction.storeObras[0].nombre }}</h1>
+        <h1 v-if="showComprarUno && storeComprar1.storeObras[0] != null"> {{ storeComprar1.storeObras[0].nombre }}</h1>
+        <h1 v-if="showComprarDos && storeComprar2.storeObras[0] != null" > {{ storeComprar2.storeObras[0].nombre }}</h1>
     </div>
 </template>
 
