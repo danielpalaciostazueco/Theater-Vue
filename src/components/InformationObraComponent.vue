@@ -1,22 +1,26 @@
 <template>
-    <section class="horarios" v-if="store.storeObras.length > 0">
-        <div class="horarios-img">
+    <section class="horarios" v-if="store.storeObras && store.storeObras.length > 0">
+        <div class="horarios-img" v-if="store.storeObras[0].imagenes && store.storeObras[0].imagenes.length > 0">
             <img :src="store.storeObras[0].imagenes[0]" alt="Imagen destacada de la obra" />
         </div>
         <div class="horarios-txt">
             <h2 class="horarios-txt__title">{{ $t("Function.text1") }}</h2>
-            <ul class="horarios-txt__list">
+            <ul class="horarios-txt__list" v-if="store.storeObras[0].fechaUno && store.storeObras[0].fechaDos && store.storeObras[0].fechaTres">
                 <li v-for="fecha in [store.storeObras[0].fechaUno, store.storeObras[0].fechaDos, store.storeObras[0].fechaTres]"
                     :key="fecha" class="horarios-txt__item">{{ fecha }}</li>
             </ul>
+            <div>
+                <h2 class="horarios-txt__title2">{{ $t("Function.text5") }}</h2>
+                <p class="horarios-txt">{{ store.storeObras[0].duracion }} {{ $t("Function.text6") }}</p>
+            </div>
         </div>
     </section>
-    <div class="primera-img">
-        <img :src="store.storeObras[0].imagenes[1]" alt="Imagen destacada de la obra" />
+    <div class="primera-img" v-if="store.storeObras[0].imagenes && store.storeObras[0].imagenes.length > 1">
+        <img :src="store.storeObras[0].imagenes[1]" alt="Imagen secundaria de la obra" />
     </div>
     <article>
         <div class="button-bought" id="boton-comprar">
-            <RouterLink :to="{ path: '/ComprarUno/' + store.storeObras[0].obraID }" class='show-poster__button'>
+            <RouterLink :to="{ path: '/ComprarUno/' + store.storeObras[0].obraID }" class="show-poster__button">
                 {{ $t("Function.text3") }}
             </RouterLink>
         </div>
@@ -24,7 +28,7 @@
     <section>
         <div class="frame-information">
             <div class="frame-information__title">
-                <h2> {{ $t("Function.text2") }}</h2>
+                <h2>{{ $t("Function.text2") }}</h2>
             </div>
             <div class="frame-information__txt">
                 <p>{{ store.storeObras[0].descripcion }}</p>
@@ -32,12 +36,13 @@
         </div>
         <div class="frame-repart">
             <div class="frame-repart__title">
-                <h2> {{ $t("Function.text4") }}</h2>
+                <h2>{{ $t("Function.text4") }}</h2>
             </div>
             <div class="frame-repart__txt">
                 <ul class="frame-repart__list">
-                    <li v-for="actor in store.storeObras[0].actores " :key="actor" class="frame-repart__item">{{
-                        actor }}</li>
+                    <li v-for="actor in store.storeObras[0].actores" :key="actor" class="frame-repart__item">
+                        {{ actor }}
+                    </li>
                 </ul>
             </div>
         </div>
@@ -78,22 +83,7 @@ body {
     overflow: auto;
 }
 
-/*---------Main--------*/
-.main-block {
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    width: 100%;
-    background-color: #1E3367;
-    height: 13vh;
-    margin-bottom: 10vh;
-}
 
-.main-block__title {
-    color: white;
-    font-size: xx-large;
-    margin-left: 20vh;
-}
 
 .horarios {
     display: flex;
@@ -106,6 +96,11 @@ body {
 .horarios-img {
     flex: 1;
     text-align: center;
+}
+
+.duracion-title{
+    font-size: xxx-large;
+    margin-bottom: 3vh;
 }
 
 .horarios-img img {
@@ -121,8 +116,23 @@ body {
     font-size: xxx-large;
     margin-bottom: 3vh;
 }
+.horarios-txt__title2{
+    font-size: xxx-large;
+    margin-bottom: 3vh;
+    margin-top: 5vh;
+}
 
-.horarios-txt__list,
+.horarios-txt__list {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+.horarios-txt{
+    font-size: larger;
+}
+
 .horarios-txt__item {
     font-size: xx-large;
     list-style-position: inside;
@@ -137,17 +147,6 @@ body {
 
 .primera-img img {
     max-width: 100vh;
-}
-
-.segunda-img {
-    display: flex;
-    justify-content: left;
-    margin-left: 20vh;
-    margin-bottom: 5vh;
-}
-
-.segunda-img__image {
-    width: 700px;
 }
 
 article {
@@ -168,10 +167,6 @@ article {
     margin-bottom: 10vh;
 }
 
-.button-bought__link {
-    color: white;
-    font-size: x-large;
-}
 
 .show-poster__button {
     background-color: #1E3367;
@@ -228,19 +223,10 @@ article {
     font-size: 20px;
 }
 
-.imagen-container img {
-    max-width: 500px;
-}
-
-.boton-container img {
-    max-width: 500px;
-}
 
 
-@media screen and (max-width: 1150px) {
-    .main-block h1 {
-        margin-left: 6vh;
-    }
+@media screen and (max-width: 768px) {
+
 
     .horarios {
         flex-direction: column;
@@ -254,9 +240,9 @@ article {
         flex: 1;
     }
 
-    .horarios-img__image {
-        width: 100%;
-        max-width: 600px;
+    .horarios-img img {
+        width: 344px;
+        margin-top: 10vh;
     }
 
     .horarios-txt {
@@ -267,56 +253,39 @@ article {
         font-size: 32px;
         margin-bottom: 10px;
     }
+     .horarios-txt__title2 {
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+
 
     .horarios-txt__item {
         font-size: 22px;
     }
 
-    .primera-img,
-    .segunda-img {
-        justify-content: center;
-        margin-left: 0;
-        margin-bottom: 5vh;
+    .horarios-txt__list {
+        margin: 0;
+        padding: 0;
+        text-decoration: none;
+        margin-bottom: 7px;
     }
 
-    .primera-img__image,
-    .segunda-img__image {
-        width: 100%;
-        max-width: 600px;
+
+    .primera-img img {
+        max-width: 300px;
     }
+
 
     .button-bought {
-
         margin-right: 0;
         margin-bottom: 10vh;
-    }
-
-    .button-bought__link {
-        font-size: 18px;
+        width: 300px;
+        margin-right: 45px;
     }
 
     .frame-information,
     .frame-repart {
         max-width: 100%;
-    }
-
-    .footer {
-        display: flex;
-        justify-content: center;
-    }
-
-    .footer__logo {
-        text-align: center;
-    }
-
-    .footer__menu {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .footer__networks {
-        display: flex;
-        flex-direction: column;
     }
 
     .show-poster__button {

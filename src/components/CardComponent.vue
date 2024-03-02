@@ -171,9 +171,20 @@ body {
     cursor: pointer;
 }
 
+@media screen and (max-width: 1285px){
+    .poster-container {
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    flex-wrap: wrap;
+}
 
 
-@media screen and (max-width: 1150px) {
+}
+
+@media screen and (max-width: 768px) {
     .performance-block {
         display: flex;
         flex-direction: column;

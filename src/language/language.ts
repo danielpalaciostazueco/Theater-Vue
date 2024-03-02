@@ -71,7 +71,9 @@ export const messages = {
         text1: 'Show times',
         text2: 'Function information',
         text3: 'Buy tickets',
-        text4: 'Cast of actors'
+        text4: 'Cast of actors',
+        text5: 'Duration',
+        text6: 'Minutes'
       },
   
       HomeAdmin: {
@@ -190,6 +192,8 @@ export const messages = {
         text2: 'Información de la función',
         text3: 'Comprar entradas',
         text4: 'Reparto de actores',
+        text5: 'Duración',
+        text6: 'Minutos'
       },
   
       HomeAdmin: {

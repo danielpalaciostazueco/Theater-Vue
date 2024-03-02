@@ -67,11 +67,11 @@ const realizarCompra = async () => {
 };
 
 function generarButacas() {
-    // Definiciones iniciales
+
     const anchoAsiento = 40, altoAsiento = 40, espacioEntreAsientos = 10, espacioEntreFilas = 20;
     const anchoReposabrazos = 10, altoReposabrazos = altoAsiento;
     const anchoSvg = (anchoAsiento + espacioEntreAsientos + anchoReposabrazos * 2) * 5;
-    // Configuración de la pantalla
+  
     const anchoPantalla = anchoSvg * 0.8;
     const altoPantalla = 100;
     const xPantalla = (anchoSvg - anchoPantalla) / 2;
@@ -121,30 +121,52 @@ const realizarCompraYRecargarAsientos = async () => {
 };
 
 function generarPDF() {
-    const doc = new jsPDF();
+  const fechaActual = new Date();
+  const anchoEntrada = 3.5 * 72; 
+  const altoEntrada = 200; 
 
-    const fechaActual = new Date();
-    const fechaFormateada = fechaActual.toLocaleDateString("es-ES", {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
+  const doc = new jsPDF({
+    orientation: 'landscape',
+    unit: 'pt',
+    format: [anchoEntrada, altoEntrada]
+  });
 
-    doc.setFontSize(16);
-    doc.text("UrbanTheater", 10, 10);
-    doc.setFontSize(12);
-    doc.text(`Fecha: ${fechaFormateada}`, 10, 20);
-
-
-    doc.text("Detalles de la Compra", 10, 30);
-    doc.text(`Obra: ${store.storeObras[0].nombre}`, 10, 40);
-    doc.text(`Sesión ID: ${idSesion}`, 10, 50);
+  const fechaFormateada = fechaActual.toLocaleDateString("es-ES", {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
 
 
-    const asientosComprados = Array.from(asientosSeleccionados.value).join(", ");
-    doc.text(`Asientos: ${asientosComprados}`, 10, 60);
-    doc.text(`Total: ${calcularTotal.value} €`, 10, 70);
-    doc.save("compra.pdf");
+  const colorPrincipal = "#000";
+  const colorSecundario = "#700";
+  doc.setTextColor(colorPrincipal);
+  
+
+  doc.setFont('times', 'bold');
+  doc.setFontSize(22);
+  doc.text("UrbanTheater", 20, 30); 
+
+
+  doc.setDrawColor(colorSecundario);
+  doc.setLineWidth(1);
+  doc.line(20, 40, anchoEntrada - 20, 40); 
+
+  doc.setFont('times', 'normal');
+  doc.setFontSize(12);
+ 
+  doc.text(`Fecha: ${fechaFormateada}`, 20, 60);
+  doc.text("Detalles de la Compra", 20, 80);
+  doc.text(`Obra: ${store.storeObras[0].nombre}`, 20, 100);
+  doc.text(`Sesión ID: ${idSesion}`, 20, 120);
+  const asientosComprados = Array.from(asientosSeleccionados.value).join(", ");
+  doc.text(`Asientos: ${asientosComprados}`, 20, 140);
+  
+  
+  doc.setFont('times', 'bold');
+  doc.setTextColor(colorSecundario);
+  doc.text(`Total: ${calcularTotal.value} €`, 20, 160);
+  doc.save("compra.pdf");
 }
 </script> 
 <style scoped>

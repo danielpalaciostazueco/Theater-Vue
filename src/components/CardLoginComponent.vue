@@ -10,7 +10,7 @@
             <button type="submit">{{ $t("CreateAccount.text5") }}</button>
         </form>
         <footer>
-          
+
         </footer>
     </div>
 </template>
@@ -23,7 +23,6 @@ const submitForm = async () => {
     await store.registrarUsuario();
 };
 </script>
-
 <style scoped>
 * {
     box-sizing: border-box;
@@ -41,40 +40,18 @@ body {
     font-family: "Ubuntu";
 }
 
-.circle {
-    position: fixed;
-    top: -50vmin;
-    left: -50vmin;
-    width: 200vmin;
-    height: 200vmin;
-    border-radius: 50%;
-    background: #65c8ff;
-    z-index: -1;
-}
-
-.circle::after {
-    content: "";
-    position: absolute;
-    right: -50vmin;
-    bottom: -50vmin;
-    width: 200vmin;
-    height: 200vmin;
-    border-radius: 50%;
-    background: #143d81;
-    z-index: -2;
-}
-
 .card {
     overflow: hidden;
     position: relative;
     z-index: 3;
-    width: 360px;
+    width: 100%;
+    max-width: 360px;
     padding: 160px 30px 38px;
     border-radius: 1.25rem;
     background: #fff;
     text-align: center;
-    box-shadow: 0 100px 100px rgba(0, 0, 0, 0.1);
-    margin-left: 80vh;
+    margin: 30px;
+    margin-left: 79vh;
     margin-top: 30vh;
 }
 
@@ -108,6 +85,7 @@ body {
 .card .logo i {
     font-size: 30px;
     color: #216ce7;
+
 }
 
 .card>h2 {
@@ -117,13 +95,13 @@ body {
     color: #2a3444;
 }
 
+
 .form {
     margin: 0 auto 30px;
     display: grid;
     gap: 18px;
     width: 100%;
-    max-width: 300px;
-    /* fija un ancho máximo para los campos del formulario */
+    /* Eliminar el ancho máximo para adaptarse a pantallas pequeñas */
 }
 
 .form>input,
@@ -185,11 +163,36 @@ body {
     color: orange;
 }
 
-/* Media query para ajustar el tamaño de la tarjeta en pantallas más grandes */
-@media (min-width: 768px) {
+/* Media query para pantallas de tamaño intermedio */
+@media (min-width: 576px) and (max-width: 767px) {
     .card {
-        width: 360px;
-        /* Ancho de la tarjeta para pantallas más grandes */
+        padding: 100px 15px 38px;
+        margin-top: 20vh;
     }
+
+    .card>h2 {
+        font-size: 22px;
+        font-weight: 400;
+        margin: 0 0 30px;
+        color: #2a3444;
+        margin-top: 30px;
+    }
+}
+
+/* Media query para teléfonos móviles */
+@media (max-width: 575px) {
+    .card {
+        padding: 100px 15px 38px;
+        margin-top: 20vh;
+        padding-right: 30px;
+    }
+}
+
+.card>h2 {
+    font-size: 22px;
+    font-weight: 400;
+    margin: 0 0 30px;
+    color: #2a3444;
+    margin-top: 30px;
 }
 </style>

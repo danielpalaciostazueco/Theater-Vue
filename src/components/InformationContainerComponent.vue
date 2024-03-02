@@ -1,33 +1,34 @@
 <template>
     <div id="container" class="information-container">
         <h2 class="information-title">{{ $t("Comprar1.text") }}</h2>
-        <div class="container-frame">
+        <div class="container-frame" v-if="store.storeObras.length > 0 && store.storeObras[0]">
             <ul class="horarios-txt__list">
                 <li v-if="store.storeObras[0].fechaUno" class='horarios-txt__item'>
                     {{ store.storeObras[0].fechaUno }}
-                    <RouterLink v-if="store.storeObras[0] && store.storeObras[0].obraID" :to="{
+                    <RouterLink :to="{
                         path: '/comprarDos/' + store.storeObras[0].obraID,
                         query: { idSesion: 1 }
-                    }" class="show-poster__button">{{ $t("Comprar1.text2") }}</RouterLink>
+                    }" class="show-poster__button" v-if="store.storeObras[0].obraID">{{ $t("Comprar1.text2") }}</RouterLink>
                 </li>
                 <li v-if="store.storeObras[0].fechaDos" class='horarios-txt__item'>
                     {{ store.storeObras[0].fechaDos }}
-                    <RouterLink v-if="store.storeObras[0] && store.storeObras[0].obraID" :to="{
+                    <RouterLink :to="{
                         path: '/comprarDos/' + store.storeObras[0].obraID,
                         query: { idSesion: 2 }
-                    }" class="show-poster__button">{{ $t("Comprar1.text2") }}</RouterLink>
+                    }" class="show-poster__button" v-if="store.storeObras[0].obraID">{{ $t("Comprar1.text2") }}</RouterLink>
                 </li>
                 <li v-if="store.storeObras[0].fechaTres" class='horarios-txt__item'>
                     {{ store.storeObras[0].fechaTres }}
-                    <RouterLink v-if="store.storeObras[0] && store.storeObras[0].obraID" :to="{
+                    <RouterLink :to="{
                         path: '/comprarDos/' + store.storeObras[0].obraID,
                         query: { idSesion: 3 }
-                    }" class="show-poster__button">{{ $t("Comprar1.text2") }}</RouterLink>
+                    }" class="show-poster__button" v-if="store.storeObras[0].obraID">{{ $t("Comprar1.text2") }}</RouterLink>
                 </li>
             </ul>
         </div>
     </div>
 </template>
+
 <script setup lang="ts">
 import { onMounted, } from 'vue';
 import { useRoute, RouterLink } from 'vue-router';
@@ -147,133 +148,12 @@ button {
     margin-left: 10px;
 }
 
-.horario {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 900px;
-    margin: auto;
-}
 
-.fecha,
-.hora,
-.disponibilidad {
-    flex: 1;
-}
+@media screen and (max-width: 768px) {
 
-.boton-comprar {
-    background-color: #1E3367;
-    color: white;
-    padding: 8px 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    border-radius: 4px;
-}
-
-.boton-comprar:hover {
-    background-color: #45a049;
-}
-
-/* Estilos del pie de página */
-.footer {
-    margin-top: 10vh;
-    display: flex;
-    align-items: center;
-    background-color: #1E3367;
-    text-align: center;
-    width: 100%;
-    height: 25vh;
-}
-
-.footer__logo {
-    flex: 0.7;
-    text-align: right;
-}
-
-.footer__menu {
-    flex: 1;
-    text-align: center;
-}
-
-.footer__menu a {
-    color: white;
-    margin-right: 2vh;
-}
-
-.footer__networks {
-    flex: 0.7;
-    text-align: left;
-}
-
-.footer__logo img {
-    width: 90px;
-    border-radius: 70px;
-}
-
-.footer__networks img {
-    width: 40px;
-    margin-right: 4vh;
-}
-
-@media screen and (max-width: 1150px) {
-
-
-    .header {
-        margin-top: 5vh;
-        display: flex;
-        height: auto;
-        text-align: center;
-        margin-bottom: 5vh;
-    }
-
-    .header__logo {
-        margin-left: 5vh;
-    }
-
-    .header__nav {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        margin-top: 10px;
-    }
-
-    main {
-        margin: 0 15px;
-    }
-
-    .frame-function {
-        display: flex;
-        flex-direction: column;
-        width: auto;
-        height: 500px;
-    }
-
-    .footer {
-        display: flex;
-        justify-content: center;
-    }
-
-    .footer__logo {
-        text-align: center;
-    }
-
-    .footer__menu {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .footer__networks {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .main-block h1 {
-        margin-left: 6vh;
+    .information-title h2 {
+        color: #333;
+        margin-top: 20px;
     }
 }
 </style>
