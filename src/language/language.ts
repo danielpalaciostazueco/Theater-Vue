@@ -93,22 +93,9 @@ export const messages = {
         text2: 'Buy tickets',
       },
   
-      LoginAdmin: {
-        text1: 'Login',
-        text2: 'If you do not hace an user account, please register',
-        text3:'Here',
-        text4: 'If you have an user account please login',
-      },
-  
-      LoginUser: {
-        text1: 'Login',
-        text2: 'If you do not hace an user account, please register',
-        text3:'Here',
-        text4: 'If you have an admin account please login',
-      },
-  
+   
       CreateAccount: {
-        text1: 'Create Account',
+        text1: 'Register',
         text2: 'If you already have an account please login',
         text3:'Here',
         text4: 'If you have an admin account please login',
@@ -213,22 +200,10 @@ export const messages = {
         text2: 'Comprar entradas',
       },
   
-      LoginAdmin: {
-        text1: 'Iniciar Sesión',
-        text2: 'Si no tienes una cuenta de usuario, por favor registrate',
-        text3:'Aquí',
-        text4: 'Si tienes una cuenta de usuario por favor inicia sesión',
-      },
-  
-      LoginUser: {
-        text1: 'Iniciar Sesión',
-        text2: 'Si no tienes una cuenta de usuario, por favor registrate',
-        text3:'Aquí',
-        text4: 'Si tienes una cuenta de administrador por favor inicia sesión',
-      },
+    
   
       CreateAccount: {
-        text1: 'Crear Cuenta',
+        text1: 'Registro',
         text2: 'Si ya tienes una cuenta por favor inicia sesión',
         text3:'Aquí',
         text4: 'Si tienes una cuenta de administrador por favor inicia sesión',

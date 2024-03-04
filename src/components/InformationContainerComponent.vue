@@ -64,7 +64,9 @@ body {
     overflow: auto;
 }
 
-
+.horarios-txt__item{
+    margin-bottom: 10px;
+}
 /* Estilos del bloque principal */
 .main-block {
     display: flex;

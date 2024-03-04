@@ -1,8 +1,8 @@
 <template>
   <header class="header">
     <div class="header__logo">
-      <RouterLink to="/"></RouterLink>
-    </div>
+      <canvas ref="canvasRef" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave" width="300" height="200"></canvas>
+ </div>
     <nav class="header__nav">
       <RouterLink to="/Programacion" class="nav__link">{{ $t("Header.schedule") }}</RouterLink>
       <RouterLink to="/About" class="nav__link">{{ $t("Header.information") }}</RouterLink>
@@ -28,6 +28,105 @@ const currentLanguage = computed(() => locale.value === 'en' ? 'Español' : 'Eng
 
 const toggleLanguage = () => {
   locale.value = locale.value === 'en' ? 'es' : 'en';
+}
+
+const mask1Src = '/Careta-Morada.png';
+const mask2Src = '/Careta-amarilla.png';
+
+const separation = ref(0);
+const canvasRef = ref<HTMLCanvasElement | null>(null);
+
+onMounted(() => {
+  if (canvasRef.value) {
+    const ctx = canvasRef.value.getContext("2d");
+    if (!ctx) return;
+
+    const mask1 = new Image();
+    const mask2 = new Image();
+
+   
+    mask1.onload = () => {
+   
+      if (mask2.complete) {
+        drawMasks(ctx, mask1, mask2);
+      }
+    };
+    mask2.onload = () => {
+  
+      if (mask1.complete) {
+        drawMasks(ctx, mask1, mask2);
+      }
+    };
+
+    mask1.src = mask1Src;
+    mask2.src = mask2Src;
+  }
+});
+
+function drawMasks(ctx: CanvasRenderingContext2D, mask1: HTMLImageElement, mask2: HTMLImageElement) {
+  const canvasWidth = ctx.canvas.width;
+  const canvasHeight = ctx.canvas.height;
+
+  ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+  const circleRadius = 30;
+  ctx.lineWidth = 6;
+  ctx.strokeStyle = "blue";
+  ctx.fillStyle = "#87CEEB";
+  ctx.beginPath();
+  ctx.arc(canvasWidth / 2, canvasHeight / 2, circleRadius, 0, 2 * Math.PI);
+  ctx.fill();
+  ctx.stroke();
+
+
+  const maskWidth = mask1.width;
+  const maskX1 = (canvasWidth - maskWidth) / 2 - separation.value / 2;
+  const maskX2 = (canvasWidth - maskWidth) / 2 + separation.value / 2;
+
+
+  const maskHeight = mask1.height;
+  const maskY = (canvasHeight - maskHeight) / 2;
+
+
+  ctx.drawImage(mask1, maskX1, maskY, maskWidth, maskHeight);
+  ctx.drawImage(mask2, maskX2, maskY, maskWidth, maskHeight);
+}
+
+function handleMouseEnter() {
+ 
+  separation.value = 20; 
+  redrawMasks();
+}
+
+function handleMouseLeave() {
+
+  separation.value = 0;
+  redrawMasks();
+}
+
+function redrawMasks() {
+  if (canvasRef.value) {
+    const ctx = canvasRef.value.getContext("2d");
+    if (!ctx) return;
+
+    const mask1 = new Image();
+    const mask2 = new Image();
+
+ 
+    mask1.onload = () => {
+      if (mask2.complete) {
+        drawMasks(ctx, mask1, mask2);
+      }
+    };
+    mask2.onload = () => {
+      if (mask1.complete) {
+        drawMasks(ctx, mask1, mask2);
+      }
+    };
+
+    mask1.src = mask1Src;
+    mask2.src = mask2Src;
+  }
 }
 </script>
 
