@@ -1,23 +1,32 @@
 <template>
-    <div class="card">
-        <div class="logo">
-            <i class='bx bxs-user'></i>
+     <div class="circle"></div>
+    <div class="app">
+        <button @click="toggleLanguage" class="nav__link">{{ currentLanguage }}</button>
+        <div class="card">
+            <div class="logo">
+                <i class='bx bxs-user'></i>
+            </div>
+            <h2>{{ $t("CreateAccount.text1") }}</h2>
+            <form class="form" @submit.prevent="submitForm">
+                <input  type="text" placeholder="Nombre" v-model="store.formData.nombreUsuario">
+                <input type="password" placeholder="Contraseña" v-model="store.formData.contrasena">
+                <button type="submit">{{ $t("CreateAccount.text5") }}</button>
+            </form>
         </div>
-        <h2>{{ $t("CreateAccount.text1") }}</h2>
-        <form class="form" @submit.prevent="submitForm">
-            <input type="text" placeholder="Nombre" v-model="store.formData.nombreUsuario">
-            <input type="password" placeholder="Contraseña" v-model="store.formData.contrasena">
-            <button type="submit">{{ $t("CreateAccount.text5") }}</button>
-        </form>
-        <footer>
-
-        </footer>
     </div>
-</template>
+ </template>
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useListadoObrasLoginStore } from '../store/LoginView-Store';
+import { useI18n } from 'vue-i18n';
 
 const store = useListadoObrasLoginStore();
+const { t, locale } = useI18n();
+const currentLanguage = computed(() => locale.value === 'en' ? 'Español' : 'English');
+
+const toggleLanguage = () => {
+  locale.value = locale.value === 'en' ? 'es' : 'en';
+}
 
 const submitForm = async () => {
     await store.registrarUsuario();
@@ -39,6 +48,37 @@ body {
     background: #f5f5f5;
     font-family: "Ubuntu";
 }
+.circle {
+    position: fixed;
+    top: -50vmin;
+    left: -50vmin;
+    width: 200vmin;
+    height: 302vmin;
+    border-radius: 50%;
+    background: #65c8ff;
+    z-index: -1;
+}
+
+.circle:after {
+    content: "";
+    position: absolute;
+    right: -147vmin;
+    width: 227vmin;
+    height: 265vmin;
+    border-radius: 50%;
+    background: #143d81;
+    z-index: -2;
+}
+
+
+.app{
+    display: flex;
+    justify-content: center;
+}
+
+.nav__link{
+    height: 20px;
+}
 
 .card {
     overflow: hidden;
@@ -51,8 +91,7 @@ body {
     background: #fff;
     text-align: center;
     margin: 30px;
-    margin-left: 79vh;
-    margin-top: 30vh;
+    margin-top: 17vh;
 }
 
 .card::before {
@@ -177,6 +216,26 @@ body {
         color: #2a3444;
         margin-top: 30px;
     }
+    .circle:after {
+    content: "";
+    position: absolute;
+    right: -65vmin;
+    width: 200vmin;
+    height: 244vmin;
+    border-radius: 50%;
+    background: #143d81;
+    z-index: -2;
+}
+.circle {
+    position: fixed;
+    top: -50vmin;
+    left: -46vmin;
+    width: 200vmin;
+    height: 254vmin;
+    border-radius: 50%;
+    background: #65c8ff;
+    z-index: -1;
+}
 }
 
 /* Media query para teléfonos móviles */

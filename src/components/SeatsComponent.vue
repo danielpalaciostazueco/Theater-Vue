@@ -156,7 +156,7 @@ function generarPDF() {
   doc.setFontSize(12);
  
   doc.text(`Fecha: ${fechaFormateada}`, 20, 60);
-  doc.text("Detalles de la Compra", 20, 80);
+  doc.text("Detalles de la Compra:", 20, 80);
   doc.text(`Obra: ${store.storeObras[0].nombre}`, 20, 100);
   doc.text(`Sesión ID: ${idSesion}`, 20, 120);
   const asientosComprados = Array.from(asientosSeleccionados.value).join(", ");
