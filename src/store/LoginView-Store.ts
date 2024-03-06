@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { reactive, ref } from 'vue';
 import router from '@/router';
+import { URLAPI } from '@/env';
 
 interface Usuario {
   nombreUsuario: string;
@@ -18,7 +19,7 @@ export const useListadoObrasLoginStore = defineStore('listadoObrasLogin', () => 
   const usuarios = reactive<Usuario[]>([]);
 
   async function registrarUsuario() {
-    const url = 'http://localhost:8001/Usuario/Register';
+    const url = `${URLAPI}/Usuario/Register`;
     try {
       const response = await fetch(url, {
         method: 'POST',

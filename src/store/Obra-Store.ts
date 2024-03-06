@@ -1,3 +1,4 @@
+import { URLAPI } from '@/env';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
@@ -12,9 +13,9 @@ export const useListadoObrasStore = defineStore('listadoObras', () => {
   let data: any;
   const cargarObras = async () => {
     try {
-      const response = await fetch('http://localhost:8001/Obra');
+      const response = await fetch(`${URLAPI}/Obra`);
       if (!response.ok) {
-       const response = await fetch('http://localhost:8001/Obra');
+       const response = await fetch(`${URLAPI}/Obra`);
        data = await response.json();
       }
        data = await response.json();
