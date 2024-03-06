@@ -1,3 +1,4 @@
+import { URLAPI } from '@/env';
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
 
@@ -17,7 +18,7 @@ export const useListadoObrasComprar1Store = defineStore('listadoObrasComprar1', 
 
   async function cargarObras(obraID: string) {
     try {
-      const response = await fetch(`http://localhost:8001/Obra/${obraID}`);
+      const response = await fetch(`${URLAPI}/Obra/${obraID}`);
       if (!response.ok) {
         throw new Error('Error al obtener los datos de la obra');
       }

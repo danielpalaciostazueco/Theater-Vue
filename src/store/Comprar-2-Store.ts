@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { reactive, ref } from 'vue';
+import { URLAPI } from '@/env';
 
 interface Obra {
   nombre: string;
@@ -24,7 +25,7 @@ export const useListadoObrasComprar2Store = defineStore('listadoObrasCompra2', (
 
   async function cargarObra(obraID: string) {
     try {
-      const response = await fetch(`http://localhost:8001/Obra/${obraID}`);
+      const response = await fetch(`${URLAPI}/Obra/${obraID}`);
       if (!response.ok) {
         throw new Error('Error al obtener los datos de la obra');
       }
@@ -42,7 +43,7 @@ export const useListadoObrasComprar2Store = defineStore('listadoObrasCompra2', (
 
     async function cargarAsientosOcupados(obraID: string, idSesion: string) {
     try {
-      const response = await fetch(`http://localhost:8001/Obra/${obraID}/Session?sessionId=${idSesion}`);
+      const response = await fetch(`${URLAPI}/Obra/${obraID}/Session?sessionId=${idSesion}`);
       if (response.ok) {
         const data = await response.json();
         asientosOcupados.splice(0, asientosOcupados.length, ...data.map((idAsiento: number) => ({ idAsiento })));
@@ -58,7 +59,7 @@ export const useListadoObrasComprar2Store = defineStore('listadoObrasCompra2', (
 
   async function cargarTodosLosAsientos() {
     try {
-      const response = await fetch(`http://localhost:8001/Asiento`);
+      const response = await fetch(`${URLAPI}/Asiento`);
       if (!response.ok) {
         throw new Error('Error al obtener todos los asientos');
       }
@@ -79,7 +80,7 @@ export const useListadoObrasComprar2Store = defineStore('listadoObrasCompra2', (
       const payload = {
         asientos: idsAsientosParaComprar
       };
-      const url = `http://localhost:8001/Obra/${obraID}/Session?sessionId=${idSesion}`;
+      const url = `${URLAPI}/Obra/${obraID}/Session?sessionId=${idSesion}`;
       const respuesta = await fetch(url, {
         method: 'POST',
         headers: {

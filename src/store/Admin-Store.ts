@@ -1,3 +1,4 @@
+import { URLAPI } from '@/env';
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
 
@@ -16,7 +17,7 @@ export interface Obra {
 }
 
 export const useListadoObrasAdminStore = defineStore('listadoObrasAdmin', () => {
-  const apiUrl = 'http://localhost:8001/Obra';
+  const apiUrl = `${URLAPI}/Obra`;
   const obras = reactive<Array<Obra>>([]);
   const obraEditando = reactive<Obra>({
     obraID: 0,
