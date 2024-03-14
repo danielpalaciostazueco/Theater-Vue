@@ -20,20 +20,11 @@ import { RouterLink } from 'vue-router'
         </div>
     </footer>
 </template>
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap');
 
-<style>
 .footer {
     margin-top: 13vh;
-    display: flex;
-    align-items: center;
-    background-color: #1E3367;
-    text-align: center;
-    width: 100%;
-    height: 25vh;
-}
-
-.footer {
-    margin-top: 10vh;
     display: flex;
     align-items: center;
     background-color: #1E3367;
@@ -47,15 +38,29 @@ import { RouterLink } from 'vue-router'
     text-align: right;
 }
 
+.footer__logo img {
+    width: 90px;
+    border-radius: 70px;
+}
+
 .footer__menu {
     flex: 1;
     margin-left: 4px;
     text-align: center;
 }
 
-.footer__menu a {
+.footer__menu-link {
     color: white;
     margin-right: 2vh;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer__menu-link:hover {
+    color: #87CEEB;
+
 }
 
 .footer__networks {
@@ -63,13 +68,14 @@ import { RouterLink } from 'vue-router'
     text-align: left;
 }
 
-.footer__logo img {
-    width: 90px;
-    border-radius: 70px;
-}
-
 .footer__networks img {
     width: 40px;
     margin-right: 4vh;
+}
+
+@media screen and (max-width: 768px) {
+    .footer__networks {
+        display: none;
+    }
 }
 </style>

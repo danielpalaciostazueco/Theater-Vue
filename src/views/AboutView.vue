@@ -1,21 +1,15 @@
 <script setup lang="ts">
 import MainBlockComponent from '@/components/MainBlockComponent.vue';
+import AboutComponent from '@/components/AboutComponent.vue';
 
 </script>
 <template>
+
     <body>
         <main>
             <MainBlockComponent></MainBlockComponent>
-            <section class="frame-Thorario">
-                <div class="frame-Thorario_title">
-                    <h2>{{ $t("About.text") }}</h2>
-                </div>
-                <div class="frame-Thorario_txt">
-                    <p>
-                        {{ $t("About.text2") }}
-                    </p>
-                </div>
-            </section>
+            <AboutComponent></AboutComponent>
+
         </main>
     </body>
 </template>
@@ -61,12 +55,12 @@ body {
 .header__nav {
     flex: 2.2;
     display: flex;
-    /* Para que los elementos se distribuyan en línea */
+
     text-align: left;
     justify-content: left;
-    /* Para alinear los elementos al final del contenedor */
+
     gap: 20px;
-    /* Espacio entre los elementos */
+
 }
 
 .nav__link {
@@ -74,7 +68,7 @@ body {
     text-decoration: none;
 }
 
-/*---------Header--------*/
+
 
 .main-block {
     display: flex;
@@ -123,7 +117,7 @@ body {
 }
 
 
-/* Estilos del pie de página */
+
 .footer {
     margin-top: 10vh;
     display: flex;

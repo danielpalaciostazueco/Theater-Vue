@@ -1,17 +1,14 @@
-<script setup lang="ts">
-import MainBlockComponent from '@/components/MainBlockComponent.vue';
-import ActivitiesComponent from '@/components/ActivitiesComponent.vue';
-
-</script>
 <template>
-
-    <body>
-        <main>
-            <MainBlockComponent></MainBlockComponent>
-            <ActivitiesComponent></ActivitiesComponent>
-
-        </main>
-    </body>
+    <section class="frame-Thorario">
+        <div class="frame-Thorario_title">
+            <h2>{{ $t("About.text") }}</h2>
+        </div>
+        <div class="frame-Thorario_txt">
+            <p>
+                {{ $t("About.text2") }}
+            </p>
+        </div>
+    </section>
 </template>
 <style scoped>
 body,
@@ -55,9 +52,12 @@ body {
 .header__nav {
     flex: 2.2;
     display: flex;
+
     text-align: left;
     justify-content: left;
+
     gap: 20px;
+
 }
 
 .nav__link {
@@ -83,21 +83,21 @@ body {
     margin-left: 20vh;
 }
 
-.frame-VG {
+.frame-Thorario {
     display: flex;
     flex-direction: column;
     max-width: 600px;
     margin: auto;
 }
 
-.frame-VG_title {
+.frame-Thorario_title {
     position: relative;
     margin-bottom: 25px;
     color: #000000;
     font-size: 20px;
 }
 
-.frame-VG_title h2::after {
+.frame-Thorario_title h2::after {
     content: "";
     width: 100%;
     position: absolute;
@@ -107,12 +107,11 @@ body {
     background-color: #000000;
 }
 
-.frame-VG_txt {
+.frame-Thorario_txt {
     margin-top: 3vh;
     margin-bottom: 5vh;
     font-size: 20px;
 }
-
 
 
 .footer {

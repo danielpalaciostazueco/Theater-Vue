@@ -38,9 +38,19 @@ export const useListadoObrasComprar1Store = defineStore('listadoObrasComprar1', 
     }
   }
   function formatearFecha(fecha: string) {
-    const opciones: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(fecha).toLocaleDateString('es-ES', opciones);
+    const opciones: Intl.DateTimeFormatOptions = {
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit', 
+      hour12: false 
+    };
+    
+    const fechaObj = new Date(fecha);
+    return fechaObj.toLocaleDateString('es-ES', opciones) ;
   }
+  
 
   return { cargarObras, storeObras};
 });

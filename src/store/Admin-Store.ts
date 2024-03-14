@@ -41,17 +41,27 @@ export const useListadoObrasAdminStore = defineStore('listadoObrasAdmin', () => 
     };
   }
 
+
   async function cargarObras() {
     try {
       const response = await fetch(apiUrl);
       if (!response.ok) throw new Error('Error al cargar las obras');
       const data = await response.json();
-      obras.splice(0, obras.length, ...data);
+      obras.splice(0, obras.length); 
+      data.forEach((obra: Obra) => {
+        const obraFormateada = {
+          ...obra,
+          duracion: obra.duracion / 60,
+          fechaUno: obra.fechaUno ? formatearFecha(obra.fechaUno) : '',
+          fechaDos: obra.fechaDos ? formatearFecha(obra.fechaDos) : '',
+          fechaTres: obra.fechaTres ? formatearFecha(obra.fechaTres) : '',
+        };
+        obras.push(obraFormateada); // Añade las obras formateadas al array
+      });
     } catch (error) {
       console.error('Error al cargar las obras:', error);
     }
   }
-
   
 async function guardarObra(obra: Obra) {
   try {
@@ -74,6 +84,20 @@ async function guardarObra(obra: Obra) {
     console.error('Error al guardar la obra:', error);
   }
 }
+function formatearFecha(fecha: string) {
+    const opciones: Intl.DateTimeFormatOptions = {
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit', 
+      hour12: false 
+    };
+    
+    const fechaObj = new Date(fecha);
+    return fechaObj.toLocaleDateString('es-ES', opciones) ;
+  }
+  
 
 async function actualizarObra(obra: Obra) {
   try {

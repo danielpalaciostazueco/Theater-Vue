@@ -1,17 +1,17 @@
-<script setup lang="ts">
-import MainBlockComponent from '@/components/MainBlockComponent.vue';
-import ActivitiesComponent from '@/components/ActivitiesComponent.vue';
-
-</script>
 <template>
-
-    <body>
-        <main>
-            <MainBlockComponent></MainBlockComponent>
-            <ActivitiesComponent></ActivitiesComponent>
-
-        </main>
-    </body>
+    <main>
+        <MainBlockComponent></MainBlockComponent>
+        <section class="frame-VG">
+            <div class="frame-VG_title">
+                <h2>{{ $t("Activities.text") }}</h2>
+            </div>
+            <div class="frame-VG_txt">
+                <p>
+                    {{ $t("Activities.text2") }}
+                </p>
+            </div>
+        </section>
+    </main>
 </template>
 <style scoped>
 body,
@@ -55,9 +55,12 @@ body {
 .header__nav {
     flex: 2.2;
     display: flex;
+
     text-align: left;
     justify-content: left;
+
     gap: 20px;
+
 }
 
 .nav__link {

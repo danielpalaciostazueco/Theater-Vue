@@ -1,16 +1,19 @@
 <template>
   <header class="header">
     <div class="header__logo">
-      <canvas ref="canvasRef" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave" width="300" height="200"></canvas>
- </div>
+      <canvas ref="canvasRef" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave" width="300"
+        height="200"></canvas>
+    </div>
     <nav class="header__nav">
       <RouterLink to="/Programacion" class="nav__link">{{ $t("Header.schedule") }}</RouterLink>
       <RouterLink to="/About" class="nav__link">{{ $t("Header.information") }}</RouterLink>
       <RouterLink to="/Activities" class="nav__link">{{ $t("Header.activities") }}</RouterLink>
       <RouterLink to="/Contact" class="nav__link">{{ $t("Header.contact") }}</RouterLink>
+      <RouterLink to="/Historial" class="nav__link">{{ $t("Header.record") }}</RouterLink>
       <RouterLink v-if="isAdmin" to="/AdminPanel" class="nav__link">{{ $t("HomeAdmin.admin") }}</RouterLink>
     </nav>
-    <button @click="toggleLanguage" class="nav__link">{{ currentLanguage }}</button>
+    <button @click="toggleLanguage" class="nav__link language-toggle">{{ currentLanguage }}</button>
+
   </header>
 </template>
 
@@ -44,15 +47,15 @@ onMounted(() => {
     const mask1 = new Image();
     const mask2 = new Image();
 
-   
+
     mask1.onload = () => {
-   
+
       if (mask2.complete) {
         drawMasks(ctx, mask1, mask2);
       }
     };
     mask2.onload = () => {
-  
+
       if (mask1.complete) {
         drawMasks(ctx, mask1, mask2);
       }
@@ -93,8 +96,8 @@ function drawMasks(ctx: CanvasRenderingContext2D, mask1: HTMLImageElement, mask2
 }
 
 function handleMouseEnter() {
- 
-  separation.value = 20; 
+
+  separation.value = 20;
   redrawMasks();
 }
 
@@ -112,7 +115,7 @@ function redrawMasks() {
     const mask1 = new Image();
     const mask2 = new Image();
 
- 
+
     mask1.onload = () => {
       if (mask2.complete) {
         drawMasks(ctx, mask1, mask2);
@@ -129,10 +132,9 @@ function redrawMasks() {
   }
 }
 </script>
-
-
-
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap');
+
 .header {
   display: flex;
   align-items: center;
@@ -148,11 +150,6 @@ function redrawMasks() {
   text-align: center;
 }
 
-.logo__image {
-  max-width: 140px;
-  height: auto;
-}
-
 .header__nav {
   flex: 2.2;
   display: flex;
@@ -160,10 +157,34 @@ function redrawMasks() {
   gap: 20px;
 }
 
-.nav__link {
-  color: #000000;
-  text-decoration: none;
+.nav__link,
+.language-toggle {
+  font-family: 'Roboto', sans-serif;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 2px solid #1E3367;
+  background-color: transparent;
+  color: #1E3367;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  height: fit-content;
 }
+
+.nav__link:hover,
+.language-toggle:hover {
+  background-color: #1E3367;
+  color: #ffffff;
+}
+
+.language-toggle {
+  margin-left: auto;
+  display: inline-block;
+  margin-left: 117px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+}
+
 
 @media screen and (max-width: 768px) {
   .header {
@@ -175,10 +196,14 @@ function redrawMasks() {
 
   .header__logo,
   .header__nav {
-
     display: flex;
     justify-content: left;
     gap: 20px;
+  }
+
+  .language-toggle {
+    margin-left: 0;
+    margin-top: 10px;
   }
 }
 </style>

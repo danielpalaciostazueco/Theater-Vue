@@ -71,7 +71,7 @@ function generarButacas() {
     const anchoAsiento = 40, altoAsiento = 40, espacioEntreAsientos = 10, espacioEntreFilas = 20;
     const anchoReposabrazos = 10, altoReposabrazos = altoAsiento;
     const anchoSvg = (anchoAsiento + espacioEntreAsientos + anchoReposabrazos * 2) * 5;
-  
+
     const anchoPantalla = anchoSvg * 0.8;
     const altoPantalla = 100;
     const xPantalla = (anchoSvg - anchoPantalla) / 2;
@@ -121,55 +121,57 @@ const realizarCompraYRecargarAsientos = async () => {
 };
 
 function generarPDF() {
-  const fechaActual = new Date();
-  const anchoEntrada = 3.5 * 72; 
-  const altoEntrada = 200; 
+    const fechaActual = new Date();
+    const anchoEntrada = 3.5 * 72;
+    const altoEntrada = 200;
 
-  const doc = new jsPDF({
-    orientation: 'landscape',
-    unit: 'pt',
-    format: [anchoEntrada, altoEntrada]
-  });
+    const doc = new jsPDF({
+        orientation: 'landscape',
+        unit: 'pt',
+        format: [anchoEntrada, altoEntrada]
+    });
 
-  const fechaFormateada = fechaActual.toLocaleDateString("es-ES", {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-
-
-  const colorPrincipal = "#000";
-  const colorSecundario = "#700";
-  doc.setTextColor(colorPrincipal);
-  
-
-  doc.setFont('times', 'bold');
-  doc.setFontSize(22);
-  doc.text("UrbanTheater", 20, 30); 
+    const fechaFormateada = fechaActual.toLocaleDateString("es-ES", {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
 
 
-  doc.setDrawColor(colorSecundario);
-  doc.setLineWidth(1);
-  doc.line(20, 40, anchoEntrada - 20, 40); 
+    const colorPrincipal = "#000";
+    const colorSecundario = "#700";
+    doc.setTextColor(colorPrincipal);
 
-  doc.setFont('times', 'normal');
-  doc.setFontSize(12);
- 
-  doc.text(`Fecha: ${fechaFormateada}`, 20, 60);
-  doc.text("Detalles de la Compra:", 20, 80);
-  doc.text(`Obra: ${store.storeObras[0].nombre}`, 20, 100);
-  doc.text(`Sesión ID: ${idSesion}`, 20, 120);
-  const asientosComprados = Array.from(asientosSeleccionados.value).join(", ");
-  doc.text(`Asientos: ${asientosComprados}`, 20, 140);
-  
-  
-  doc.setFont('times', 'bold');
-  doc.setTextColor(colorSecundario);
-  doc.text(`Total: ${calcularTotal.value} €`, 20, 160);
-  doc.save("compra.pdf");
+
+    doc.setFont('times', 'bold');
+    doc.setFontSize(22);
+    doc.text("UrbanTheater", 20, 30);
+
+
+    doc.setDrawColor(colorSecundario);
+    doc.setLineWidth(1);
+    doc.line(20, 40, anchoEntrada - 20, 40);
+
+    doc.setFont('times', 'normal');
+    doc.setFontSize(12);
+
+    doc.text(`Fecha: ${fechaFormateada}`, 20, 60);
+    doc.text("Detalles de la Compra:", 20, 80);
+    doc.text(`Obra: ${store.storeObras[0].nombre}`, 20, 100);
+    doc.text(`Sesión ID: ${idSesion}`, 20, 120);
+    const asientosComprados = Array.from(asientosSeleccionados.value).join(", ");
+    doc.text(`Asientos: ${asientosComprados}`, 20, 140);
+
+
+    doc.setFont('times', 'bold');
+    doc.setTextColor(colorSecundario);
+    doc.text(`Total: ${calcularTotal.value} €`, 20, 160);
+    doc.save("compra.pdf");
 }
-</script> 
+</script>
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap');
+
 body,
 h1,
 h2,
@@ -182,6 +184,11 @@ a {
     text-decoration: none;
 }
 
+h1,
+h2 {
+    font-family: 'Playfair Display', serif;
+    color: white;
+}
 
 .article-block {
     display: flex;
@@ -206,7 +213,7 @@ a {
     margin-left: 20vh;
 }
 
-/* Estilos del marco de la función */
+
 .frame-function {
     display: flex;
     align-items: center;
@@ -284,8 +291,38 @@ section {
 
 .cinema-button {
     display: flex;
-    justify-content: center;
-    padding-top: 20px;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #1E3367;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.button-bought {
+    background: linear-gradient(45deg, #ffd700, #d4af37);
+    border: none;
+    color: #1e3367;
+    border-radius: 32px;
+
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0px 5px 15px rgba(212, 175, 55, 0.4);
+
+    transition: transform 0.2s ease-in-out;
+
+}
+
+
+.button-bought:hover {
+    background: linear-gradient(45deg, #ffe066, #e6be8a);
+    transform: translateY(-2px);
+}
+
+
+.button-bought:active {
+    transform: translateY(1px);
 }
 
 .ocupado {
@@ -296,4 +333,3 @@ section {
     fill: green;
 }
 </style>
-

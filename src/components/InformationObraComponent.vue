@@ -5,7 +5,8 @@
         </div>
         <div class="horarios-txt">
             <h2 class="horarios-txt__title">{{ $t("Function.text1") }}</h2>
-            <ul class="horarios-txt__list" v-if="store.storeObras[0].fechaUno && store.storeObras[0].fechaDos && store.storeObras[0].fechaTres">
+            <ul class="horarios-txt__list"
+                v-if="store.storeObras[0].fechaUno && store.storeObras[0].fechaDos && store.storeObras[0].fechaTres">
                 <li v-for="fecha in [store.storeObras[0].fechaUno, store.storeObras[0].fechaDos, store.storeObras[0].fechaTres]"
                     :key="fecha" class="horarios-txt__item">{{ fecha }}</li>
             </ul>
@@ -65,25 +66,13 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-body,
-h1,
-h2,
-p,
-ul,
-li,
-a {
-    margin: 0;
-    padding: 0;
-    text-decoration: none;
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap');
 
 body {
-    font-family: 'Roboto';
+    font-family: 'Open Sans', sans-serif;
     line-height: 1.6;
     overflow: auto;
 }
-
-
 
 .horarios {
     display: flex;
@@ -98,11 +87,6 @@ body {
     text-align: center;
 }
 
-.duracion-title{
-    font-size: xxx-large;
-    margin-bottom: 3vh;
-}
-
 .horarios-img img {
     width: 500px;
 }
@@ -110,32 +94,27 @@ body {
 .horarios-txt {
     flex: 1;
     text-align: center;
+    font-size: larger;
 }
 
-.horarios-txt__title {
+.horarios-txt__title,
+.horarios-txt__title2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
     font-size: xxx-large;
     margin-bottom: 3vh;
-}
-.horarios-txt__title2{
-    font-size: xxx-large;
-    margin-bottom: 3vh;
-    margin-top: 5vh;
+    color: #000000;
 }
 
 .horarios-txt__list {
     margin: 0;
     padding: 0;
-    text-decoration: none;
+    list-style: none;
     margin-bottom: 10px;
-}
-
-.horarios-txt{
-    font-size: larger;
 }
 
 .horarios-txt__item {
     font-size: xx-large;
-    list-style-position: inside;
 }
 
 .primera-img {
@@ -161,12 +140,11 @@ article {
     display: flex;
     width: 47vh;
     height: 8vh;
-    margin-right: 30vh;
     justify-content: center;
     align-items: center;
+    margin-right: 30vh;
     margin-bottom: 10vh;
 }
-
 
 .show-poster__button {
     background-color: #1E3367;
@@ -186,8 +164,13 @@ article {
 .frame-information__title {
     position: relative;
     margin-bottom: 25px;
-    color: #000000;
+}
+
+.frame-information__title h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
     font-size: 20px;
+    color: #000000;
 }
 
 .frame-information__title h2::after {
@@ -215,15 +198,14 @@ article {
 }
 
 .frame-repart__title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
     font-size: 20px;
 }
 
 .frame-repart__item {
-    list-style-position: inside;
     font-size: 20px;
 }
-
-
 
 @media screen and (max-width: 768px) {
 
@@ -253,7 +235,8 @@ article {
         font-size: 32px;
         margin-bottom: 10px;
     }
-     .horarios-txt__title2 {
+
+    .horarios-txt__title2 {
         font-size: 32px;
         margin-bottom: 10px;
     }

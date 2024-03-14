@@ -1,63 +1,58 @@
 <template>
   <section class="frame-function">
-    <div
-      class="frame-function__poster"
-      v-if="showComprarUno && storeComprar1.storeObras.length > 0"
-    >
-      <img
-        v-if="storeComprar1.storeObras[0].imagenes?.[0]"
-        :src="storeComprar1.storeObras[0].imagenes[0]"
-        alt="Imagen de la obra"
-      />
+
+    <div class="frame-function__poster" v-if="showComprarUno && storeComprar1.storeObras.length > 0">
+      <img v-if="storeComprar1.storeObras[0].imagenes?.[0]" :src="storeComprar1.storeObras[0].imagenes[0]"
+        alt="Imagen de la obra" />
+
     </div>
 
-    <div
-      class="frame-function__poster"
-      v-if="showComprarDos && storeComprar2.storeObras.length > 0"
-    >
-      <img
-        v-if="storeComprar2.storeObras[0].imagenes?.[0]"
-        :src="storeComprar2.storeObras[0].imagenes[0]"
-        alt="Imagen de la obra"
-      />
+
+    <div class="frame-function__poster" v-if="showComprarDos && storeComprar2.storeObras.length > 0">
+      <img v-if="storeComprar2.storeObras[0].imagenes?.[0]" :src="storeComprar2.storeObras[0].imagenes[0]"
+        alt="Imagen de la obra" />
     </div>
 
-    <div class="frame-function__title" v-if="showComprarUno && storeComprar1.storeObras.length > 0">
-      <h2>{{ storeComprar1.storeObras[0]?.nombre }}</h2>
-    </div>
+    <div class="frame-function__title">
+      <h2 v-if="showComprarUno && storeComprar1.storeObras.length > 0">{{ storeComprar1.storeObras[0]?.nombre }}</h2>
+      <h2 v-if="showComprarDos && storeComprar2.storeObras.length > 0">{{ storeComprar2.storeObras[0]?.nombre }}</h2>
+      <h2 v-if="showComprarDos">{{ $t("Function.text7") }} {{ idSesion }}</h2>
+      <h2 v-if="showComprarDos && idSesion === '1'">{{ storeComprar2.storeObras[0]?.fechaUno }}</h2>
+      <h2 v-if="showComprarDos && idSesion === '2'">{{ storeComprar2.storeObras[0]?.fechaDos }}</h2>
+      <h2 v-if="showComprarDos && idSesion === '3'">{{ storeComprar2.storeObras[0]?.fechaTres }}</h2>
+      <h2 v-if="showComprarDos">{{ storeComprar2.storeObras[0].duracion }} {{ $t("Function.text6") }}</h2>
 
-    <div class="frame-function__title" v-if="showComprarDos && storeComprar2.storeObras.length > 0">
-      <h2>{{ storeComprar2.storeObras[0]?.nombre }}</h2>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
-import { useListadoObrasComprar1Store } from '../store/Comprar-1-Store'
-import { useListadoObrasComprar2Store } from '../store/Comprar-2-Store'
+import { computed, onMounted } from 'vue';
+import { useRoute, RouterLink } from 'vue-router';
+import { useListadoObrasComprar1Store } from '../store/Comprar-1-Store';
+import { useListadoObrasComprar2Store } from '../store/Comprar-2-Store';
 
-const route = useRoute()
-const storeComprar1 = useListadoObrasComprar1Store()
-const storeComprar2 = useListadoObrasComprar2Store()
+const route = useRoute();
+const storeComprar1 = useListadoObrasComprar1Store();
+const storeComprar2 = useListadoObrasComprar2Store();
 
-const idObra = computed(() => route.params.Id as string)
-
-const showComprarUno = computed(() => route.name === 'ComprarUno')
-const showComprarDos = computed(() => route.name === 'ComprarDos')
+const idObra = computed(() => route.params.Id as string);
+const idSesion = computed(() => route.query.idSesion as string);
+const showComprarUno = computed(() => route.name === 'ComprarUno');
+const showComprarDos = computed(() => route.name === 'ComprarDos');
 
 onMounted(async () => {
   if (showComprarUno.value) {
-    await storeComprar1.cargarObras(idObra.value)
+    await storeComprar1.cargarObras(idObra.value);
   }
   if (showComprarDos.value) {
-    await storeComprar2.cargarObra(idObra.value)
+    await storeComprar2.cargarObra(idObra.value);
   }
-})
+});
 </script>
-
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap');
+
 body,
 h1,
 h2,
@@ -68,6 +63,8 @@ a {
   margin: 0;
   padding: 0;
   text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+
 }
 
 .article-block {
@@ -91,9 +88,11 @@ a {
   color: white;
   font-size: xx-large;
   margin-left: 20vh;
+  font-family: 'Playfair Display', serif;
+
 }
 
-/* Estilos del marco de la función */
+
 .frame-function {
   display: flex;
   align-items: center;
@@ -120,15 +119,12 @@ a {
 .frame-function__title h2 {
   font-size: 30px;
   color: white;
+  font-family: 'Playfair Display', serif;
+
 }
 
-/* Estilos del contenedor */
 #container {
   text-align: center;
-}
-
-h2 {
-  color: #333;
 }
 
 .container-frame {
@@ -147,7 +143,6 @@ button {
 }
 
 section {
-  font-family: Arial, sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -171,6 +166,7 @@ section {
     font-size: 30px;
     color: #fff;
     display: none;
+
   }
 
   .frame-function__poster {

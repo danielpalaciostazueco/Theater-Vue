@@ -4,7 +4,9 @@
         <h1 v-if="variable != null"> {{ $t(variable) }}</h1>
         <h1 v-if="showFuction && storeFunction.storeObras[0] != null"> {{ storeFunction.storeObras[0].nombre }}</h1>
         <h1 v-if="showComprarUno && storeComprar1.storeObras[0] != null"> {{ storeComprar1.storeObras[0].nombre }}</h1>
-        <h1 v-if="showComprarDos && storeComprar2.storeObras[0] != null" > {{ storeComprar2.storeObras[0].nombre }}</h1>
+
+        <h1 v-if="showComprarDos && storeComprar2.storeObras[0] != null"> {{ storeComprar2.storeObras[0].nombre }}</h1>
+
     </div>
 </template>
 
@@ -45,6 +47,9 @@ if (pathname === '/Contact') {
 if (pathname === '/Activities') {
     variable = "Activities.activities"
 }
+if (pathname === '/Historial') {
+    variable = "Header.record"
+}
 
 onMounted(async () => {
     if (showComprarUno.value) {
@@ -61,6 +66,8 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+
 body,
 h1,
 h2,
@@ -74,7 +81,7 @@ a {
 }
 
 body {
-    font-family: 'Roboto';
+    font-family: 'Montserrat', sans-serif;
     line-height: 1.6;
     overflow: auto;
 }
@@ -90,9 +97,15 @@ body {
     color: #fff
 }
 
-.main-block h1[data-v-fd379de5] {
-    padding-left: 30px;
-    margin-bottom: 50px;
+
+.main-block h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-left: 51px;
+    font-size: 2.5rem;
+    padding: 20px 0;
 
 }
 </style>

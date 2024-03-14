@@ -6,7 +6,8 @@ export const messages = {
         schedule : 'Schedule',
         activities: 'Activities',
         contact: 'Contact',
-        language: 'english'
+        language: 'english',
+        record: 'Tickets'
       },
   
       Footer: {
@@ -45,6 +46,7 @@ export const messages = {
         actions: 'Actions',
         save: 'Save',
         cancel: 'Cancel',
+        edit: 'Edit',
       },
   
       Comprar2: {
@@ -57,6 +59,10 @@ export const messages = {
         information: 'Buy tickets',
         text: 'Date and Time Information',
         text2: 'Buy ',
+        text3: 'Seats',
+        session1: 'Session 1',
+        session2: 'Session 2',
+        session3: 'Session 3'
       },
   
       Contact: {
@@ -73,7 +79,8 @@ export const messages = {
         text3: 'Buy tickets',
         text4: 'Cast of actors',
         text5: 'Duration',
-        text6: 'Minutes'
+        text6: 'Minutes',
+        text7: 'Session'
       },
   
       HomeAdmin: {
@@ -101,6 +108,11 @@ export const messages = {
         text4: 'If you have an admin account please login',
         text5: 'Create',
       },
+
+      Login: {
+        name: 'Name',
+        password: 'Password',
+      }
   
   
     },
@@ -112,7 +124,8 @@ export const messages = {
         schedule : 'Programación',
         activities: 'Actividades',
         contact: 'Contacto',
-        language: 'español'
+        language: 'español',
+        record: 'Tickets'
       },
   
       Footer:{
@@ -152,6 +165,7 @@ export const messages = {
         date1:'Fecha 1',
         date2:'Fecha 2',
         date3:'Fecha 3',
+        edit: 'Editar',
       },
   
       Comprar2: {
@@ -164,6 +178,10 @@ export const messages = {
         information: 'Comprar entradas',
         text: 'Información de Fecha y Hora',
         text2: 'Comprar ',
+        text3: 'Asientos',
+        session1: 'Sesión 1',
+        session2: 'Sesión 2',
+        session3: 'Sesión 3'
       },
   
       Contact: {
@@ -180,7 +198,8 @@ export const messages = {
         text3: 'Comprar entradas',
         text4: 'Reparto de actores',
         text5: 'Duración',
-        text6: 'Minutos'
+        text6: 'Minutos',
+        text7: 'Sesión'
       },
   
       HomeAdmin: {
@@ -209,6 +228,9 @@ export const messages = {
         text4: 'Si tienes una cuenta de administrador por favor inicia sesión',
         text5: 'Crear',
       },
-  
+      Login: {
+        name: 'Nombre',
+        password: 'Contraseña',
+      }
     }};
 

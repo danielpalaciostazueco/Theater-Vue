@@ -1,4 +1,5 @@
 <template>
+
     <body>
         <main class="main">
             <MainBlockComponent></MainBlockComponent>

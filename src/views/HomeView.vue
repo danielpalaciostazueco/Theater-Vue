@@ -1,22 +1,8 @@
 <template>
+
   <body>
     <main class="main">
-      <section class="performance-block">
-        <div class="performance-block__info">
-          <h2 class="performance-block__title">{{ $t('HomeAdmin.text1') }}</h2>
-          <RouterLink to="/Programacion" class="performance-block__button">{{ $t('HomeAdmin.text4') }}
-          </RouterLink>
-        </div>
-        <div class="performance-block__image">
-          <img src="../assets/img/ROMEO-Y-JULIETA.jpeg" alt="Función de Teatro" class="image__img" />
-        </div>
-        <div class="performance-block__name">
-          <h2 class="performance-block__name-title">{{ $t('HomeAdmin.text2') }}</h2>
-          <p class="performance-block__name-text">
-            {{ $t('HomeAdmin.text3') }}
-          </p>
-        </div>
-      </section>
+      <PanelHomeComponent></PanelHomeComponent>
       <article>
         <CardComponent></CardComponent>
       </article>
@@ -26,6 +12,7 @@
 
 <script setup lang="ts">
 import CardComponent from '../components/CardComponent.vue'
+import PanelHomeComponent from '@/components/PanelHomeComponent.vue';
 </script>
 
 <style scoped>

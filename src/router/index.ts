@@ -7,7 +7,7 @@ import ContactView from "../views/ContactView.vue"
 import ActivitiesView from "../views/ActivitiesView.vue"
 import ComprarUnoView from "../views/ComprarUno.vue"
 import ComprarDosView from "../views/ComprarDos.vue"
-
+import HistorialComponentVue from "@/components/HistorialComponent.vue"
 import AdminPanelView from "../views/AdminPanelView.vue"
 import LoginView from "../views/LoginView.vue"
 
@@ -24,7 +24,7 @@ const router = createRouter({
             name: 'Home',
             component: HomeView
         },
-       
+     
         {
             path: '/AdminPanel',
             name: 'AdminPanel',
@@ -39,6 +39,11 @@ const router = createRouter({
             path: '/Function/:Id',
             name: 'Function',
             component: FunctionView
+        },
+        {
+            path: '/Historial',
+            name: 'Historial',
+            component: HistorialComponentVue
         },
         {
             path: '/About',
