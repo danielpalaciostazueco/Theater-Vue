@@ -92,7 +92,9 @@ a {
 
 }
 
-
+.information-title{
+  text-align: center;
+}
 .frame-function {
   display: flex;
   align-items: center;

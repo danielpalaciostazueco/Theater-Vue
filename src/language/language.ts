@@ -7,7 +7,9 @@ export const messages = {
         activities: 'Activities',
         contact: 'Contact',
         language: 'english',
-        record: 'Tickets'
+        record: 'Tickets',
+        homepage: 'Homepage',
+        register: 'Register'
       },
   
       Footer: {
@@ -88,7 +90,7 @@ export const messages = {
         schedule : 'Schedule',
         activities: 'Activities',
         contact: 'Contact',
-        admin: 'Admin Panel',
+        admin: 'Admin',
         text1: 'Next Functions',
         text2: 'Romeo and Juliet',
         text3: 'Romeo and Juliet" is a play written by William Shakespeare in the 16th century. The plot follows two young lovers, Romeo and Juliet, whose rival families cause conflict. Although adversity, they fall in love and marry secretly, but a series of misunderstandings and tragedies lead to a fatal outcome. The work explores themes such as love, family rivalry and destiny, becoming one of the best-known love stories in literature.',
@@ -125,7 +127,9 @@ export const messages = {
         activities: 'Actividades',
         contact: 'Contacto',
         language: 'español',
-        record: 'Tickets'
+        record: 'Tickets',
+        homepage: 'Principal',
+        register: 'Registro'
       },
   
       Footer:{
@@ -207,7 +211,7 @@ export const messages = {
         schedule : 'Prgoramación',
         activities: 'Actividades',
         contact: 'Contacto',
-        admin: 'Panel de Administración',
+        admin: 'Admin',
         text1: 'Próximas Funciones',
         text2: 'Romeo y Julieta',
         text3: 'Romeo y Julieta" es una obra escrita por William Shakespeare en el siglo XVI. La trama sigue a dos jóvenes amantes, Romeo y Julieta, cuyas familias rivales causan conflictos. A pesar de la adversidad, se enamoran y se casan en secreto, pero una serie de malentendidos y tragedias conducen a un desenlace fatal. La obra explora temas como el amor, la rivalidad familiar y el destino, convirtiéndose en una de las historias de amor más conocidas de la literatura.',

@@ -144,6 +144,7 @@ article {
     align-items: center;
     margin-right: 30vh;
     margin-bottom: 10vh;
+    text-decoration: none;
 }
 
 .show-poster__button {
@@ -152,6 +153,7 @@ article {
     border: none;
     padding: 10px 20px;
     font-size: 16px;
+    text-decoration: none;
 }
 
 .frame-information {

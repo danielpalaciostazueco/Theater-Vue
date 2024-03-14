@@ -5,11 +5,13 @@
         height="200"></canvas>
     </div>
     <nav class="header__nav">
+      <RouterLink to="/" class="nav__link">{{ $t("Header.homepage") }}</RouterLink>
       <RouterLink to="/Programacion" class="nav__link">{{ $t("Header.schedule") }}</RouterLink>
       <RouterLink to="/About" class="nav__link">{{ $t("Header.information") }}</RouterLink>
       <RouterLink to="/Activities" class="nav__link">{{ $t("Header.activities") }}</RouterLink>
       <RouterLink to="/Contact" class="nav__link">{{ $t("Header.contact") }}</RouterLink>
       <RouterLink to="/Historial" class="nav__link">{{ $t("Header.record") }}</RouterLink>
+      <RouterLink to="/Register" class="nav__link">{{ $t("Header.register") }}</RouterLink> 
       <RouterLink v-if="isAdmin" to="/AdminPanel" class="nav__link">{{ $t("HomeAdmin.admin") }}</RouterLink>
     </nav>
     <button @click="toggleLanguage" class="nav__link language-toggle">{{ currentLanguage }}</button>
@@ -162,13 +164,13 @@ function redrawMasks() {
   font-family: 'Roboto', sans-serif;
   padding: 10px 20px;
   border-radius: 20px;
-  border: 2px solid #1E3367;
   background-color: transparent;
   color: #1E3367;
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
   height: fit-content;
+  text-decoration: none;
 }
 
 .nav__link:hover,
