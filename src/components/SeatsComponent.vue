@@ -7,7 +7,7 @@
             <p>{{ $t("Comprar2.text") }} {{ calcularTotal }} €</p>
         </div>
         <div class="button-buy">
-            <button @click="realizarCompraYRecargarAsientos">{{ $t("Comprar2.text2") }}</button>
+            <button  @click="realizarCompraYRecargarAsientos">{{ $t("Comprar2.text2") }}</button>
         </div>
     </div>
 </template>
@@ -194,22 +194,6 @@ h2 {
     color: white;
 }
 
-.article-block {
-    display: flex;
-    justify-content: right;
-    margin-top: 10vh;
-    flex-direction: column;
-}
-
-.main-block {
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    width: 100%;
-    background-color: #1E3367;
-    height: 13vh;
-    margin-bottom: 10vh;
-}
 
 .button-buy button {
     border: none;
@@ -219,40 +203,6 @@ h2 {
     height: 29px;
 }
 
-.main-block h1 {
-    color: white;
-    font-size: xx-large;
-    margin-left: 20vh;
-}
-
-
-.frame-function {
-    display: flex;
-    align-items: center;
-    background-color: #1E3367;
-    width: 800px;
-    height: 450px;
-    text-align: center;
-    max-width: 977px;
-    margin: auto;
-}
-
-.frame-function__poster {
-    flex: 1;
-}
-
-.frame-function__poster img {
-    width: 280px;
-}
-
-.frame-function__title {
-    flex: 1;
-}
-
-.frame-function__title h2 {
-    font-size: 30px;
-    color: white;
-}
 
 /* Estilos del contenedor */
 #container {
@@ -263,16 +213,7 @@ h2 {
     color: #333;
 }
 
-.container-frame {
-    margin-top: 20px;
-    background-color: #f8f8f8;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 
 button {
     margin-left: 10px;
@@ -284,10 +225,6 @@ section {
     align-items: center;
     justify-content: center;
     margin-top: 15vh;
-}
-
-.container {
-    text-align: center;
 }
 
 .cinema-seats {
@@ -307,37 +244,6 @@ section {
     justify-content: center;
 }
 
-.button-bought {
-    background: linear-gradient(45deg, #ffd700, #d4af37);
-    border: none;
-    color: #1e3367;
-    border-radius: 32px;
-
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    box-shadow: 0px 5px 15px rgba(212, 175, 55, 0.4);
-
-    transition: transform 0.2s ease-in-out;
-
-}
 
 
-.button-bought:hover {
-    background: linear-gradient(45deg, #ffe066, #e6be8a);
-    transform: translateY(-2px);
-}
-
-
-.button-bought:active {
-    transform: translateY(1px);
-}
-
-.ocupado {
-    fill: red;
-}
-
-.seleccionado {
-    fill: green;
-}
 </style>

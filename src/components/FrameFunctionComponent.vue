@@ -14,8 +14,8 @@
     </div>
 
     <div class="frame-function__title">
-      <h2 v-if="showComprarUno && storeComprar1.storeObras.length > 0">{{ storeComprar1.storeObras[0]?.nombre }}</h2>
-      <h2 v-if="showComprarDos && storeComprar2.storeObras.length > 0">{{ storeComprar2.storeObras[0]?.nombre }}</h2>
+      <h2 id="1" v-if="showComprarUno && storeComprar1.storeObras.length > 0">{{ storeComprar1.storeObras[0]?.nombre }}</h2>
+      <h2 id="2" v-if="showComprarDos && storeComprar2.storeObras.length > 0">{{ storeComprar2.storeObras[0]?.nombre }}</h2>
       <h2 v-if="showComprarDos">{{ $t("Function.text7") }} {{ idSesion }}</h2>
       <h2 v-if="showComprarDos && idSesion === '1'">{{ storeComprar2.storeObras[0]?.fechaUno }}</h2>
       <h2 v-if="showComprarDos && idSesion === '2'">{{ storeComprar2.storeObras[0]?.fechaDos }}</h2>
