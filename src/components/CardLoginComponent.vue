@@ -1,7 +1,7 @@
 <template>
     <div class="circle"></div>
     <div class="app">
-        <button @click="cambiarIdioma" class="nav__link">{{ currentLanguage }}</button>
+        <button @click="cambiarIdioma" class="nav__link">{{ idiomaActual }}</button>
         <div class="card">
             <div class="logo">
                 <i class='bx bxs-user'></i>
@@ -22,7 +22,7 @@ import { useI18n } from 'vue-i18n';
 
 const store = useListadoObrasLoginStore();
 const { t, locale } = useI18n();
-const currentLanguage = computed(() => locale.value === 'en' ? 'Español' : 'English');
+const idiomaActual = computed(() => locale.value === 'en' ? 'Español' : 'English');
 
 const cambiarIdioma = () => {
     locale.value = locale.value === 'en' ? 'es' : 'en';
