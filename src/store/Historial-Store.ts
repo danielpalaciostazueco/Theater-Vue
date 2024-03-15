@@ -42,18 +42,18 @@ export const useHistorialStore = defineStore('Historial', () => {
     try {
       const response = await fetch(`${URLAPI}/Historial/${idUsuario}`);
       if (!response.ok) throw new Error('Error al cargar los historiales');
-      const rawData: Historial[] = await response.json();
+      const datosParaHacerTarjeta: Historial[] = await response.json();
 
 
       const tarjetasInfo: HistorialesAgrupados = {};
 
-      rawData.forEach((historial) => {
+      datosParaHacerTarjeta.forEach((historial) => {
         const clave = `${historial.nombreObra}-${formatearFecha(historial.fecha)}`;
         if (!tarjetasInfo[clave]) {
           tarjetasInfo[clave] = {
             nombreUsuario: historial.nombreUsuario,
             nombreObra: historial.nombreObra,
-            fecha: historial.fecha,
+            fecha: formatearFecha(historial.fecha),
             sesion: historial.sesion,
             asientos: [historial.asiento],
             idUsuario: historial.idUsuario,

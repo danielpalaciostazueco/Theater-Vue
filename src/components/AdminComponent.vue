@@ -1,5 +1,5 @@
 <template>
-  <button @click="toggleLanguage" class="nav__link">{{ currentLanguage }}</button>
+  <button @click="idiomaCambiado" class="nav__link">{{ idiomaActual }}</button>
   <div class="gestion-obras">
     <h2 class="titulo">{{ $t("AdminPanel.title") }}</h2>
     <button @click="nuevaObra" class="boton-agregar">{{ $t("AdminPanel.create") }}</button>
@@ -67,9 +67,9 @@ import { useListadoObrasAdminStore } from '../store/Admin-Store';
 import { useI18n } from 'vue-i18n';
 const store = useListadoObrasAdminStore();
 const { t, locale } = useI18n();
-const currentLanguage = computed(() => locale.value === 'en' ? 'Español' : 'English');
+const idiomaActual = computed(() => locale.value === 'en' ? 'Español' : 'English');
 
-const toggleLanguage = () => {
+const idiomaCambiado = () => {
   locale.value = locale.value === 'en' ? 'es' : 'en';
 }
 const mostrarFormulario = ref(false);

@@ -1,8 +1,8 @@
 <template>
   <header class="header">
     <div class="header__logo">
-      <canvas ref="canvasRef" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave" width="300"
-        height="200"></canvas>
+      <canvas ref="canvasRef" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave" width="100"
+        height="100"></canvas>
     </div>
     <nav class="header__nav">
       <RouterLink to="/" class="nav__link">{{ $t("Header.homepage") }}</RouterLink>
@@ -11,10 +11,11 @@
       <RouterLink to="/Activities" class="nav__link">{{ $t("Header.activities") }}</RouterLink>
       <RouterLink to="/Contact" class="nav__link">{{ $t("Header.contact") }}</RouterLink>
       <RouterLink to="/Historial" class="nav__link">{{ $t("Header.record") }}</RouterLink>
-      <RouterLink to="/Register" class="nav__link">{{ $t("Header.register") }}</RouterLink> 
-      <RouterLink v-if="isAdmin" to="/AdminPanel" class="nav__link">{{ $t("HomeAdmin.admin") }}</RouterLink>
+      <RouterLink to="/Register" class="nav__link">{{ $t("Header.register") }}</RouterLink>
+      <RouterLink v-if="isAdmin && store.usuarios != null" to="/AdminPanel" class="nav__link">{{ $t("HomeAdmin.admin")
+        }}</RouterLink>
     </nav>
-    <button @click="toggleLanguage" class="nav__link language-toggle">{{ currentLanguage }}</button>
+    <button @click="idiomaCambiado" class="nav__link language-toggle">{{ idiomaActual }}</button>
 
   </header>
 </template>
@@ -29,9 +30,9 @@ const store = useListadoObrasLoginStore();
 const { t, locale } = useI18n();
 
 const isAdmin = computed(() => store.isAdmin());
-const currentLanguage = computed(() => locale.value === 'en' ? 'Español' : 'English');
+const idiomaActual = computed(() => locale.value === 'en' ? 'Español' : 'English');
 
-const toggleLanguage = () => {
+const idiomaCambiado = () => {
   locale.value = locale.value === 'en' ? 'es' : 'en';
 }
 

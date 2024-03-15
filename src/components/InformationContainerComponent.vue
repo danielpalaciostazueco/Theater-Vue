@@ -5,44 +5,35 @@
       <ul class="horarios-txt__list">
         <li v-if="store.storeObras[0].fechaUno" class="horarios-txt__item">
           {{ store.storeObras[0].fechaUno }}
-          <RouterLink
-            :to="{ path: '/comprarDos/' + store.storeObras[0].obraID, query: { idSesion: 1 } }"
-            class="show-poster__button"
-            >{{ $t('Comprar1.text2') }}</RouterLink
-          >
+          <RouterLink :to="{ path: '/comprarDos/' + store.storeObras[0].obraID, query: { idSesion: 1 } }"
+            class="show-poster__button">{{ $t('Comprar1.text2') }}</RouterLink>
         </li>
         <li v-if="store.storeObras[0].fechaDos" class="horarios-txt__item">
           {{ store.storeObras[0].fechaDos }}
-          <RouterLink
-            :to="{ path: '/comprarDos/' + store.storeObras[0].obraID, query: { idSesion: 2 } }"
-            class="show-poster__button"
-            >{{ $t('Comprar1.text2') }}</RouterLink
-          >
+          <RouterLink :to="{ path: '/comprarDos/' + store.storeObras[0].obraID, query: { idSesion: 2 } }"
+            class="show-poster__button">{{ $t('Comprar1.text2') }}</RouterLink>
         </li>
         <li v-if="store.storeObras[0].fechaTres" class="horarios-txt__item">
           {{ store.storeObras[0].fechaTres }}
-          <RouterLink
-            :to="{ path: '/comprarDos/' + store.storeObras[0].obraID, query: { idSesion: 3 } }"
-            class="show-poster__button"
-            >{{ $t('Comprar1.text2') }}</RouterLink
-          >
+          <RouterLink :to="{ path: '/comprarDos/' + store.storeObras[0].obraID, query: { idSesion: 3 } }"
+            class="show-poster__button">{{ $t('Comprar1.text2') }}</RouterLink>
         </li>
       </ul>
     </div>
     <div class="asientos-disponibles">
-        <h3>
-          {{ $t('Comprar1.session1') }} {{ asientos - asientosOcupados.sesion1 }}
-          {{ $t('Comprar1.text3') }}
-        </h3>
-        <h3>
-          {{ $t('Comprar1.session2') }} {{ asientos - asientosOcupados.sesion2 }}
-          {{ $t('Comprar1.text3') }}
-        </h3>
-        <h3>
-          {{ $t('Comprar1.session3') }} {{ asientos - asientosOcupados.sesion3 }}
-          {{ $t('Comprar1.text3') }}
-        </h3>
-      </div>
+      <h3>
+        {{ $t('Comprar1.session1') }} : {{ asientos - asientosOcupados.sesion1 }}
+        {{ $t('Comprar1.text3') }}
+      </h3>
+      <h3>
+        {{ $t('Comprar1.session2') }} : {{ asientos - asientosOcupados.sesion2 }}
+        {{ $t('Comprar1.text3') }}
+      </h3>
+      <h3>
+        {{ $t('Comprar1.session3') }} : {{ asientos - asientosOcupados.sesion3 }}
+        {{ $t('Comprar1.text3') }}
+      </h3>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -196,12 +187,19 @@ body {
   }
 
   asientos-disponibles h3 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #102a42;
-    margin: 10px 0;
+    .asientos-disponibles h3 {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 24px;
+      color: #ff5733;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      letter-spacing: 2px;
+      font-weight: bold;
+      text-align: center;
+    }
   }
-  .information-title h2 {
+
+  .information-title {
     text-align: center;
   }
 

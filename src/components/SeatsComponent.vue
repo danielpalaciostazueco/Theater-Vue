@@ -6,7 +6,7 @@
         <div>
             <p>{{ $t("Comprar2.text") }} {{ calcularTotal }} €</p>
         </div>
-        <div>
+        <div class="button-buy">
             <button @click="realizarCompraYRecargarAsientos">{{ $t("Comprar2.text2") }}</button>
         </div>
     </div>
@@ -37,7 +37,7 @@ const calcularTotal = computed(() => {
     return asientosSeleccionados.value.size * store.precioPorAsiento;
 });
 
-const toggleSeatSelection = (asientoId: number) => {
+const cogerAsientosSeleccionados = (asientoId: number) => {
     const asiento = store.asientos.find(a => a.idAsiento === asientoId);
     if (!asiento || !asiento.isFree) return;
 
@@ -67,21 +67,18 @@ const realizarCompra = async () => {
 };
 
 function generarButacas() {
-
     const anchoAsiento = 40, altoAsiento = 40, espacioEntreAsientos = 10, espacioEntreFilas = 20;
     const anchoReposabrazos = 10, altoReposabrazos = altoAsiento;
     const anchoSvg = (anchoAsiento + espacioEntreAsientos + anchoReposabrazos * 2) * 5;
-
     const anchoPantalla = anchoSvg * 0.8;
     const altoPantalla = 100;
     const xPantalla = (anchoSvg - anchoPantalla) / 2;
     const yPantalla = 20;
 
-    let svgHTML = `<svg width="${anchoSvg}" height="400">`;
+    let svgHTML = `<svg width="${anchoSvg}" height="440">`;
 
 
     svgHTML += `<rect x="${xPantalla}" y="${yPantalla}" width="${anchoPantalla}" height="${altoPantalla}" style="fill:#9f9f9f; stroke:white; stroke-width:2" />`;
-
 
     store.asientos.forEach((asiento, index) => {
         const fila = Math.floor(index / 5);
@@ -93,28 +90,35 @@ function generarButacas() {
 
         svgHTML += `<rect id="asiento-${asiento.idAsiento}" x="${x + anchoReposabrazos}" y="${y}" width="${anchoAsiento}" height="${altoAsiento}" rx="5" ry="5" style="stroke:black; fill:${color}; cursor:pointer" />`;
 
+
         svgHTML += `<rect x="${x}" y="${y}" width="${anchoReposabrazos}" height="${altoReposabrazos}" style="fill:grey" />`;
         svgHTML += `<rect x="${x + anchoAsiento + anchoReposabrazos}" y="${y}" width="${anchoReposabrazos}" height="${altoReposabrazos}" style="fill:grey" />`;
+
+
+        const numeroAsiento = asiento.idAsiento;
+        const textoX = x + anchoReposabrazos + anchoAsiento / 2;
+        const textoY = y + altoAsiento / 2 + 5;
+        svgHTML += `<text x="${textoX}" y="${textoY}" fill="white" font-size="14" font-family="Arial" text-anchor="middle" dominant-baseline="central">${numeroAsiento}</text>`;
     });
 
     svgHTML += '</svg>';
-
-
     document.getElementById('cinema-seats')!.innerHTML = svgHTML;
+
+    // Agregar evento click a los asientos
     document.querySelectorAll('rect[id^="asiento-"]').forEach((rect) => {
-
         const htmlRect = rect as unknown as HTMLElement;
-
         const idAsiento = parseInt(htmlRect.id.replace('asiento-', ''));
         const asiento = store.asientos.find(a => a.idAsiento === idAsiento);
         if (asiento && asiento.isFree) {
-            htmlRect.addEventListener('click', () => toggleSeatSelection(idAsiento));
+            htmlRect.addEventListener('click', () => cogerAsientosSeleccionados(idAsiento));
         } else {
             htmlRect.style.fill = 'red';
             htmlRect.style.cursor = "not-allowed";
         }
     });
 }
+
+
 const realizarCompraYRecargarAsientos = async () => {
     await realizarCompra();
     generarButacas();
@@ -207,6 +211,14 @@ h2 {
     margin-bottom: 10vh;
 }
 
+.button-buy button {
+    border: none;
+    background: linear-gradient(0deg, rgba(255, 151, 0, 1) 0%, rgba(251, 75, 2, 1) 100%);
+    width: 57px;
+    border-radius: 20px;
+    height: 29px;
+}
+
 .main-block h1 {
     color: white;
     font-size: xx-large;
@@ -291,12 +303,8 @@ section {
 
 .cinema-button {
     display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    background-color: #1E3367;
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
+    align-items: center;
+    justify-content: center;
 }
 
 .button-bought {

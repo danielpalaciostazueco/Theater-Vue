@@ -36,7 +36,7 @@ export const useListadoObrasLoginStore = defineStore('listadoObrasLogin', () => 
         usuarios.push(usuarioRegistrado);
         usuarios.splice(0, usuarios.length, usuarioRegistrado); 
         localStorage.setItem('usuario', JSON.stringify(usuarioRegistrado));
-        router.push('/Home');
+        router.push('/');
       } else {
         console.error('Error en el registro:', response.statusText);
       }
