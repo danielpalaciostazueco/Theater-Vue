@@ -30,7 +30,7 @@ export const useListadoObrasFunctionStore = defineStore('listadoObrasFuncion', (
         nombre: data.nombre,
         imagenes: data.imagenes.split(','),
         obraID: data.obraID,
-        duracion: data.duracion / 60,
+        duracion: data.duracion,
         descripcion: data.descripcion,
         fechaUno: formatearFecha(data.fechaUno),
         fechaDos: formatearFecha(data.fechaDos),

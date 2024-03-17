@@ -43,7 +43,7 @@ export const useListadoObrasComprar2Store = defineStore('listadoObrasCompra2', (
         nombre: data.nombre,
         imagenes: data.imagenes.split(','),
         obraID: data.obraID,
-        duracion: data.duracion / 60,
+        duracion: data.duracion ,
         fechaUno: formatearFecha(data.fechaUno),
         fechaDos: formatearFecha(data.fechaDos),
         fechaTres: formatearFecha(data.fechaTres),
