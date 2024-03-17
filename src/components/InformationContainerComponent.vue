@@ -186,32 +186,24 @@ body {
     margin-left: 10px;
   }
 
-  asientos-disponibles h3 {
-    .asientos-disponibles h3 {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      font-size: 24px;
-      color: #ff5733;
-      text-transform: uppercase;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-      letter-spacing: 2px;
-      font-weight: bold;
-      text-align: center;
-    }
-  }
 
-  .information-title {
+  .asientos-disponibles {
     text-align: center;
   }
+}
 
-  @media screen and (max-width: 768px) {
-    .information-title h2 {
-      color: #333;
-      margin-top: 20px;
-    }
+.information-title {
+  text-align: center;
+}
 
-    .horarios-txt__item {
-      font-size: 14px;
-    }
+@media screen and (max-width: 768px) {
+  .information-title h2 {
+    color: #333;
+    margin-top: 20px;
+  }
+
+  .horarios-txt__item {
+    font-size: 14px;
   }
 }
 </style>

@@ -194,14 +194,17 @@ function redrawMasks() {
     text-align: center;
     margin-top: 5vh;
     margin-bottom: 5vh;
-    display: grid;
+    display: flex;
+    flex-direction: column;
   }
+
 
   .header__logo,
   .header__nav {
     display: flex;
     justify-content: left;
     gap: 20px;
+    flex-direction: column;
   }
 
   .language-toggle {

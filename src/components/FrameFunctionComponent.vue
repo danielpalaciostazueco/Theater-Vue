@@ -14,8 +14,10 @@
     </div>
 
     <div class="frame-function__title">
-      <h2 id="1" v-if="showComprarUno && storeComprar1.storeObras.length > 0">{{ storeComprar1.storeObras[0]?.nombre }}</h2>
-      <h2 id="2" v-if="showComprarDos && storeComprar2.storeObras.length > 0">{{ storeComprar2.storeObras[0]?.nombre }}</h2>
+      <h2 id="1" v-if="showComprarUno && storeComprar1.storeObras.length > 0">{{ storeComprar1.storeObras[0]?.nombre }}
+      </h2>
+      <h2 id="2" v-if="showComprarDos && storeComprar2.storeObras.length > 0">{{ storeComprar2.storeObras[0]?.nombre }}
+      </h2>
       <h2 v-if="showComprarDos">{{ $t("Function.text7") }} {{ idSesion }}</h2>
       <h2 v-if="showComprarDos && idSesion === '1'">{{ storeComprar2.storeObras[0]?.fechaUno }}</h2>
       <h2 v-if="showComprarDos && idSesion === '2'">{{ storeComprar2.storeObras[0]?.fechaDos }}</h2>
@@ -92,9 +94,10 @@ a {
 
 }
 
-.information-title{
+.information-title {
   text-align: center;
 }
+
 .frame-function {
   display: flex;
   align-items: center;
@@ -157,22 +160,22 @@ section {
     align-items: center;
     background-color: #1e3367;
     width: 800px;
-    height: 450px;
+    height: 474px;
     text-align: center;
     max-width: 323px;
     margin: auto;
     margin-top: 5vh;
+    flex-direction: column;
   }
 
   .frame-function__title h2 {
     font-size: 30px;
     color: #fff;
-    display: none;
-
   }
 
   .frame-function__poster {
     margin-left: 23px;
+    margin-top: 20px;
   }
 }
 </style>

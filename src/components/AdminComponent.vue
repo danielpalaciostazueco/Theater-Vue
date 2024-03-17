@@ -1,5 +1,6 @@
 <template>
-  <button @click="idiomaCambiado" class="nav__link">{{ idiomaActual }}</button>
+  <button @click="idiomaCambiado" class="boton-idioma">{{ idiomaActual }}</button>
+  <RouterLink to="/" class="boton-idioma">{{ $t("Header.homepage") }}</RouterLink>
   <div class="gestion-obras">
     <h2 class="titulo">{{ $t("AdminPanel.title") }}</h2>
     <button @click="nuevaObra" class="boton-agregar">{{ $t("AdminPanel.create") }}</button>
@@ -137,6 +138,15 @@ onMounted(() => {
 .titulo {
   text-align: center;
   margin-bottom: 20px;
+}
+
+.boton-idioma {
+  display: inline-block;
+  height: 30px;
+  font-family: Playfair Display, serif;
+  font-weight: 700;
+  background-color: #216ce7;
+  border-radius: 20px;
 }
 
 .boton-agregar,

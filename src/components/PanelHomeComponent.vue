@@ -111,6 +111,7 @@ body {
 @media screen and (max-width: 768px) {
     .performance-block {
         flex-direction: column;
+        margin-top: 400px;
     }
 
     .performance-block__name-title,
@@ -122,6 +123,11 @@ body {
     .performance-block__button {
         margin: auto;
         margin-top: 2vh;
+    }
+
+    .performance-block__image img {
+        max-width: 100%;
+        height: auto;
     }
 }
 </style>

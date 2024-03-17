@@ -2,6 +2,8 @@ import { defineStore } from 'pinia';
 import { reactive, ref } from 'vue';
 import { URLAPI } from '@/env';
 import { useListadoObrasLoginStore } from './LoginView-Store';
+
+
 interface Obra {
   nombre: string;
   imagenes: string[];
@@ -158,19 +160,20 @@ async function resetearYRecargarAsientos(obraID: string, idSesion: string) {
     await cargarAsientosOcupados(obraID, idSesion);
     await cargarTodosLosAsientos();
   }
-    function formatearFecha(fecha: Date) {
-    const opciones: Intl.DateTimeFormatOptions = {
-      year: 'numeric', 
-      month: 'long', 
+
+ 
+   function formatearFecha(fecha: string): string {
+    const fechaObj = new Date(fecha);
+    fechaObj.setHours(fechaObj.getHours() + 1); 
+    return fechaObj.toLocaleString('es-ES', {
+      year: 'numeric',
+      month: 'long',
       day: 'numeric',
       hour: '2-digit',
-      minute: '2-digit', 
-      hour12: false 
-    };
-    
-    const fechaObj = new Date(fecha);
-    return fechaObj.toLocaleDateString('es-ES', opciones) ;
-  }
+      minute: '2-digit',
+      hour12: false,
+    });
+}
   
 
 

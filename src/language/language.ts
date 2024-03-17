@@ -108,15 +108,17 @@ export const messages = {
         text2: 'If you already have an account please login',
         text3:'Here',
         text4: 'If you have an admin account please login',
-        text5: 'Create',
+        text5: 'Enter',
       },
 
       Login: {
         name: 'Name',
         password: 'Password',
+      },
+
+      Fecha : {
+        text1: 'en-EN',
       }
-  
-  
     },
       
     es: {
@@ -230,11 +232,15 @@ export const messages = {
         text2: 'Si ya tienes una cuenta por favor inicia sesión',
         text3:'Aquí',
         text4: 'Si tienes una cuenta de administrador por favor inicia sesión',
-        text5: 'Crear',
+        text5: 'Entrar',
       },
       Login: {
         name: 'Nombre',
         password: 'Contraseña',
+      },
+
+      Fecha : {
+        text1: 'es-ES',
       }
     }};
 

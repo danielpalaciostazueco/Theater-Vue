@@ -77,5 +77,25 @@ import { RouterLink } from 'vue-router'
     .footer__networks {
         display: none;
     }
+
+    .footer {
+        margin-top: 13vh;
+        display: flex;
+        align-items: center;
+        background-color: #1e3367;
+        text-align: center;
+        width: 100%;
+        height: 25vh;
+        flex-direction: column;
+    }
+
+    .footer__logo {
+
+        margin-top: 20px;
+    }
+
+    .footer__menu {
+        margin-top: 4vh;
+    }
 }
 </style>

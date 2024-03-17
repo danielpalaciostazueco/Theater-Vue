@@ -2,6 +2,7 @@ import { URLAPI } from '@/env';
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
 
+
 interface Obra {
   nombre: string;
   imagenes: string[];
@@ -37,19 +38,19 @@ export const useListadoObrasComprar1Store = defineStore('listadoObrasComprar1', 
       console.error('Error al obtener los datos de la obra:', error);
     }
   }
-  function formatearFecha(fecha: string) {
-    const opciones: Intl.DateTimeFormatOptions = {
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit', 
-      hour12: false 
-    };
-    
-    const fechaObj = new Date(fecha);
-    return fechaObj.toLocaleDateString('es-ES', opciones) ;
-  }
+
+ function formatearFecha(fecha: string): string {
+  const fechaObj = new Date(fecha);
+  fechaObj.setHours(fechaObj.getHours() + 1); 
+  return fechaObj.toLocaleString('es-ES', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
+}
   
 
   return { cargarObras, storeObras};

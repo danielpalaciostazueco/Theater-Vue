@@ -7,7 +7,7 @@
             <p>{{ $t("Comprar2.text") }} {{ calcularTotal }} €</p>
         </div>
         <div class="button-buy">
-            <button  @click="realizarCompraYRecargarAsientos">{{ $t("Comprar2.text2") }}</button>
+            <button @click="realizarCompraYRecargarAsientos">{{ $t("Comprar2.text2") }}</button>
         </div>
     </div>
 </template>
@@ -77,8 +77,8 @@ function generarButacas() {
 
     let svgHTML = `<svg width="${anchoSvg}" height="440">`;
 
-
-    svgHTML += `<rect x="${xPantalla}" y="${yPantalla}" width="${anchoPantalla}" height="${altoPantalla}" style="fill:#9f9f9f; stroke:white; stroke-width:2" />`;
+    svgHTML += `<rect x="${xPantalla}" y="${yPantalla}" width="${anchoPantalla}" height="${altoPantalla}" style="fill:#9f9f9f; stroke:white; stroke-width:2" />
+            <text x="${xPantalla + anchoPantalla / 2}" y="${yPantalla + altoPantalla / 2}" fill="white" font-size="24" font-family="Arial" text-anchor="middle" dominant-baseline="central">ESCENARIO</text>`;
 
     store.asientos.forEach((asiento, index) => {
         const fila = Math.floor(index / 5);
@@ -104,7 +104,6 @@ function generarButacas() {
     svgHTML += '</svg>';
     document.getElementById('cinema-seats')!.innerHTML = svgHTML;
 
-    // Agregar evento click a los asientos
     document.querySelectorAll('rect[id^="asiento-"]').forEach((rect) => {
         const htmlRect = rect as unknown as HTMLElement;
         const idAsiento = parseInt(htmlRect.id.replace('asiento-', ''));
@@ -243,7 +242,4 @@ section {
     align-items: center;
     justify-content: center;
 }
-
-
-
 </style>

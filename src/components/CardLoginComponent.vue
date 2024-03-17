@@ -1,7 +1,10 @@
 <template>
     <div class="circle"></div>
     <div class="app">
-        <button @click="cambiarIdioma" class="nav__link">{{ idiomaActual }}</button>
+        <div class="button-login">
+            <button @click="cambiarIdioma" class="boton-idioma">{{ idiomaActual }}</button>
+            <RouterLink to="/" class="nav__link">{{ $t("Header.homepage") }}</RouterLink>
+        </div>
         <div class="card">
             <div class="logo">
                 <i class='bx bxs-user'></i>
@@ -94,6 +97,56 @@ body {
     margin: 30px;
     margin-top: 17vh;
 }
+
+.nav__link,
+.language-toggle {
+    font-family: 'Roboto', sans-serif;
+    padding: 10px 10px;
+    border-radius: 20px;
+    background-color: transparent;
+    color: #1E3367;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    height: fit-content;
+    text-decoration: none;
+}
+
+.nav__link:hover,
+.language-toggle:hover {
+    background-color: #1E3367;
+    color: #ffffff;
+}
+
+.boton-idioma {
+    display: inline-block;
+    height: 30px;
+    font-family: Playfair Display, serif;
+    font-weight: 700;
+    background-color: #216ce7;
+    border-radius: 20px;
+}
+
+.nav__link:hover,
+.language-toggle:hover {
+    background-color: #1E3367;
+    color: #ffffff;
+}
+
+.language-toggle {
+    margin-left: auto;
+    display: inline-block;
+    margin-left: 117px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+}
+
+.button-login {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+}
+
 
 .card::before {
     content: "";
@@ -207,6 +260,15 @@ body {
     .card {
         padding: 100px 15px 38px;
         margin-top: 20vh;
+    }
+
+    .boton-idioma {
+        display: inline-block;
+        height: 30px;
+        font-family: Playfair Display, serif;
+        font-weight: 700;
+        background-color: #216ce7;
+        border-radius: 20px;
     }
 
     .card>h2 {

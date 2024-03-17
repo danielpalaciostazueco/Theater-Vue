@@ -84,20 +84,21 @@ async function guardarObra(obra: Obra) {
     console.error('Error al guardar la obra:', error);
   }
 }
-function formatearFecha(fecha: string) {
-    const opciones: Intl.DateTimeFormatOptions = {
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit', 
-      hour12: false 
-    };
-    
-    const fechaObj = new Date(fecha);
-    return fechaObj.toLocaleDateString('es-ES', opciones) ;
-  }
-  
+
+
+
+function formatearFecha(fecha: string): string {
+  const fechaObj = new Date(fecha);
+  fechaObj.setHours(fechaObj.getHours() + 1); 
+  return fechaObj.toLocaleString('es-ES', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
+}
 
 async function actualizarObra(obra: Obra) {
   try {
@@ -154,3 +155,5 @@ async function actualizarObra(obra: Obra) {
 
   return { obras, obraEditando, cargarObras, guardarObra, actualizarObra, borrarObra, resetObraEditando, setObraEditando };
 });
+
+

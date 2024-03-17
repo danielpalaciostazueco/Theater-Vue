@@ -108,4 +108,19 @@ body {
     padding: 20px 0;
 
 }
+
+@media screen and (max-width: 768px) {
+    .main-block {
+        margin-top: 429px;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        width: 100%;
+        background-color: #1e3367;
+        height: 13vh;
+        margin-bottom: 10vh;
+        color: #fff
+    }
+
+}
 </style>

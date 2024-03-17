@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { reactive } from 'vue';
 import { URLAPI } from '@/env';
 
+
 interface Historial {
   idObjeto: number;
   nombreUsuario: string;
@@ -26,17 +27,20 @@ interface HistorialesAgrupados {
 export const useHistorialStore = defineStore('Historial', () => {
   const historiales = reactive<HistorialesAgrupados>({});
 
-  function formatearFecha(fecha: string): string {
-    const opciones: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    };
-    return new Intl.DateTimeFormat('es-ES', opciones).format(new Date(fecha));
-  }
+  
+ function formatearFecha(fecha: string): string {
+  const fechaObj = new Date(fecha);
+  fechaObj.setHours(fechaObj.getHours() + 1); 
+  return fechaObj.toLocaleString('es-ES', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
+}
+
 
   async function cargarHistoriales(idUsuario: number) {
     try {

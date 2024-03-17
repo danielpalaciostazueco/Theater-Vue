@@ -1,11 +1,11 @@
 <template>
     <div class="historial-container">
         <div v-for="(grupo, clave) in historiales" :key="clave" class="historial-group">
-            <h2>{{ grupo.nombreObra }}</h2>
-            <p>{{ grupo.nombreUsuario }}</p>
-            <p>{{ grupo.fecha }}</p>
-            <p>Sesión: {{ grupo.sesion }}</p>
-            <p>Asientos: {{ grupo.asientos.join(', ') }}</p>
+            <h2 id="1">{{ grupo.nombreObra }}</h2>
+            <p id="2">{{ grupo.nombreUsuario }}</p>
+            <p id="3">{{ grupo.fecha }}</p>
+            <p id="4">Sesión: {{ grupo.sesion }}</p>
+            <p id="5">Asientos: {{ grupo.asientos.join(', ') }}</p>
         </div>
     </div>
 </template>
