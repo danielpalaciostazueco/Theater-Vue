@@ -4,13 +4,14 @@ import router from '@/router';
 import { URLAPI } from '@/env';
 
 interface Usuario {
+  idUsuario: number;
   nombreUsuario: string;
   contrasena: string;
   rol: number;
 }
 
 export const useListadoObrasLoginStore = defineStore('listadoObrasLogin', () => {
-  const formData = ref({
+  const Datos = ref({
     nombreUsuario: '',
     contrasena: '',
   });
@@ -26,14 +27,16 @@ export const useListadoObrasLoginStore = defineStore('listadoObrasLogin', () => 
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData.value),
+        body: JSON.stringify(Datos.value),
+        
       });
 
       if (response.ok) {
         const usuarioRegistrado: Usuario = await response.json();
+        usuarios.push(usuarioRegistrado);
         usuarios.splice(0, usuarios.length, usuarioRegistrado); 
         localStorage.setItem('usuario', JSON.stringify(usuarioRegistrado));
-        router.push('/Home');
+        router.push('/');
       } else {
         console.error('Error en el registro:', response.statusText);
       }
@@ -61,5 +64,5 @@ export const useListadoObrasLoginStore = defineStore('listadoObrasLogin', () => 
 
   cargarUsuarioDesdeLocalStorage();
 
-  return { formData, registrarUsuario, isAdmin, usuarios, cargarUsuarioDesdeLocalStorage };
+  return { Datos, registrarUsuario, isAdmin, usuarios, cargarUsuarioDesdeLocalStorage };
 });

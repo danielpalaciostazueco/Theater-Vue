@@ -7,24 +7,34 @@ import ContactView from "../views/ContactView.vue"
 import ActivitiesView from "../views/ActivitiesView.vue"
 import ComprarUnoView from "../views/ComprarUno.vue"
 import ComprarDosView from "../views/ComprarDos.vue"
-
+import HistorialView from "../views/HistorialView.vue"
 import AdminPanelView from "../views/AdminPanelView.vue"
 import LoginView from "../views/LoginView.vue"
+import NotFoundComponent from "@/components/NotFoundComponent.vue"
+
+const routes = [
+    {
+      path: '/:catchAll(.*)',
+      name: 'NotFound',
+      component: NotFoundComponent
+    }
+];
+
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
-            path: '/',
+            path: '/Register',
             name: 'Login',
             component: LoginView
         },    
         {
-            path: '/Home',
+            path: '/',
             name: 'Home',
             component: HomeView
         },
-       
+     
         {
             path: '/AdminPanel',
             name: 'AdminPanel',
@@ -39,6 +49,11 @@ const router = createRouter({
             path: '/Function/:Id',
             name: 'Function',
             component: FunctionView
+        },
+        {
+            path: '/Historial',
+            name: 'Historial',
+            component: HistorialView
         },
         {
             path: '/About',
@@ -64,7 +79,12 @@ const router = createRouter({
             path: '/ComprarDos/:Id',
             name: 'ComprarDos',
             component: ComprarDosView
-        }    
+        },
+        {
+            path: '/:catchAll(.*)',
+            name: 'NotFound',
+            component: NotFoundComponent
+        },     
     ]
 })
 

@@ -1,6 +1,8 @@
+
 import { URLAPI } from '@/env';
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
+import moment from 'moment';
 
 export interface Obra {
   obraID: number;
@@ -32,26 +34,48 @@ export const useListadoObrasAdminStore = defineStore('listadoObrasAdmin', () => 
     fechaTres: new Date().toISOString(),
     cartel: '',
   });
-  function convertirFechasParaBackend(obra: Obra) {
-    return {
-      ...obra,
-      fechaUno: obra.fechaUno ? new Date(obra.fechaUno).toISOString() : '',
-      fechaDos: obra.fechaDos ? new Date(obra.fechaDos).toISOString() : '',
-      fechaTres: obra.fechaTres ? new Date(obra.fechaTres).toISOString() : '',
-    };
+
+function convertirFechasParaBackend(obra: Obra) {
+  function formatearFecha(fecha: string) {
+
+    const fechaMoment = moment(fecha, 'YYYY-MM-DD HH:mm');
+    
+    if (!fechaMoment.isValid()) {
+      console.error('La fecha proporcionada no tiene un formato reconocible:', fecha);
+      return '';
+    }
+    
+    return fechaMoment.format('YYYY-MM-DDTHH:mm:ss');
   }
+  return {
+    ...obra,
+    fechaUno: obra.fechaUno ? formatearFecha(obra.fechaUno) : null,
+    fechaDos: obra.fechaDos ? formatearFecha(obra.fechaDos) : null,
+    fechaTres: obra.fechaTres ? formatearFecha(obra.fechaTres) : null,
+  };
+}
+
 
   async function cargarObras() {
     try {
       const response = await fetch(apiUrl);
       if (!response.ok) throw new Error('Error al cargar las obras');
       const data = await response.json();
-      obras.splice(0, obras.length, ...data);
+      obras.splice(0, obras.length); 
+      data.forEach((obra: Obra) => {
+        const obraFormateada = {
+          ...obra,
+          duracion: obra.duracion ,
+          fechaUno: obra.fechaUno ? formatearFecha(obra.fechaUno) : '',
+          fechaDos: obra.fechaDos ? formatearFecha(obra.fechaDos) : '',
+          fechaTres: obra.fechaTres ? formatearFecha(obra.fechaTres) : '',
+        };
+        obras.push(obraFormateada); 
+      });
     } catch (error) {
       console.error('Error al cargar las obras:', error);
     }
   }
-
   
 async function guardarObra(obra: Obra) {
   try {
@@ -74,6 +98,33 @@ async function guardarObra(obra: Obra) {
     console.error('Error al guardar la obra:', error);
   }
 }
+function formatearFecha(fecha: string) {
+  const fechaObj = new Date(fecha);
+  const opciones: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  };
+  
+
+  const fechaFormateada = fechaObj.toLocaleDateString('es-ES', opciones);
+  const horaFormateada = fechaObj.toLocaleTimeString('es-ES', opciones);
+
+  const fechaMatch = fechaFormateada.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+  const horaMatch = horaFormateada.match(/(\d{2}):(\d{2})/);
+  
+  if (fechaMatch && horaMatch) {
+  
+    return `${fechaMatch[3]}-${fechaMatch[2]}-${fechaMatch[1]} ${horaMatch[1]}:${horaMatch[2]}`;
+  } else {
+    console.error('No se pudo formatear la fecha:', fecha);
+    return '';
+  }
+}
+
 
 async function actualizarObra(obra: Obra) {
   try {

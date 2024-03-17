@@ -6,7 +6,7 @@
         <div>
             <p>{{ $t("Comprar2.text") }} {{ calcularTotal }} €</p>
         </div>
-        <div>
+        <div class="button-buy">
             <button @click="realizarCompraYRecargarAsientos">{{ $t("Comprar2.text2") }}</button>
         </div>
     </div>
@@ -37,7 +37,7 @@ const calcularTotal = computed(() => {
     return asientosSeleccionados.value.size * store.precioPorAsiento;
 });
 
-const toggleSeatSelection = (asientoId: number) => {
+const cogerAsientosSeleccionados = (asientoId: number) => {
     const asiento = store.asientos.find(a => a.idAsiento === asientoId);
     if (!asiento || !asiento.isFree) return;
 
@@ -67,21 +67,18 @@ const realizarCompra = async () => {
 };
 
 function generarButacas() {
-
     const anchoAsiento = 40, altoAsiento = 40, espacioEntreAsientos = 10, espacioEntreFilas = 20;
     const anchoReposabrazos = 10, altoReposabrazos = altoAsiento;
     const anchoSvg = (anchoAsiento + espacioEntreAsientos + anchoReposabrazos * 2) * 5;
-  
     const anchoPantalla = anchoSvg * 0.8;
     const altoPantalla = 100;
     const xPantalla = (anchoSvg - anchoPantalla) / 2;
     const yPantalla = 20;
 
-    let svgHTML = `<svg width="${anchoSvg}" height="400">`;
+    let svgHTML = `<svg width="${anchoSvg}" height="440">`;
 
-
-    svgHTML += `<rect x="${xPantalla}" y="${yPantalla}" width="${anchoPantalla}" height="${altoPantalla}" style="fill:#9f9f9f; stroke:white; stroke-width:2" />`;
-
+    svgHTML += `<rect x="${xPantalla}" y="${yPantalla}" width="${anchoPantalla}" height="${altoPantalla}" style="fill:#9f9f9f; stroke:white; stroke-width:2" />
+            <text x="${xPantalla + anchoPantalla / 2}" y="${yPantalla + altoPantalla / 2}" fill="white" font-size="24" font-family="Arial" text-anchor="middle" dominant-baseline="central">ESCENARIO</text>`;
 
     store.asientos.forEach((asiento, index) => {
         const fila = Math.floor(index / 5);
@@ -93,83 +90,91 @@ function generarButacas() {
 
         svgHTML += `<rect id="asiento-${asiento.idAsiento}" x="${x + anchoReposabrazos}" y="${y}" width="${anchoAsiento}" height="${altoAsiento}" rx="5" ry="5" style="stroke:black; fill:${color}; cursor:pointer" />`;
 
+
         svgHTML += `<rect x="${x}" y="${y}" width="${anchoReposabrazos}" height="${altoReposabrazos}" style="fill:grey" />`;
         svgHTML += `<rect x="${x + anchoAsiento + anchoReposabrazos}" y="${y}" width="${anchoReposabrazos}" height="${altoReposabrazos}" style="fill:grey" />`;
+
+
+        const numeroAsiento = asiento.idAsiento;
+        const textoX = x + anchoReposabrazos + anchoAsiento / 2;
+        const textoY = y + altoAsiento / 2 + 5;
+        svgHTML += `<text x="${textoX}" y="${textoY}" fill="white" font-size="14" font-family="Arial" text-anchor="middle" dominant-baseline="central">${numeroAsiento}</text>`;
     });
 
     svgHTML += '</svg>';
-
-
     document.getElementById('cinema-seats')!.innerHTML = svgHTML;
+
     document.querySelectorAll('rect[id^="asiento-"]').forEach((rect) => {
-
         const htmlRect = rect as unknown as HTMLElement;
-
         const idAsiento = parseInt(htmlRect.id.replace('asiento-', ''));
         const asiento = store.asientos.find(a => a.idAsiento === idAsiento);
         if (asiento && asiento.isFree) {
-            htmlRect.addEventListener('click', () => toggleSeatSelection(idAsiento));
+            htmlRect.addEventListener('click', () => cogerAsientosSeleccionados(idAsiento));
         } else {
             htmlRect.style.fill = 'red';
             htmlRect.style.cursor = "not-allowed";
         }
     });
 }
+
+
 const realizarCompraYRecargarAsientos = async () => {
     await realizarCompra();
     generarButacas();
 };
 
 function generarPDF() {
-  const fechaActual = new Date();
-  const anchoEntrada = 3.5 * 72; 
-  const altoEntrada = 200; 
+    const fechaActual = new Date();
+    const anchoEntrada = 3.5 * 72;
+    const altoEntrada = 200;
 
-  const doc = new jsPDF({
-    orientation: 'landscape',
-    unit: 'pt',
-    format: [anchoEntrada, altoEntrada]
-  });
+    const doc = new jsPDF({
+        orientation: 'landscape',
+        unit: 'pt',
+        format: [anchoEntrada, altoEntrada]
+    });
 
-  const fechaFormateada = fechaActual.toLocaleDateString("es-ES", {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-
-
-  const colorPrincipal = "#000";
-  const colorSecundario = "#700";
-  doc.setTextColor(colorPrincipal);
-  
-
-  doc.setFont('times', 'bold');
-  doc.setFontSize(22);
-  doc.text("UrbanTheater", 20, 30); 
+    const fechaFormateada = fechaActual.toLocaleDateString("es-ES", {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
 
 
-  doc.setDrawColor(colorSecundario);
-  doc.setLineWidth(1);
-  doc.line(20, 40, anchoEntrada - 20, 40); 
+    const colorPrincipal = "#000";
+    const colorSecundario = "#700";
+    doc.setTextColor(colorPrincipal);
 
-  doc.setFont('times', 'normal');
-  doc.setFontSize(12);
- 
-  doc.text(`Fecha: ${fechaFormateada}`, 20, 60);
-  doc.text("Detalles de la Compra:", 20, 80);
-  doc.text(`Obra: ${store.storeObras[0].nombre}`, 20, 100);
-  doc.text(`Sesión ID: ${idSesion}`, 20, 120);
-  const asientosComprados = Array.from(asientosSeleccionados.value).join(", ");
-  doc.text(`Asientos: ${asientosComprados}`, 20, 140);
-  
-  
-  doc.setFont('times', 'bold');
-  doc.setTextColor(colorSecundario);
-  doc.text(`Total: ${calcularTotal.value} €`, 20, 160);
-  doc.save("compra.pdf");
+
+    doc.setFont('times', 'bold');
+    doc.setFontSize(22);
+    doc.text("UrbanTheater", 20, 30);
+
+
+    doc.setDrawColor(colorSecundario);
+    doc.setLineWidth(1);
+    doc.line(20, 40, anchoEntrada - 20, 40);
+
+    doc.setFont('times', 'normal');
+    doc.setFontSize(12);
+
+    doc.text(`Fecha: ${fechaFormateada}`, 20, 60);
+    doc.text("Detalles de la Compra:", 20, 80);
+    doc.text(`Obra: ${store.storeObras[0].nombre}`, 20, 100);
+    doc.text(`Sesión ID: ${idSesion}`, 20, 120);
+    const asientosComprados = Array.from(asientosSeleccionados.value).join(", ");
+    doc.text(`Asientos: ${asientosComprados}`, 20, 140);
+
+
+    doc.setFont('times', 'bold');
+    doc.setTextColor(colorSecundario);
+    doc.text(`Total: ${calcularTotal.value} €`, 20, 160);
+    doc.save("compra.pdf");
 }
-</script> 
+</script>
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap');
+
 body,
 h1,
 h2,
@@ -182,58 +187,21 @@ a {
     text-decoration: none;
 }
 
-
-.article-block {
-    display: flex;
-    justify-content: right;
-    margin-top: 10vh;
-    flex-direction: column;
-}
-
-.main-block {
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    width: 100%;
-    background-color: #1E3367;
-    height: 13vh;
-    margin-bottom: 10vh;
-}
-
-.main-block h1 {
-    color: white;
-    font-size: xx-large;
-    margin-left: 20vh;
-}
-
-/* Estilos del marco de la función */
-.frame-function {
-    display: flex;
-    align-items: center;
-    background-color: #1E3367;
-    width: 800px;
-    height: 450px;
-    text-align: center;
-    max-width: 977px;
-    margin: auto;
-}
-
-.frame-function__poster {
-    flex: 1;
-}
-
-.frame-function__poster img {
-    width: 280px;
-}
-
-.frame-function__title {
-    flex: 1;
-}
-
-.frame-function__title h2 {
-    font-size: 30px;
+h1,
+h2 {
+    font-family: 'Playfair Display', serif;
     color: white;
 }
+
+
+.button-buy button {
+    border: none;
+    background: linear-gradient(0deg, rgba(255, 151, 0, 1) 0%, rgba(251, 75, 2, 1) 100%);
+    width: 57px;
+    border-radius: 20px;
+    height: 29px;
+}
+
 
 /* Estilos del contenedor */
 #container {
@@ -244,16 +212,7 @@ h2 {
     color: #333;
 }
 
-.container-frame {
-    margin-top: 20px;
-    background-color: #f8f8f8;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 
 button {
     margin-left: 10px;
@@ -265,10 +224,6 @@ section {
     align-items: center;
     justify-content: center;
     margin-top: 15vh;
-}
-
-.container {
-    text-align: center;
 }
 
 .cinema-seats {
@@ -284,16 +239,7 @@ section {
 
 .cinema-button {
     display: flex;
+    align-items: center;
     justify-content: center;
-    padding-top: 20px;
-}
-
-.ocupado {
-    fill: red;
-}
-
-.seleccionado {
-    fill: green;
 }
 </style>
-

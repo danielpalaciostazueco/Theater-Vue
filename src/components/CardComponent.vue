@@ -171,15 +171,15 @@ body {
     cursor: pointer;
 }
 
-@media screen and (max-width: 1285px){
+@media screen and (max-width: 1285px) {
     .poster-container {
-    display: flex;
-    justify-content: space-evenly;
-    background-color: #fff;
-    padding: 20px;
-    margin: 20px;
-    flex-wrap: wrap;
-}
+        display: flex;
+        justify-content: space-evenly;
+        background-color: #fff;
+        padding: 20px;
+        margin: 20px;
+        flex-wrap: wrap;
+    }
 
 
 }

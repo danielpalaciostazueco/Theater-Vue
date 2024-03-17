@@ -2,11 +2,14 @@
 export const messages = {
     en: {
       Header: {
-        infomation : 'Information',
+        information : 'Information',
         schedule : 'Schedule',
         activities: 'Activities',
         contact: 'Contact',
-        language: 'english'
+        language: 'english',
+        record: 'Tickets',
+        homepage: 'Homepage',
+        register: 'Register'
       },
   
       Footer: {
@@ -45,6 +48,7 @@ export const messages = {
         actions: 'Actions',
         save: 'Save',
         cancel: 'Cancel',
+        edit: 'Edit',
       },
   
       Comprar2: {
@@ -57,6 +61,10 @@ export const messages = {
         information: 'Buy tickets',
         text: 'Date and Time Information',
         text2: 'Buy ',
+        text3: 'Seats',
+        session1: 'Session 1',
+        session2: 'Session 2',
+        session3: 'Session 3'
       },
   
       Contact: {
@@ -73,7 +81,8 @@ export const messages = {
         text3: 'Buy tickets',
         text4: 'Cast of actors',
         text5: 'Duration',
-        text6: 'Minutes'
+        text6: 'Minutes',
+        text7: 'Session'
       },
   
       HomeAdmin: {
@@ -81,7 +90,7 @@ export const messages = {
         schedule : 'Schedule',
         activities: 'Activities',
         contact: 'Contact',
-        admin: 'Admin Panel',
+        admin: 'Admin',
         text1: 'Next Functions',
         text2: 'Romeo and Juliet',
         text3: 'Romeo and Juliet" is a play written by William Shakespeare in the 16th century. The plot follows two young lovers, Romeo and Juliet, whose rival families cause conflict. Although adversity, they fall in love and marry secretly, but a series of misunderstandings and tragedies lead to a fatal outcome. The work explores themes such as love, family rivalry and destiny, becoming one of the best-known love stories in literature.',
@@ -99,10 +108,17 @@ export const messages = {
         text2: 'If you already have an account please login',
         text3:'Here',
         text4: 'If you have an admin account please login',
-        text5: 'Create',
+        text5: 'Enter',
       },
-  
-  
+
+      Login: {
+        name: 'Name',
+        password: 'Password',
+      },
+
+      Fecha : {
+        text1: 'en-EN',
+      }
     },
       
     es: {
@@ -112,7 +128,10 @@ export const messages = {
         schedule : 'Programación',
         activities: 'Actividades',
         contact: 'Contacto',
-        language: 'español'
+        language: 'español',
+        record: 'Tickets',
+        homepage: 'Principal',
+        register: 'Registro'
       },
   
       Footer:{
@@ -152,6 +171,7 @@ export const messages = {
         date1:'Fecha 1',
         date2:'Fecha 2',
         date3:'Fecha 3',
+        edit: 'Editar',
       },
   
       Comprar2: {
@@ -164,6 +184,10 @@ export const messages = {
         information: 'Comprar entradas',
         text: 'Información de Fecha y Hora',
         text2: 'Comprar ',
+        text3: 'Asientos',
+        session1: 'Sesión 1',
+        session2: 'Sesión 2',
+        session3: 'Sesión 3'
       },
   
       Contact: {
@@ -180,7 +204,8 @@ export const messages = {
         text3: 'Comprar entradas',
         text4: 'Reparto de actores',
         text5: 'Duración',
-        text6: 'Minutos'
+        text6: 'Minutos',
+        text7: 'Sesión'
       },
   
       HomeAdmin: {
@@ -188,7 +213,7 @@ export const messages = {
         schedule : 'Prgoramación',
         activities: 'Actividades',
         contact: 'Contacto',
-        admin: 'Panel de Administración',
+        admin: 'Admin',
         text1: 'Próximas Funciones',
         text2: 'Romeo y Julieta',
         text3: 'Romeo y Julieta" es una obra escrita por William Shakespeare en el siglo XVI. La trama sigue a dos jóvenes amantes, Romeo y Julieta, cuyas familias rivales causan conflictos. A pesar de la adversidad, se enamoran y se casan en secreto, pero una serie de malentendidos y tragedias conducen a un desenlace fatal. La obra explora temas como el amor, la rivalidad familiar y el destino, convirtiéndose en una de las historias de amor más conocidas de la literatura.',
@@ -207,8 +232,15 @@ export const messages = {
         text2: 'Si ya tienes una cuenta por favor inicia sesión',
         text3:'Aquí',
         text4: 'Si tienes una cuenta de administrador por favor inicia sesión',
-        text5: 'Crear',
+        text5: 'Entrar',
       },
-  
+      Login: {
+        name: 'Nombre',
+        password: 'Contraseña',
+      },
+
+      Fecha : {
+        text1: 'es-ES',
+      }
     }};
 

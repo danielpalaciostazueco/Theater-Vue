@@ -5,6 +5,7 @@ import { createI18n } from 'vue-i18n';
 import {messages} from './language/language'; 
 import { createPinia } from 'pinia';
 
+
 const i18n = createI18n({
   legacy: false, 
   locale: 'en', 
@@ -18,4 +19,5 @@ const app = createApp(App);
 app.use(router);
 app.use(i18n); 
 app.use(pinia);
+
 app.mount('#app');

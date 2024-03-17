@@ -1,5 +1,8 @@
 <template>
-  <button @click="toggleLanguage" class="nav__link">{{ currentLanguage }}</button>
+  <div class="contenedor-botones">
+    <button @click="idiomaCambiado" class="boton-idioma">{{ idiomaActual }}</button>
+    <RouterLink to="/" class="boton-idioma">{{ $t("Header.homepage") }}</RouterLink>
+  </div>
   <div class="gestion-obras">
     <h2 class="titulo">{{ $t("AdminPanel.title") }}</h2>
     <button @click="nuevaObra" class="boton-agregar">{{ $t("AdminPanel.create") }}</button>
@@ -38,38 +41,38 @@
           <td>{{ obra.fechaTres }}</td>
           <td><img :src="obra.cartel" alt="Cartel" style="width: 100px; height: auto;" /></td>
           <td>
-            <button @click="editarObra(obra)">Editar</button>
-            <button @click="borrarObra(obra.obraID)">Borrar</button>
+            <button @click="editarObra(obra)">{{ $t('AdminPanel.edit') }}</button>
+            <button @click="borrarObra(obra.obraID)">{{ $t('AdminPanel.cancel') }}</button>
           </td>
         </tr>
       </tbody>
     </table>
     <div v-if="mostrarFormulario" class="formulario">
-      <input v-model="obraEditando.nombre" placeholder="Nombre" />
-      <textarea v-model="obraEditando.descripcion" placeholder="Descripción"></textarea>
-      <input v-model="obraEditando.autores" placeholder="Autores" />
-      <input v-model="obraEditando.duracion" type="number" placeholder="Duración" />
-      <input v-model="obraEditando.actores" placeholder="Actores" />
-      <input v-model="obraEditando.imagenes" placeholder="Imágenes" />
-      <input type="date" v-model="obraEditando.fechaUno" placeholder="Fecha 1" />
-      <input type="date" v-model="obraEditando.fechaDos" placeholder="Fecha 2" />
-      <input type="date" v-model="obraEditando.fechaTres" placeholder="Fecha 3" />
-      <input v-model="obraEditando.cartel" placeholder="Cartel" />
-      <button @click="guardarActualizarObra">Guardar</button>
-      <button @click="cerrarFormulario">Cancelar</button>
+      <input v-model="obraEditando.nombre" :placeholder="$t('AdminPanel.name')" />
+      <textarea v-model="obraEditando.descripcion" :placeholder="$t('AdminPanel.description')"></textarea>
+      <input v-model="obraEditando.autores" :placeholder="$t('AdminPanel.authors')" />
+      <input v-model="obraEditando.duracion" type="number" :placeholder="$t('AdminPanel.duration')" />
+      <input v-model="obraEditando.actores" :placeholder="$t('AdminPanel.actors')" />
+      <input v-model="obraEditando.imagenes" :placeholder="$t('AdminPanel.images')" />
+      <input type="datetime-local" v-model="obraEditando.fechaUno" :placeholder="$t('AdminPanel.date1')" />
+      <input type="datetime-local" v-model="obraEditando.fechaDos" :placeholder="$t('AdminPanel.date2')" />
+      <input type="datetime-local" v-model="obraEditando.fechaTres" :placeholder="$t('AdminPanel.date3')" />
+      <input v-model="obraEditando.cartel" :placeholder="$t('AdminPanel.poster')" />
+      <button @click="guardarActualizarObra">{{ $t('AdminPanel.save') }}</button>
+      <button @click="cerrarFormulario">{{ $t('AdminPanel.cancel') }}</button>
     </div>
   </div>
 </template>
-  
+
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { useListadoObrasAdminStore } from '../store/Admin-Store';
 import { useI18n } from 'vue-i18n';
 const store = useListadoObrasAdminStore();
 const { t, locale } = useI18n();
-const currentLanguage = computed(() => locale.value === 'en' ? 'Español' : 'English');
+const idiomaActual = computed(() => locale.value === 'en' ? 'Español' : 'English');
 
-const toggleLanguage = () => {
+const idiomaCambiado = () => {
   locale.value = locale.value === 'en' ? 'es' : 'en';
 }
 const mostrarFormulario = ref(false);
@@ -136,6 +139,24 @@ onMounted(() => {
 
 .titulo {
   text-align: center;
+  margin-bottom: 20px;
+}
+
+.boton-idioma {
+  display: inline-block;
+  height: 30px;
+  font-family: Playfair Display, serif;
+  font-weight: 700;
+  background-color: #216ce7;
+  border-radius: 20px;
+  text-decoration: none;
+  border: solid 2px black;
+  color: black;
+}
+
+.contenedor-botones {
+  display: flex;
+  justify-content: flex-end;
   margin-bottom: 20px;
 }
 
@@ -208,9 +229,7 @@ onMounted(() => {
     position: relative;
   }
 
-  .tabla-obras td::before {
-    /* Para mantener el contenido sin necesidad de data-label, omitimos esta parte */
-  }
+  .tabla-obras td::before {}
 
   .tabla-obras td {
     border: none;

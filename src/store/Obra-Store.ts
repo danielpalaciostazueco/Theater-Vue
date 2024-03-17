@@ -6,6 +6,8 @@ interface Obra {
   nombre: string;
   imagenes: string;
   obraID: string;
+  descripcion: string;
+  cartel: string;
 }
 
 export const useListadoObrasStore = defineStore('listadoObras', () => {
