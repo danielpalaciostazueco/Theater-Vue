@@ -2,7 +2,7 @@
 export const messages = {
     en: {
       Header: {
-        infomation : 'Information',
+        information : 'Information',
         schedule : 'Schedule',
         activities: 'Activities',
         contact: 'Contact',

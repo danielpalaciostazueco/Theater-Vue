@@ -41,7 +41,7 @@ export const useListadoObrasComprar1Store = defineStore('listadoObrasComprar1', 
 
  function formatearFecha(fecha: string): string {
   const fechaObj = new Date(fecha);
-  fechaObj.setHours(fechaObj.getHours() + 1); 
+  fechaObj.setHours(fechaObj.getHours()); 
   return fechaObj.toLocaleString('es-ES', {
     year: 'numeric',
     month: 'long',
